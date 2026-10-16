@@ -1,0 +1,13 @@
+# Kept outside git on purpose (see CLAUDE.md)
+research_notes/
+reports/
+
+# Editor and machine files
+.vscode/
+.idea/
+.vs/
+.claude/settings.local.json
+.claude/worktrees/
+Thumbs.db
+desktop.ini
+.DS_Store

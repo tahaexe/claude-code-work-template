@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unity --version)",
+      "Bash(unity status *)",
+      "Bash(unity recompile *)",
+      "Bash(bash docs/ai/araclar/testler.sh *)",
+      "Bash(unity list *)",
+      "Bash(unity pipeline install *)",
+      "PowerShell(unity --version)",
+      "PowerShell(unity status *)",
+      "PowerShell(unity recompile *)",
+      "PowerShell(unity list *)",
+      "PowerShell(unity pipeline install *)"
+    ]
+  }
+}

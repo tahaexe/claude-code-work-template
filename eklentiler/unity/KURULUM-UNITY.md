@@ -1,0 +1,59 @@
+# Unity Add-on: Install and Update
+<!-- Version 1.49 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
+
+## Yeni proje (New project)
+The user chose Unity but the working folder has no Unity project → do this before the general install:
+1. **Ask about the game** (one at a time, short, with options if possible): name · one-sentence idea · 2D or 3D · target platforms · revenue model (none / ads / in-app purchases / paid). Ask nothing else; the answers also start the game summary.
+2. **Location:** `<GameName>` under the "Unity projeleri klasörü" in the global CLAUDE.md (no spaces or Turkish characters in the folder name); ask the user if it isn't defined. Never use the app's temporary session folder as the project location.
+3. **Create:** run the `unity:new-unity-project` skill with these answers; don't re-ask known answers.
+   - Editor: newest installed LTS; none fitting → download it (several GB; silently on the owner's computer per the global CLAUDE.md, else ask once).
+   - Template: the URP template for 2D or 3D.
+   - Source control: local Git + Unity `.gitignore` (don't ask; step commits depend on it). Git LFS only if the user wants.
+   - Settings: right after creation, the baseline of `el-kitabi/unity-proje-ayarlari.md` (template folder) for the chosen platforms.
+   - Packages: what the skill suggests for the genre and platform + `com.unity.pipeline` + `com.unity.test-framework`; skip the skill's MCP setup (Unity CLI first). Don't integrate ads or IAP during setup; write them to the game summary and **Up next**.
+4. **Game summary draft:** right away create `docs/ai/tasarim/oyun-ozeti.md` from `sablonlar/oyun/oyun-ozeti.md` in the add-on folder and fill it with the answers (Turkish); unknown fields stay `‹…›`. Nothing is lost when the session moves.
+5. **Move the session:** move the session to the new project folder; if the app can't, tell the user to open Claude Code there and type "şablonu kur". Install continues there from step 2 of the general `KURULUM.md`.
+
+## Kurulum (Install)
+1. **Learn the project:** Unity version from `ProjectSettings/ProjectVersion.txt`; packages from `Packages/manifest.json`: render pipeline (URP / HDRP / Built-in), Input System, UI system (uGUI / UI Toolkit), Addressables, Test Framework, DOTS if any. Find where scripts, UI, tests, shaders and editor code live; look at the `.asmdef` layout.
+2. **Check tools, add missing packages**, report briefly. Choosing Unity authorized these steps. A missing tool doesn't stop the install; it only changes the verify method.
+   - **Unity CLI:** `unity --version`. Missing → install (silently if the global CLAUDE.md marks this as the template owner's computer, else ask once): Windows PowerShell `irm https://unity.com/install.ps1 | iex`, other systems per the `unity:unity-cli` skill. It installs to `%LOCALAPPDATA%\Unity\bin\`; if `unity` isn't found right after, call it by that full path.
+   - **Unity's Claude plugin** (`unity:*` skills): `unity@unity-agent-plugin` missing from `claude plugin list` → `claude plugin marketplace add Unity-Technologies/unity-agent-plugin`, then `claude plugin install unity@unity-agent-plugin --scope user` (same silent/ask rule as the CLI; a GitHub SSH error → KURULUM.md step 3's HTTPS prefix); skills appear in a new session.
+   - **C# code intelligence** (`csharp-lsp` plugin; handbook `el-kitabi/csharp-lsp.md`, template folder): needs a .NET 10+ SDK (`dotnet --list-sdks`); none → skip, one line to the user. `csharp-ls --version` fails → `dotnet tool install --global csharp-ls` (once per machine; below 0.24 → `dotnet tool update --global csharp-ls`). `claude plugin list --json` has no `csharp-lsp@claude-plugins-official` at scope `local` for this `projectPath` → at the project root `claude plugin install csharp-lsp@claude-plugins-official --scope local` (`.claude/settings.local.json`, git-ignored: each machine and Claude account installs its own). Same silent/ask rule as the CLI; declined → note it in `hafiza/kararlar.md`, never offered again. It loads in a new session.
+   - **Editor:** `unity status`. If Claude has to start the editor, start it headless (handbook `unity-cli-saha-notlari.md`); `unity status` doesn't list a headless editor, ask it with an `eval`.
+   - **Pipeline package** (`com.unity.pipeline`, Unity 6+): needed for the CLI to drive the editor and for `unity recompile`. Missing → `unity pipeline install --project-path .`.
+   - **Test Framework** (`com.unity.test-framework`): without it tests don't run or even hang; add it to `manifest.json` (`unity:unity-package-management`).
+3. **Fill the Commands table** (CLAUDE.md). Check each command with `--help`; don't run tests or builds during install (slow), verify them in the first plan step. Mark what you couldn't verify `‹?›`. Defaults proven in a real project (Unity CLI 1.0 beta, Pipeline 0.8; `testler.sh` in a real project, 2026-10-15):
+
+   | Purpose | Editor open (also headless) | Editor closed |
+   |---|---|---|
+   | Compile check | `unity recompile --project-path . --timeout 120 --json` (waits for the compile; read `data.status`, `data.errors`; without `--json` it once printed nothing) | `testler.sh` also compiles (compile errors: no results, it prints their `error CS` lines) |
+   | EditMode tests | `unity command run_tests --mode editor --project-path .` (read `Summary` in the JSON) | `bash docs/ai/araclar/testler.sh EditMode` |
+   | PlayMode tests | targeted only: `unity command run_tests --mode playmode --filter <name> --async_tests true --project-path .`, result in `Temp/pipeline_test_status.json`; full suite with the editor closed | `bash docs/ai/araclar/testler.sh PlayMode` |
+   | Affected tests only | same + `--filter <name>` (`--filter_type assembly` for an asmdef) | same + a filter: `testler.sh <mode> "<name>;<name>"` (Unity's `-testFilter`, names or a regex; no `--affected` without `unity test`) |
+   | Build | `unity command build --target <target> --outputPath <path> --confirm true --project-path .`, then `build_status` | `unity build . --target <target> --output-path <path>` or `--profile <profile>` |
+
+   Editor-closed tests use the add-on's runner: copy `araclar/testler.sh` (add-on folder) to `docs/ai/araclar/` with LF line endings (`sed 's/\r$//' <add-on file> > <project file>`: a Windows clone of the template may hold it as CRLF, which bash can't run). It needs this project's editor closed (a project open in an editor can't be opened by a second Unity); failing for that reason means "not verified", not "passed". Never `unity test`: it has no log option, so its editor writes the shared `Editor.log` the user's own editor uses.
+
+   So verification runs without prompts, add the missing `allow` rules of `izinler.json` (add-on folder) to `.claude/settings.json`: read and verify commands plus `unity pipeline install`. Outside bypass mode, delete, other package adds, build and free C# eval get a permission prompt.
+4. **Add the Unity section to CLAUDE.md:** insert `claude-bolumu.md` (heading included) after "Rules". CLAUDE.md stays ≤160 lines and ≤10,000 characters; move detail to rule files or `hafiza/` if needed.
+5. **Install rules:** `rules/*.md` → `.claude/rules/`. Fit each `paths:` pattern to the real folders from step 1 (e.g. scripts under `Assets/_Game/Scripts/`). Skip the rule of an area the project lacks (e.g. `unity-shader.md` with no shaders). If the project follows a different but consistent convention (naming, folders), fit the rule to it and tell the user.
+6. **Install the agent:** `agents/unity-uzmani.md` → `.claude/agents/unity-uzmani.md`.
+7. **Design templates:** `sablonlar/oyun/` → `docs/ai/sablonlar/oyun/`. Filled docs live in `docs/ai/tasarim/` (Turkish) with a `HAFIZA.md` line and a "when to read" hint. A design doc (GDD etc.) already in the project stays in place and only gets indexed; ask before moving it.
+8. **.gitignore:** add Unity's standard entries if missing (`Library/`, `Temp/`, `Logs/`, `obj/`, `Build/`, `UserSettings/` …) and tell the user. Test output goes to `Logs/claude/`. **`.gitattributes`:** a rule that makes `.asset` files text (`*.asset text…`, or `*.asset eol=…`, which implies text) also hits the `.asset` files Unity writes in binary (baked NavMesh, LightingData, terrain data), and every commit strips their CR LF pairs → append the binary lines of `el-kitabi/unity-proje-ayarlari.md` › Version control (template folder) after it and run its audit (must print nothing; a file it still lists gets its own `binary` line, then that section's renormalize step); tell the user in one line.
+9. **Memory:** write the Unity version, render pipeline, UI system, key packages and which tools work (CLI, Pipeline) to `docs/ai/hafiza/mimari.md` (create and index it if missing). Don't record temporary states like "the editor is closed".
+10. **Game summary:** if the project is new or `Assets/` is nearly empty:
+    - Show `docs/ai/tasarim/oyun-ozeti.md` (create it from the add-on template if missing) with missing fields filled by you as proposals (from the answers and the project); apply the user's corrections.
+    - Add a `HAFIZA.md` line: game summary → "read when planning gameplay or scope".
+    - Write the MVP and build-order items to DURUM's **Up next** as plan candidates (in build order); the first one starts with the composition root and service interfaces (game code rule → Services).
+    - Add an **Up next** line: "Draft the style guide before the first UI or visual work; the user corrects it (`docs/ai/sablonlar/oyun/gorsel-stil.md` → `docs/ai/tasarim/gorsel-stil.md`)".
+11. **Architecture check** (project with existing code): grep the scripts for global singletons (`static … Instance`), `FindObjectOfType`/`Find(` and very large manager classes. Found and no composition root or DI → one **Up next** line: "Service architecture migration: composition root first, then one system per step, verified in tests and Play mode (game code rule → Migrating old code)". Never change code here. Skip if that line or a migration plan exists, or the user declined it (`hafiza/kararlar.md`).
+
+## Güncelleme (Update)
+1. `agents/unity-uzmani.md`, `sablonlar/oyun/*` and `araclar/testler.sh` (→ `docs/ai/araclar/`, LF as in install step 3) → overwrite the project's copies; a project's own `testler.sh` keeps its project-specific lines (as in step 2).
+2. `rules/*.md` → update the content of the project's copies to the new version; keep the project-fitted `paths:` patterns and project-specific additions (translated to English if still Turkish). Summarize the changes to the user.
+3. Replace CLAUDE.md's `## Unity` section with the new `claude-bolumu.md`, but keep its project-specific lines (lines not in the old template section, e.g. a headless-editor note; old section: `git show v<version>:eklentiler/unity/claude-bolumu.md` in the template folder, version from the section's marker): carry them over, translated to English, and show the user the merged section. Don't touch the Commands table, except replacing MCP tool references with Unity CLI equivalents (CLI first) and bringing template default commands still in an older form up to date (e.g. `unity recompile … --json`; `unity test` → `testler.sh`, 1.43).
+4. Add the missing `allow` rules of `izinler.json` to `.claude/settings.json`; remove the `unity mcp` and `unity bug mcp` deny rules and the `unity test` allow rules of older versions.
+5. **Plugins:** run install step 2's Unity plugin and C# code intelligence checks.
+6. **Architecture check:** run install step 11's check.
+7. **Git attributes:** run install step 8's `.gitattributes` check.

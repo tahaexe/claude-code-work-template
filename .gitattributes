@@ -1,0 +1,2 @@
+# Shell scripts keep LF everywhere: with core.autocrlf=true a fresh clone would check them out CRLF and bash fails (see docs/ai/KURULUM.md step 3)
+*.sh text eol=lf

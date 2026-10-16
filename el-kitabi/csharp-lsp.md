@@ -1,0 +1,55 @@
+---
+title: "C# code intelligence in Claude Code (csharp-lsp plugin, csharp-ls server) and an editor-free compile check for Unity"
+condition: "Unity project (`ProjectSettings/ProjectVersion.txt` exists) or any project with C# `.csproj` files (e.g. a .NET repo)."
+read_when: "Installing or checking C# code intelligence; no diagnostics after a `.cs` edit or LSP calls failing; false C# errors in a new file or after new asmdefs; editing another project's C#; deciding whether diagnostics can stand in for a compile; type-checking Unity C# while the editor can't run (busy, closed, waiting for a heavy-job slot)."
+requires: "`csharp-ls` (a dotnet global tool; needs the .NET 10 SDK or later) and the `csharp-lsp@claude-plugins-official` plugin at local scope (Install below). Unity projects: the Unity add-on installs both (its install step 2), so offer them here only in other C# projects. The compile check needs a .NET SDK and one editor compile (`Library/ScriptAssemblies`)."
+source: Trial in a Unity 6.3 project (13 C# projects/asmdefs, 917 `.cs` files incl. third-party and Synty assemblies), 2026-10-14 · Claude Code docs, read 2026-10-14 (https://code.claude.com/docs/en/plugins/code-intelligence · /plugins/install for scopes, where /discover-plugins leads · /plugins/troubleshooting · /tools-reference#lsp-tool-behavior · /env-vars) · csharp-ls README and CHANGELOG (github.com/razzmatazz/csharp-language-server, 0.28.0) · the official marketplace entry (`csharp-ls` for `.cs`) · Project C `docs/ai/hafiza/dersler.md` and `Tools/UnityCompileCheck/UnityCompileCheck.csproj`, Project D `docs/ai/hafiza/dersler.md` and `Tools/UnityCheck/` (`UnityCheck.csproj`, `asmdefs.py`), all 2026-10-16
+tech: csharp-lsp plugin 1.0.0 (claude-plugins-official) · csharp-ls 0.28.0 (net10.0) · .NET SDK 10.0.401 · Unity 6.3 generated `.slnx` and `.csproj` · Windows 11, terminal sessions. Recheck after a Unity or IDE package upgrade (the generated `.csproj` format) or a new csharp-ls. Compile check: Unity 6000.3.17f1's managed DLLs, `netstandard2.1`.
+added: 2026-10-14 · trialled in a project session, added by the session manager · 2026-10-16 (1.49): a running server doesn't reload rewritten projects (verified in a project); editor-free compile check (two projects)
+---
+# C# code intelligence (csharp-lsp)
+
+## What it gives
+- Claude Code runs `csharp-ls` (Roslyn) for `.cs` files only; the plugin maps no `.cshtml`. The plugin is config only (no hooks, MCP or bin), from Anthropic's official marketplace.
+- After each Edit/Write of a `.cs` file: "Found N new diagnostic issues in M files" with the new compiler errors and warnings. Hints (e.g. CS8019, an unneeded `using`) are marked ✶.
+- `LSP` tool (read-only, no permission prompt): definition, references, hover (type at a position), file symbols, workspace symbol search, implementations, call hierarchy. Prefer it to text search for symbols; it works across asmdefs, third-party assemblies and UnityEngine.
+- Early feedback only: Unity's compile and tests still verify (Commands table); never call a step verified on diagnostics alone.
+- Cloud sessions start no language servers (docs). Trialled in a terminal session; the desktop app's local sessions: untested.
+
+## Install
+- Needs the .NET 10 SDK or later: `dotnet --list-sdks` (csharp-ls 0.28 targets net10.0; the plugin's README still says 6.0). None → skip, tell the user in one line.
+- Server, once per machine: `dotnet tool install --global csharp-ls` → `%USERPROFILE%\.dotnet\tools`, which must be on the PATH Claude Code starts with; check `csharp-ls --version`. Older than 0.24 → `dotnet tool update --global csharp-ls` (0.22 and 0.24 fixed compatibility with Claude Code).
+- Plugin, per project, from the project root: `claude plugin install csharp-lsp@claude-plugins-official --scope local` → `.claude/settings.local.json` (git-ignored). Not project scope: the server must exist on each machine. `Marketplace "claude-plugins-official" not found` → `claude plugin marketplace add anthropics/claude-plugins-official` first.
+- The install is recorded in the account's Claude config folder (`plugins/installed_plugins.json`, with the `projectPath`), so each Claude account installs it too: another account's `claude plugin list` in that project doesn't show it (2026-10-14).
+- Loads in a new session. Check: put a type error in a `.cs` file (`Vector3 v = transform;` → CS0029), see one new diagnostic, undo it.
+- Nothing comes back → `csharp-ls --version` in the session's shell and `claude plugin list --json` (`errors`); the user's `/plugin` › Errors names a missing binary (`Executable not found in $PATH: "csharp-ls"`). Installed into a folder not on PATH → a new session from a shell where it is.
+- Remove (e.g. over 3 GB or many false errors): `claude plugin uninstall csharp-lsp@claude-plugins-official --scope local`.
+
+## Pitfalls
+- **Stay at the project root.** The server works only while the session's working folder is the project root (where `<Project>.slnx` or `.sln` and the `.csproj` files sit). A Bash `cd` into a subfolder moves that folder for the rest of the session, and every LSP call fails "Pending response rejected since connection got disposed"; back at the root the next call works at once.
+  - Never `cd` into a subfolder, not even chained (`cd X && …`): use absolute paths and `git -C`. PowerShell's `cd`/`Set-Location` persists the same way (docs).
+  - Untested option: env `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1` (docs: back to the original folder after each Bash or PowerShell command in the main session).
+- **New `.cs` files or asmdefs (Unity only; SDK-style `.csproj` files include `.cs` files by glob).** Unity's generated `.csproj` files list every `.cs` file; the editor, headless too, rewrites them when a refresh adds files or asmdefs. Until then csharp-ls puts the new file in a wrong project (Assembly-CSharp-like) without its asmdef's references: false errors (e.g. CS0234, CS0103) in that file only; its real errors still show.
+  - Check: `grep -l <File>.cs *.csproj` at the root.
+  - After an editor refresh rewrote the projects, end this session's own `csharp-ls.exe` (other sessions keep theirs); the next LSP call starts a fresh one. PowerShell, walking up from the shell to this session's `claude.exe`: `$c=$PID; while ($c -and (Get-CimInstance Win32_Process -Filter "ProcessId=$c").Name -ne 'claude.exe') { $c=(Get-CimInstance Win32_Process -Filter "ProcessId=$c").ParentProcessId }; Get-CimInstance Win32_Process -Filter "Name='csharp-ls.exe' AND ParentProcessId=$c" | ForEach-Object { Stop-Process -Id $_.ProcessId }`
+  - A running server doesn't reload projects the editor rewrites during the session (verified in a project, 2026-10-16: asmdefs created mid-session kept false CS0246/CS0103 in every new file for the rest of the session). End the session's own server as above, or trust `unity recompile` and the editor-free check (below) until a new session.
+- **Only the session's own project.** A session rooted in project A that edits project B's files by absolute path gets no diagnostics for B; B's C# is checked by B's session or B's compile.
+- **Messages in the OS language** (Turkish here); the codes are standard (CS0029). csharp-ls 0.24+ reads `DOTNET_CLI_UI_LANGUAGE` (e.g. `en-US`) for English messages: untested.
+
+## Measured (a Unity 6.3 project, 2026-10-14)
+- Diagnostics pulled for all 917 `.cs` files (own 690, third-party 209, Synty 17): 0 false errors, 1 real warning (CS0618, Unity shows it too).
+- Go-to-definition and references across assemblies (third-party, `Game.Settings`, tests); `UnityEngine` resolves.
+- The solution (13 projects) loads in ~10 s on the first request; memory 0.3-0.4 GB while editing, 0.56 GB peak with every file's diagnostics. Needs no editor; light enough to stay on beside other work.
+
+## Editor-free compile check (Unity)
+- Type-checks all game C# in seconds with no editor: while the editor can't run (busy, closed, a heavy-job slot to wait for) or before spending an editor run. Proven 2026-10-16 in two projects (`Tools/UnityCompileCheck`, `Tools/UnityCheck`; a planted error was reported).
+- An SDK-style project `Tools/<Name>/<Name>.csproj`, run with `dotnet build Tools/<Name>`: `netstandard2.1`, `LangVersion` 9.0, `EnableDefaultCompileItems` false, `Nullable` and `ImplicitUsings` disable, `DefineConstants` `UNITY_EDITOR;UNITY_INCLUDE_TESTS`, `NoWarn` CS0649 (serialized fields look unassigned); every `Reference` with `Private="false"`.
+  - Sources: `<Compile Include="$(Root)/Assets/<game folder>/**/*.cs" />` plus local packages' sources.
+  - Unity: `<Editor>/Data/Managed/UnityEngine/*.dll` without `UnityEditor.CoreModule.dll`, plus `<Editor>/Data/Managed/UnityEditor.dll`; both define the editor types, so referencing both makes every editor type ambiguous (another project instead keeps the module and leaves `Managed/UnityEditor.dll` out).
+  - Packages: their compiled DLLs in `Library/ScriptAssemblies` (e.g. `UnityEngine.UI`, `Unity.TextMeshPro`, `Unity.InputSystem`; tests also `UnityEngine.TestRunner`, `UnityEditor.TestRunner` and `Library/PackageCache/com.unity.ext.nunit@*/net40/unity-custom/nunit.framework.dll`).
+  - The editor path is per Unity version (`C:/Program Files/Unity/Hub/Editor/<version>/Editor`): keep it in a property the command line can override (`-p:UnityEditorDir=…`); recheck after an upgrade.
+- Limits:
+  - One assembly: asmdef boundaries (a missing reference, `internal` use across assemblies) go unchecked. One project's `asmdefs.py` writes one project per asmdef with only its references (non-transitive, as in Unity) and caught a CS0012 that the one-assembly check passed.
+  - Only the project file's defines: the project's scripting define symbols and asmdef version defines aren't applied, so `#if` code compiles differently.
+  - Needs `Library/ScriptAssemblies` from one editor compile (a new package: one Unity compile first).
+- Never a substitute for Unity's compile: a step is verified only after `unity recompile` or `testler.sh` (Commands table). A project that adopts the check adds it to its Commands table as the first, editor-free compile row.
