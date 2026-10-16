@@ -1,237 +1,240 @@
-# Claude Çalışma Şablonu
+<div align="center">
+
+# Claude Code Çalışma Şablonu
+
+**Claude Code için plan öncelikli bir çalışma sistemi.**<br>
+Claude işi planlar, her adımı doğrulayıp commit'ler ve hafızasını senin reponda tutar;<br>
+böylece oturumlar ve bilgisayarlar arasında hiçbir şey kaybolmaz.
+
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
+[![Version](https://img.shields.io/badge/version-1.50-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-eklentisi)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 [English](README.md) · **Türkçe**
 
-Claude Code için, her projede kullanılabilen bir çalışma sistemi. Kurulduğu projede Claude şunları yapar:
+[Özellikler](#özellikler) · [Nasıl çalışır](#nasıl-çalışır) · [Başlarken](#başlarken) · [Günlük kullanım](#günlük-kullanım) · [Unity eklentisi](#unity-eklentisi) · [El kitabı](#el-kitabı) · [Yapılandırma](#yapılandırma)
 
-- **İşi önce anlar, kararı kendisi verir.** Büyük işleri inceleyip plana bağlar ve başlar. Onayını yalnızca senin kararın gerekiyorsa (kapsam, para, geri dönüşü zor işlem) ya da iş fazlara bölünecek kadar büyükse bekler.
-- **Plana göre ilerler.** Planı adım adım, sonuna kadar kendisi uygular. Her adımı doğrular, plana işler, commit'ler ve push'lar.
-- **Hafızasını yönetir.** Kararları, dersleri ve kaldığı yeri projenin içindeki dosyalarda tutar, böylece oturumlar ve bilgisayarlar arasında unutmaz.
-- **Bağlamı (context) korur.** Her oturumda yalnızca küçük bir çekirdek yüklenir, gerisini gerektiğinde okur.
-- **Tarayıcı işini kendisi yapar.** Tarayıcı gereken işleri (Play Console, Gemini, bir sayfayı kontrol etmek) izin almadan Chrome'daki kendi profilinde Claude in Chrome ile yapar (her Claude hesabının kendi adını taşıyan bir profili olur, ör. `alex`); senin profillerine ve başka tarayıcılara dokunmaz, yalnızca Claude'un kendi güvenlik onayları kalır.
-
-Komut ezberlemen gerekmez, Claude'la normal konuşman yeterli.
-
-> **Hızlı başlangıç, komutlar ve sorun giderme için [Kullanım Kılavuzu](KILAVUZ.md).**
-
-> Şablon sürümü: **1.50** (2026-10-16) · Unity projeleri için ek bir eklenti içerir (aşağıda).
+</div>
 
 ---
 
-## Nasıl çalışır?
+## Özellikler
 
-| Katman | Dosyalar | Ne zaman yüklenir |
-|---|---|---|
-| **Çekirdek** | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `HAFIZA.md` | Her oturumda, otomatik |
-| **Aktif iş** | `planlar/<aktif plan>.md` | O plan üzerinde çalışılırken |
-| **Bilgi** | `hafiza/*.md` | Konu gerektirdiğinde (hafıza dizini yönlendirir) |
-| **Nadir** | `sablonlar/`, `BAKIM.md`, `KURULUM.md` | Plan yazarken, plan bitince, kurulumda |
-| **Projeye özel kurallar** | `.claude/rules/*.md` | Yalnızca eşleşen dosyalar okunduğunda |
+- **Plan öncelikli çalışma.** Küçük işler hemen yapılır. Büyük işler incelenir, plana bağlanır ve adım adım yürütülür; her adım doğrulanır, plana işlenir, commit'lenir ve push'lanır.
+- **Hafıza repoda.** Kararlar, dersler ve güncel durum `docs/ai/` klasöründe durur ve git ile oturumlar, bilgisayarlar ve bulut oturumları arasında taşınır. `/clear` ve `/compact` iş kaybettirmez.
+- **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 5 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
+- **Sınırları belli özerklik.** Teknik kararları Claude verir ve gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler ve kimlik bilgileri için durup sorar.
+- **Unity eklentisi.** Önce Unity CLI, penceresiz test çalıştırıcı, C# kod zekâsı, SOLID ve servis yapısına dayanan kod kuralları, oyun tasarım şablonları ve her arayüz adımından sonra görsel stil kontrolü.
+- **Koşullu el kitabı.** Google Play, App Store, Firebase, ASO, shader'lar, Synty asset'leri ve daha fazlası üzerine sahada denenmiş notlar. Yalnızca işe yarayacağı projelere kurulur, diğerlerinde bağlam harcamaz.
+- **Kendi profilinde tarayıcı işi.** Claude in Chrome ile Claude, Chrome'daki kendi profilinde çalışır (Play Console, App Store Connect, bir sayfayı kontrol etmek) ve senin profillerine dokunmaz.
 
-**Dil:** Claude'un kendi okuduğu dosyalar (protokol, durum, hafıza, planlar, kurallar, el kitabı) kısa İngilizce maddeler hâlinde yazılır, böylece daha az token harcanır. Claude seninle Türkçe konuşur. Senin okuduğun dosyalar Türkçe kalır: manuel testler, tasarım belgeleri, bu README ve KILAVUZ.
+## Nasıl çalışır
 
 ```text
 İstek
  ├─ Küçük iş → yap → doğrula → commit + push
  └─ Büyük iş → keşfet → (soru) → plan yaz → başla
-                 (senin kararın gerekiyorsa ya da iş fazlıysa önce SENİN ONAYIN)
+                 (yalnızca karar senin olduğunda ya da iş fazlıysa onayını bekler)
                                                ↓
     Her adım:  uygula → doğrula → plana işle → commit + push → sonraki adım
                (engel · karar · planda olmayan riskli işlem → durur ve sorar)
                                                ↓
-    Kapanış:   özet + manuel testler (manuel-testler.md) + hafıza güncellemesi + arşiv
+    Kapanış:   özet + manuel testler + hafıza güncellemesi + arşiv
 ```
 
-## Klasör yapısı (kurulumdan sonra projede)
+| Katman | Dosyalar | Ne zaman yüklenir |
+|---|---|---|
+| Çekirdek | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `HAFIZA.md` | Her oturumda |
+| Aktif iş | `planlar/<aktif plan>.md` | O plan üzerinde çalışılırken |
+| Bilgi | `hafiza/*.md` | Konu gerektirdiğinde |
+| Nadir | `sablonlar/`, `BAKIM.md`, `KURULUM.md` | Plan yazarken ya da kapatırken, kurulumda |
+| Proje kuralları | `.claude/rules/*.md` | Yalnızca eşleşen dosyalar okunduğunda |
+
+Claude'un kendi dosyaları, token tasarrufu için kısa İngilizce maddelerle yazılır. Claude seninle Türkçe konuşur; senin için yazdığı dosyalar da Türkçedir.
+
+## Başlarken
+
+### Gereksinimler
+
+- [Claude Code](https://claude.com/claude-code) (masaüstü uygulaması ya da CLI) ve Git.
+- Unity eklentisi için Unity Hub üzerinden Unity 6. Unity CLI, Unity'nin Claude eklentisi ve C# kod zekâsı eksikse Claude kurar (C# kod zekâsı .NET 10 SDK'sı gerektirir).
+
+### Kurulum
+
+1. Bu repoyu **klonla**, örneğin `C:\Users\<kullanıcı>\claude-code-work-template` klasörüne.
+2. Aşağıdaki **global yönlendirmeyi** kendi klasörlerinle `~/.claude/CLAUDE.md` dosyasına ekle. Bu olmadan Claude kurulum isteğini tanımaz.
+
+   ```markdown
+   ## Claude çalışma şablonu
+   Şablon klasörü: <ŞABLON>
+   Unity projeleri klasörü: <UNITY_PROJELERİ> (yeni Unity projeleri burada oluşturulur)
+   - Kullanıcı bir projeye bu çalışma sistemini kurmak isterse ("şablonu kur", "planlı çalışma sistemini kur" gibi): <ŞABLON>\docs\ai\KURULUM.md dosyasını oku ve "Kurulum" bölümünü uygula.
+   - Şablonu güncellemek isterse ("şablonu güncelle"): aynı dosyanın "Güncelleme" bölümünü uygula.
+   - Bir projede çok adımlı bir işe başlanırken projede docs/ai/PROTOKOL.md yoksa kurulumu tek cümleyle öner; istenmezse ısrar etme.
+   ```
+3. **Bir projeye kur.** Claude Code'u projenin klasöründe aç ve *"şablonu kur"* de. Claude proje türünü (Unity ya da diğer) anlar, dosyaları kopyalar; git'i, izin kurallarını ve `CLAUDE.md`'yi hazırlar, projeye özel kuralları yazar.
+4. **Sonra güncelle.** Bu repoyu çek (pull), ardından projede *"şablonu güncelle"* de. Yalnızca sabit dosyalar yenilenir; planlar, hafıza ve `CLAUDE.md` korunur.
+
+Adım adım kurulum, ipuçları ve sorun giderme [Kullanım Kılavuzu](KILAVUZ.md)'nda.
+
+### Kurulumdan sonra proje yapısı
 
 ```text
 proje/
-├─ CLAUDE.md                 proje bilgisi: kurulumda Claude doldurur
-├─ .claude/rules/            projeye özel kurallar: kurulumda Claude yazar
-├─ .claude/settings.json     izin kuralları: kurulumda eklenir, bağlam harcamaz
+├─ CLAUDE.md                 proje bilgisi, Claude doldurur
+├─ .claude/rules/            projeye özel kurallar
+├─ .claude/settings.json     izin kuralları (bağlam harcamaz)
 └─ docs/ai/
-   ├─ PROTOKOL.md            çalışma kuralları          (sabit)
-   ├─ KURULUM.md             kurulum ve güncelleme      (sabit)
-   ├─ BAKIM.md               kapanış ve temizlik        (sabit)
-   ├─ sablonlar/             CLAUDE.sablon.md, plan.md  (sabit)
-   ├─ araclar/               kayip-kontrol.py           (sabit)
+   ├─ PROTOKOL.md            çalışma kuralları            (sabit)
+   ├─ KURULUM.md             kurulum ve güncelleme        (sabit)
+   ├─ BAKIM.md               kapanış ve temizlik          (sabit)
+   ├─ sablonlar/             CLAUDE.sablon.md, plan.md    (sabit)
+   ├─ araclar/               kayip-kontrol.py             (sabit)
    ├─ DURUM.md               neredeyiz
    ├─ HAFIZA.md              hafıza dizini
-   ├─ manuel-testler.md      senin yapacağın testler (Türkçe)
-   ├─ hafiza/                kararlar.md, dersler.md, teknik-borc.md, …
-   └─ planlar/               YYYY-MM-DD-ad.md, arsiv/
+   ├─ manuel-testler.md      senin yapacağın testler
+   ├─ hafiza/                kararlar, dersler, teknik borç, …
+   └─ planlar/               tarihli planlar ve arşivleri
 ```
 
-**Sabit** dosyalar her projede aynıdır ve şablondan güncellenir. Diğerleri projenin kendi verisidir.
+*Sabit* dosyalar şablondan gelir ve güncellemede yenilenir; geri kalan her şey projenin kendi verisidir.
 
-Unity projelerinde ayrıca şunlar kurulur: `.claude/agents/unity-uzmani.md`, `.claude/rules/unity-*.md`, `docs/ai/sablonlar/oyun/` ve doldurulan tasarım belgeleri için `docs/ai/tasarim/`. Koşulu tutan el kitabı girdileri de `docs/ai/el-kitabi/` altına kurulur.
+## Günlük kullanım
 
----
+Ezberlenecek komut yok, normal konuşman yeterli. Claude'un tepki verdiği birkaç ifade:
 
-## Kurulum ve kullanım
+| Ne dersin | Ne olur |
+|---|---|
+| *"Envanter sistemi ekleyelim"* | Küçük iş doğrudan yapılır. Büyük iş için plan hazırlanır, gösterilir ve başlanır. |
+| *"Önce planı göster"* | Plan senin onayını bekler. |
+| *"Devam"* | Yarım kalan işi toparlar, kısa bir derleme kontrolü yapar ve sonraki adıma geçer. |
+| *"Nerede kalmıştık?"* | `DURUM.md` ve aktif plandan bir iki satırlık durum özeti. |
+| *"Bunu yapma, hep şöyle yap"* | Düzeltir ve dersi kaydeder; kalıcı kurallar `CLAUDE.md`'ye girer. |
+| *"Bunu hatırla: …"* | Uygun hafıza dosyasına yazılır. |
+| *"Hafıza bakımı"* | Tekrarları birleştirir, eskimiş bilgileri düzeltir. |
 
-Adım adım kurulum (global yönlendirme dahil), günlük kullanım, güncelleme, ipuçları ve sorun giderme [Kullanım Kılavuzu](KILAVUZ.md)'nda. Kısaca:
-
-1. Bu repoyu klonla, örneğin `C:\Users\<kullanıcı>\claude-code-work-template` klasörüne.
-2. Kılavuzdaki (bölüm 1) global yönlendirme bloğunu, şablon ve Unity klasörlerinle birlikte `~/.claude/CLAUDE.md` dosyasına ekle. Bu blok olmadan Claude "şablonu kur" sözünü tanımaz.
-3. Projede **"şablonu kur"** de. Claude proje türünü klasörden anlar (anlayamazsa Unity mi Diğer mi diye sorar) ve gerisini kendisi yapar.
-4. Şablon geliştikçe projede **"şablonu güncelle"** de. Yalnızca sabit dosyalar yenilenir; planlar, hafıza ve CLAUDE.md korunur. Yeni sürüm çıktığında Claude bunu oturumun ilk cevabında tek satırla hatırlatır.
-5. Günlük işte normal konuş. Büyük işler plana bağlanır ve adım adım ilerler; her adım commit'lenip push'lanır.
-
----
+Plan bitince Claude özet verir, yeni manuel testleri `docs/ai/manuel-testler.md`'ye ekler ve doğrulanamayanları söyler. Yeni işe geçmeden `/clear` yaz; durum zaten diskte kayıtlı.
 
 ## Unity eklentisi
 
-"şablonu kur" deyip proje türü olarak Unity'yi seçtiğinde, genel kurulumla birlikte Unity eklentisi de kurulur. Eklenti şablonda `eklentiler/unity/` klasöründe durur.
+Kurulumda Unity seçilince şunlar eklenir:
 
-| Eklenen | Projede nerede | Ne zaman yüklenir |
+| Eklenen | Nerede | Ne zaman yüklenir |
 |---|---|---|
-| Unity bölümü: skill'ler, Unity CLI, doğrulama, C# kod zekâsı | `CLAUDE.md` içinde | Her oturumda |
-| Unity uzmanı ajanı (sadece okur ve inceler; çağrılınca CLAUDE.md zincirini yüklemez) | `.claude/agents/unity-uzmani.md` | Tanımı her oturumda (~70–90 token), kendisi çağrılınca |
-| Kod kuralları: varlıklar, oyun kodu, UI, test, shader | `.claude/rules/unity-*.md` | Yalnızca eşleşen dosyalar okunduğunda |
-| Test çalıştırıcı: editör kapalıyken testleri projenin Unity sürümüyle, kendi log dosyasıyla, süre sınırıyla ve tek içe aktarma işçisiyle (daha az bellek) koşar | `docs/ai/araclar/testler.sh` | Editör kapalıyken test koşulduğunda |
-| C# kod zekâsı: her `.cs` düzenlemesinden sonra yeni derleyici hataları, tanım ve referansları sembolle bulma (`csharp-lsp` eklentisi, `csharp-ls` dil sunucusu; tuzakları el kitabı girdisinde) | `.claude/settings.local.json` (git'e girmez; her bilgisayarda ve her Claude hesabında ayrı kurulur) | Her oturumda etkin; hata raporu bir `.cs` dosyası düzenlenince gelir |
-| Unity proje ayarları: platforma göre doğru değerler (el kitabı girdisi) | `docs/ai/el-kitabi/unity-proje-ayarlari.md` | Yeni projede, platform eklerken, yayın hazırlığında, performans ve boyut işlerinde |
-| Oyun tasarım şablonları: oyun özeti (tasarım sütunlarıyla), GDD, görsel stil rehberi, prototip raporu, oyun testi raporu, post-mortem, yayın kontrol listesi | `docs/ai/sablonlar/oyun/` (doldurulanlar `docs/ai/tasarim/`) | Kullanıldığında |
+| Unity bölümü: skill'ler, Unity CLI, doğrulama, C# kod zekâsı | `CLAUDE.md` | Her oturumda |
+| Yalnızca okuyan Unity uzmanı ajanı | `.claude/agents/unity-uzmani.md` | Çağrıldığında |
+| Kod kuralları: varlıklar, oyun kodu, arayüz, test, shader | `.claude/rules/unity-*.md` | Eşleşen dosyalar okunduğunda |
+| Kendi log dosyası, süre sınırı ve tek içe aktarma işçisiyle penceresiz test çalıştırıcı | `docs/ai/araclar/testler.sh` | Editör kapalıyken testlerde |
+| C# kod zekâsı (`csharp-lsp` eklentisi, `csharp-ls` sunucusu) | `.claude/settings.local.json` | Her oturumda |
+| Oyun tasarım şablonları: tasarım sütunlarıyla oyun özeti, GDD, görsel stil rehberi, prototip ve oyun testi raporları, post-mortem, yayın kontrol listesi | `docs/ai/sablonlar/oyun/` | Kullanıldığında |
 
-**Unity CLI ve skill'lerin unutulmaması için üç katman var:**
-1. CLAUDE.md'deki Unity bölümü her oturumda şunu hatırlatır: önce uygun `unity:*` skill'i kullanılır; editör, derleme (`unity recompile`) ve build işleri Unity CLI ile yapılır. Testler açık editörde Pipeline'ın test komutuyla, editör kapalıyken `docs/ai/araclar/testler.sh` ile koşar; `unity test` kullanılmaz (log seçeneği yok, açık editörünün de kullandığı ortak `Editor.log`'a yazıyor). Unity'ye bağlantıda önce Unity CLI kullanılır (senin tercihin); skill'lerin MCP adımları da CLI ile yapılır. Unity MCP yasak değil: CLI'ın yetmediği yerde Claude kullanabilir ve bunu söyler. CLI ya da Pipeline paketi eksikse kurulur (şablon sahibinin bilgisayarında sormadan, başkasında bir kez sorarak).
-2. Plandaki her adımın **Araç** alanı. Skill ya da araç plan yazılırken seçilir, otomatik ilerlerken adımda hazır durur.
-3. Unity kuralları, ilgili dosyalar okunduğunda devreye girer.
-
-**Kurulum sırasında ayrıca:**
-- Unity CLI'ı, Unity'nin Claude eklentisini (`unity:*` skill'leri) ve C# kod zekâsını (`csharp-ls` ve `csharp-lsp`; bilgisayarda .NET 10 SDK'sı yoksa atlanır) kontrol eder, eksikse kurar: şablon sahibinin bilgisayarında sormadan, başkasında bir kez sorarak. Açık bir editör olup olmadığına bakar.
-- Eksik paketleri ekler: CLI'ın editörü kontrol edebilmesi için `com.unity.pipeline`, testler için `com.unity.test-framework`.
-- Doğrulama komutlarını CLAUDE.md'ye yazar (gerçek bir projede çalıştığı görülen komutlar varsayılandır).
-- Kural dosyalarını projenin klasör yapısına göre uyarlar.
-- Kodu olan bir projede mimariye bakar: global singleton'lar ve dev yönetici sınıfları varsa sıraya "servis mimarisine geçiş" plan adayı ekler. Kod, sen o planı başlatana kadar değişmez.
-
-**Kod mimarisi:** SOLID, temiz kod ve servis yapısı oyun kodu kuralında kısa maddeler olarak yazılı: servisler arayüzün arkasında durur ve tek bir başlangıç noktasında kurulur, her sınıfın tek sorumluluğu olur, eski kod adım adım taşınır. Yeni bir oyunda ilk plan servislerin kurulduğu başlangıç noktasıyla başlar.
-
-**Görsel kimlik:** Her oyun için bir görsel stil rehberinin (renkler, yazı tipleri, arayüz dili, sahne görünümü) taslağını ilk UI işinden önce Claude yazar, sen düzeltirsin. Oyuncunun gördüğü bir şeyi değiştiren her adımdan sonra Claude ekran görüntüsü alıp rehberle karşılaştırır, açık sapmaları düzeltir, zevke bağlı olanları manuel testlere yazar. Zevk kararı sende; Claude rehbere uyumu kontrol eder. Kapanışta Unity uzmanı ekranları tutarlılık açısından da inceler.
-
-**Arka planda çalışır:** Sen çalışırken editör penceresiz açılır, build ve test oyunları arka planda koşar. Bir pencere ancak bir test gerektirirse ve sana söylendikten sonra öne gelir. Unity CLI'ın sahada öğrenilen tuzakları "Unity CLI saha notları" el kitabı girdisinde (aşağıda).
-
-**Yayın:** Claude mağazalarda (Play Console, App Store Connect) yeni sürümü oluşturur ve sürüm verilerini girer: sürüm adı, iki dilde yenilikler notu, gerekiyorsa mağaza sayfası. Yayın her zaman doğrudan: Play'de üretim kanalı ve %100, App Store'da onaydan sonra otomatik yayın; test kanalı, TestFlight ve kademeli yayın yok. Sürüm numaralarını ayarlar, Android (imzalı AAB) ve iOS (Xcode projesi) build'lerini proje klasöründe `Builds/` altına alır ve bekler. Build'leri mağazalara sen yükler, incelemeye sen gönderirsin; Claude build yüklemez ve incelemeye göndermez. Android imzası için keystore şifresini açık editöre sen girersin; şifre hiçbir dosyaya, belgeye ya da komuta yazılmaz.
-
-**Android oyunları:** Google Play'in Level Up ile önerdiği oyun yapısı (Play Games Services girişi, başarımlar, Play Games Ödülleri, Game Stats, bulut kayıt, FPS, büyük ekran, kumanda) için el kitabı girdisi kurulur. Girdi Play Games Services'in Play Console kurulumunu (onay ekranı, imza parmak izleri, yapılandırmayı yayınlama), güncellemeler için tanıtım içeriğini, Play Console uyarılarını (R8, uçtan uca ekran), Level Up'ın getirisini (ücretler, Görevler), Şubat 2027'de başlayan bellek eşiklerini, ilk yayını ve geçiş reklamının yerini de anlatır. DURUM'daki **Up next** listesine bu yapıyı doğru sırayla ekleyen üç plan adayı ve uyarılar için bir plan adayı yazılır (aşağıda "El kitabı").
-
-**iOS oyunları:** Aynı yapının App Store karşılığı için ayrı bir el kitabı girdisi kurulur: Game Center girişi ve başarımlar (Play'dekiyle aynı liste), satın alımları geri yükleme düğmesi, güncellemeler için uygulama içi etkinlikler, kalite maddeleri, doğrudan yayın ayarları ve incelemeye göndermeden önce bakılacaklar (ret riskleri, gizlilik, yaş anketi, iPad, erişilebilirlik etiketleri). Play Games Ödülleri ve Game Stats'in iOS'ta karşılığı yok. Bir plan adayı yazılır.
-
-> Uyarlama kaynağı: Claude-Code-Game-Studios, sürüm `7ed2c3e` (2026-09-24). O repo güncellenirse bu sürümle karşılaştırılır.
-
----
+- **Önce Unity CLI.** Editör, derleme ve build işleri Unity CLI ile yapılır; Unity MCP yalnızca CLI'ın yetmediği yerde. Eksik paketler (`com.unity.pipeline`, `com.unity.test-framework`) kurulumda eklenir.
+- **Mimari.** SOLID ve tek bir başlangıç noktasında kurulan, arayüz arkasındaki servisler. Singleton ağırlıklı koda sessizce dokunulmaz, geçiş için plan adayı eklenir.
+- **Görsel kimlik.** İlk arayüz işinden önce stil rehberi taslağı yazılır; görünen her değişiklikten sonra Claude ekran görüntüsünü rehberle karşılaştırır.
+- **Arka planda çalışır.** Editör penceresiz açılır, build ve testler odağını çalmaz.
+- **Mağaza yayını hazırlığı.** Claude mağaza sürümlerini ve `Builds/` altındaki build'leri hazırlar; yüklemek ve incelemeye göndermek sende kalır, imza şifreleri hiçbir yere yazılmaz.
 
 ## El kitabı
 
-Belirli bir teknoloji, platform ya da asset paketiyle ilgili, dışarıdan (video, makale, resmi belge) derlenmiş notlar. Şablonda `el-kitabi/` klasöründe durur.
+El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri üzerine resmi belgelerden, makalelerden ve saha çalışmasından derlenmiş notları tutar. Her girdinin bir koşulu vardır: yalnızca koşulun tuttuğu projeye kurulur ve yalnızca ilgili işte okunur. Girdiler plan adayı ekleyebilir (örneğin Google Play Level Up yapısı); bir projede girdiye eklenen notlar güncellemede şablona önerilir.
 
-- **Sadece gereken projeye kurulur.** Her girdinin başında bir koşul var, örneğin "projede Synty Sidekick karakterleri var". Kurulumda ve "şablonu güncelle" dediğinde koşulu tutan girdiler projeye kopyalanır ve hafıza dizinindeki ortak el kitabı satırına birkaç kelimelik bir ipucuyla eklenir. Koşul tutmuyorsa hiçbir şey eklenmez, o projede bağlam maliyeti sıfır olur.
-- **Sadece ilgili işte okunur.** Girdinin kendisi yalnızca o konuda bir iş yapılırken açılır.
-- **Gereken araçlar önerilir.** Girdi bir araç gerektiriyorsa (örneğin Sidekick Character Creator) ve projede yoksa Claude kurmayı önerir. İstemezsen geçer ve bir daha sormaz.
-- **Gerekirse plan adayı ekler.** Girdi projede yapılması gereken bir iş tanımlıyorsa (örneğin Google Play Level Up), kurulunca bu iş DURUM'daki **Up next** listesine plan adayı olarak yazılır. İş zaten yapılmışsa eklenmez.
-- **Projede eklenen notlar kaybolmaz.** Claude bir projede girdiye yeni saha notu eklerse "şablonu güncelle" bunları korur ve şablona önerir. Böylece bir projede öğrenilen, diğer projelere de taşınır.
-- **Girdiler İngilizce:** Onları Claude okuduğu için kısa İngilizce maddelerle yazılır.
+<details>
+<summary><b>21 girdinin tamamı</b></summary>
 
-| Girdi | Koşul | Ne zaman okunur |
-|---|---|---|
-| Synty Sidekick: yüz ifadeleri ve göz kırpma | Projede Sidekick karakterleri var | Yüz ifadesi, blendshape, göz kırpma ve Face katmanı işlerinde |
-| Synty: gündüzü geceye çevirme | Projede Synty ortam asset'leri var ve proje URP kullanıyor | Gece atmosferi, ortam ışığı, sis, gökyüzü, post-processing ve iç mekân ışığı işlerinde |
-| Synty karakterlerine editörde poz verme | Projede Synty karakterleri var | Poz verirken ve tanıtım, mağaza ya da konsept görseli hazırlarken |
-| Unity'de ortam sesi (2D) ve 3D konumsal ses | Unity projesi (Synty'ye özgü değil) | Ortam sesi ya da 3D ses eklerken, ses sorunlarında |
-| Google Play'in önerdiği oyun yapısı (Level Up) | Unity projesi, hedefte Android (Google Play) | Google Play yayını (ilk yayın dahil), Play Games Services, başarım, ödül, satın alma, Game Stats, bulut kayıt, FPS, büyük ekran ve kumanda işlerinde; Level Up'ın getirisine (ücretler, Görevler) bakarken; Play Console uyarıları (R8, uçtan uca ekran), Android vitals bellek ölçümleri, tanıtım içeriği ve yayın ayarlarında; geçiş reklamını yerleştirirken. Kurulunca 4 plan adayı ekler |
-| App Store yapısı: Game Center, uygulama içi etkinlikler, ilk gönderim, doğrudan yayın | Unity projesi, hedefte iOS (App Store) | App Store yayını ve ilk gönderim (ret riskleri, gizlilik ve ATT, gizlilik bildirimleri, yaş anketi, iPad pencere boyutu, erişilebilirlik etiketleri), Game Center girişi, başarım, liderlik tablosu, iOS'ta satın alma, uygulama içi etkinlik ve iOS kalite işlerinde. Kurulunca 1 plan adayı ekler |
-| Unity proje ayarları (Unity 6.3; Android, iOS, PC) ve git'te Unity'nin ikili `.asset` dosyaları | Unity projesi | Yeni proje kurarken (hemen uygulanır), platform eklerken, yayın hazırlığında, FPS, bellek, boyut ya da build sorunlarında; `.gitattributes` yazarken ya da pişmiş bir varlık (NavMesh, ışık, arazi) bilgisayarlar arasında farklı çıktığında. Project Auditor ile ayar denetimi için 1 plan adayı ekler |
-| Unity CLI saha notları ve penceresiz editör | Unity projesi | Rutin derleme ve test dışındaki Unity CLI işlerinde (editörü sürme, eval, ekran görüntüsü, PlayMode testleri, paketler, build) ve bir komut beklenmedik davrandığında. Küçük penceresiz işlerde editör tek içe aktarma işçisiyle açılır (bir projede bellek tepesi 8,1 GB'tan 4,4 GB'a indi, süre aynı kaldı). İki Unity projesinin saha notlarından derlendi |
-| Shader derleme takılması: ölç, izle, ısındır (Unity 6 `GraphicsStateCollection`) | Unity 6 projesi | Bir efekt, malzeme, bölge ya da kalite düzeyi ilk kez göründüğünde build takıldığında; yayın, demo ya da mağaza videosu çekimi hazırlarken; DX12, Vulkan ya da Metal'e geçerken; yeni kalite düzeyleri ya da çok sayıda yeni malzeme eklerken. Bir proje oturumunun araştırmasından |
-| Tarayıcı bağlantısı: her Claude hesabına kendi Chrome profili | Her proje | Claude'a tarayıcı profili kurulurken, Claude in Chrome bağlanmadığında, hata verdiğinde ya da sekme açamadığında; Claude "açık" deyip senin bir şey görmediğinde (sıralı sorun giderme adımları). Bir projenin saha notlarından derlendi |
-| Layer Lab GUI Pro arayüz paketleri (Casual Game, Survival Clean, Fantasy RPG) | Projede GUI Pro paketi var ya da arayüz GUI Pro ile yenilenecek | Arayüz denetiminde, paketten parça alırken, düğme ve dokunma alanı ölçerken, Unity 6000.6'da güvenli alan işinde |
-| Firebase ile oyuncu hunisi, D1/D7 tutma ve uzaktan ayar | Unity projesi, hedefte Android ya da iOS, projede Firebase Unity SDK'sı var | Analitik olayı planlarken ya da eklerken, oyuncunun nerede bıraktığına bakarken, Remote Config ya da A/B testi kurarken, zorluk ya da ödül kararında, yeni olaylardan sonra mağaza gizlilik beyanlarında |
-| Mağaza sayfası ve ASO (Google Play, App Store) | Google Play'de ya da App Store'da yayınlanan proje | Mağaza metni, simge, ekran görüntüsü (App Store'un zorunlu ölçüleri dahil) ya da önizleme videosu hazırlarken; mağaza A/B testi ya da App Store özel ürün sayfası planlarken; puan isteme zamanını seçerken; sayfayı incelemeye göndermeden önce |
-| Mağaza etkinlikleri: Google Play tanıtım içeriği ve App Store uygulama içi etkinlikleri (ücretsiz görünürlük) | Google Play'de ya da App Store'da yayınlanan oyun ya da uygulama | Oyuncunun göreceği yeni içerik getiren bir sürümü (bölüm, mod, bölge, sezon) ya da süreli bir oyun içi etkinliği planlarken; tanıtım içeriği ya da uygulama içi etkinlik yazarken, gönderirken ve sonucunu ölçerken; mağaza birini reddettiğinde. Şablon kuralı: yeni içerikli her sürümün planında bir mağaza etkinliği adımı. Bir proje oturumunun araştırmasından |
-| C# kod zekâsı: `csharp-lsp` eklentisi ve `csharp-ls` dil sunucusu; Unity için editörsüz derleme denetimi | Unity projesi ya da `.csproj` dosyaları olan herhangi bir C# projesi | C# kod zekâsını kurarken ya da denetlerken; bir `.cs` düzenlemesinden sonra hata raporu gelmediğinde ya da LSP çağrıları hata verdiğinde; yeni bir dosyada ya da yeni asmdef'lerden sonra olmayan hatalar göründüğünde; başka bir projenin C# koduna dokunurken; editör açılamazken (meşgul, kapalı ya da ağır iş sırası bekleniyor) Unity C# kodunu saniyeler içinde denetlerken. Bir Unity projesinde denendi; derleme denetimi iki projeden |
-| Adil zorluk ve başarısızlık: oyuncunun kaybı kendi seçimine bağlayabilmesi, başarısızlık döngüsü, algılanan şans, akış, bölüm zorluğu puanı | Unity oyun projesi | Zorluğu ve zorluk eğrisini ayarlarken; çözücüyle üretilen ya da denetlenen bölümleri puanlarken; bölüm başına başarısızlık oranını ve deneme sayısını okurken; ölüm, tekrar deneme, devam ve kayıt noktalarını tasarlarken; boss ve özel düşmanlarda; ganimet, ödül ya da teklif olasılıklarında; oyuncular bir şeye "haksız" dediğinde; oyun testi raporundaki kayıpları okurken |
-| Hedef katmanları, güvenli bırakma noktaları, geri dönüş nedenleri ve sağlıklı liderlik tablosu | İlerlemesi, etkinlikleri ya da liderlik tablosu olan mobil oyun | Bölüm, ödül ve hedef akışını tasarlarken; günlük ödül, seri, etkinlik, bildirim ya da liderlik tablosu eklerken; oturumun nerede bitebileceğine karar verirken; oyuncuların neden geri dönmediğine bakarken (D1/D7) |
-| Rakip ya da referans oyun incelemesi (katmanlı okuma) | Oyun projesi; yalnızca istenince kullanılır | Yalnızca sen ya da bir plan bir rakip veya referans oyunun incelenmesini istediğinde. Claude kendiliğinden araştırma başlatmaz, kontrol etmediği bilgiyi yazmaz |
-| Renk körlüğüne dayanıklı palet (renk eşleştirmeli oyunlar) | Oyunun ana kuralı parçaları renkle ayırıyor (renk sıralama, jam, eşleştirme, renk savunma) | Oyunda anlamı olan renkleri, zemini ya da onları boyayan ışığı seçerken; stil rehberini yazarken; renk körü kipi planlarken; paleti gösteren mağaza görsellerinden önce; bir oyuncu iki rengin benzediğini söylediğinde. Ölçüm aracı `cvd_palette.py` birlikte gelir |
-| Lansman haftasında kısa video (YouTube Shorts, TikTok, Instagram Reels), reklam bütçesi olmadan | Mağazada (Google Play, App Store) yayında olan ya da çıkışa hazırlanan oyun (büyük bir güncellemenin tanıtımı dahil) | Lansman haftasını (L-5 → L+7) ya da büyük bir güncellemenin tanıtımını planlarken; kısa video hazırlayıp paylaşırken; video platformlarına mağaza bağlantısı koyarken; ön kayıt, ön sipariş ve özel mağaza sayfası bağlantılarında; içerik üreticilerine ulaşırken; ilk günlerin sayılarını okurken. Tanıtım oturumunun araştırmasından |
-| Kısa videolarda izlenme verisini okumak ve haftalık ölçüm (YouTube Shorts, TikTok, Instagram Reels) | Oyunları için kısa video paylaşan proje ya da klasör | Paylaşılan klipleri değerlendirirken, sonraki kesimi ya da denemeyi planlarken, haftalık tanıtım bakışında, izlenmesi sıfıra yakın bir klipte ya da hesapta, ölçüm çekişini (YouTube Analytics API) kurarken |
+| Girdi | Ne zaman kurulur |
+|---|---|
+| Synty Sidekick: yüz ifadeleri ve göz kırpma | Projede Sidekick karakterleri var |
+| Synty: gündüzü geceye çevirme | URP'li projede Synty ortam asset'leri var |
+| Synty karakterlerine editörde poz verme | Projede Synty karakterleri var |
+| Ortam sesi (2D) ve 3D konumsal ses | Unity projesi |
+| Google Play'in önerdiği oyun yapısı (Level Up) | Hedefi Google Play olan Unity projesi |
+| App Store: Game Center, uygulama içi etkinlikler, ilk gönderim | Hedefi App Store olan Unity projesi |
+| Unity proje ayarları (6.3) ve git'te ikili `.asset` dosyaları | Unity projesi |
+| Unity CLI saha notları ve penceresiz editör | Unity projesi |
+| Shader derleme takılmaları: ölç, izle, ısındır | Unity 6 projesi |
+| Tarayıcı bağlantısı: her Claude hesabına bir Chrome profili | Her proje |
+| Layer Lab GUI Pro arayüz paketleri | Projede GUI Pro kullanılıyor |
+| Firebase ile oyuncu hunisi, D1/D7 tutma ve Remote Config | Firebase SDK'sı olan mobil Unity projesi |
+| Mağaza sayfası ve ASO | Google Play'de ya da App Store'da yayında |
+| Mağaza etkinlikleri: Play tanıtım içeriği ve App Store uygulama içi etkinlikleri | Yayındaki oyun ya da uygulama |
+| C# kod zekâsı ve editörsüz derleme denetimi | Unity ya da herhangi bir C# projesi |
+| Adil zorluk ve başarısızlık | Unity oyunu |
+| Hedef katmanları, güvenli bırakma noktaları ve sağlıklı liderlik tablosu | İlerlemesi, etkinlikleri ya da liderlik tablosu olan mobil oyun |
+| Rakip ya da referans oyun incelemesi | Oyun projesi, yalnızca istenince |
+| Renk körlüğüne dayanıklı palet (`cvd_palette.py` ile) | Renk eşleştirmeli oyun |
+| Lansman haftasında kısa video (Shorts, TikTok, Reels) | Yayındaki ya da çıkışa hazırlanan oyun |
+| Kısa video ölçümlerini okumak ve haftalık değerlendirme | Kısa video paylaşan proje |
 
-**Yeni girdi eklemek:** Claude Code'u şablon klasöründe aç ve "bu videoyu el kitabına ekle: <link>" yaz. Claude in Chrome bağlıysa Gemini analizini Claude kendisi yaptırır; değilse Gemini'nin çıkardığı notu yapıştır. Adımlar ve Gemini prompt'u `el-kitabi/NASIL.md` dosyasında.
+</details>
 
----
+Kaynak eklemek için Claude Code'u şablon klasöründe aç ve *"bu videoyu el kitabına ekle: &lt;link&gt;"* de. Adımlar ve analiz prompt'u [`el-kitabi/NASIL.md`](el-kitabi/NASIL.md) dosyasında.
 
-## Ayarlar (bağlam harcamaz)
+## Yapılandırma
 
-Bunlar Claude Code'un kendi ayarları. Claude'a gösterilmedikleri için bağlam ve kullanım hakkı harcamazlar.
+Kurulumun Claude Code'un kendi ayarlarına yazdıkları bağlam harcamaz.
 
-- **İzin kuralları** (`.claude/settings.json`, kurulumda eklenir):
-  - Adım commit'leri ve push (`git add`, `git commit`, `git mv`, `git push`) onay beklemeden çalışır. Zorla push yasak değil: geçmişi yeniden yazmak gerektiğinde Claude `--force-with-lease` ile yapar, başka bilgisayardan gelen commit'ler silinmez.
-  - Unity projelerinde doğrulama komutları (`unity status`, `recompile`, `test`, `list`) ve Pipeline paketinin kurulumu (`unity pipeline install`) da onaysız çalışır.
-  - Claude in Chrome araçları da onaysız çalışır. Sayfada JavaScript çalıştırma, serbest C# gibi, izin moduna bağlı kalır.
-  - Silme, diğer paket eklemeleri, build ve serbest C# çalıştırma, bypass modu dışında izin penceresi açar.
-  - Böylece otomatik ilerlerken izin sorularına takılma azalır.
-- **Plugin'ler** (`enabledPlugins`): superpowers projelerde kapalı, çünkü her oturuma "şu skill'i kullanmak zorundasın" diyen katı bir akış getiriyor; şablon sahibinin bilgisayarlarında kurulum ve güncelleme onu kullanıcı düzeyinde de kapatır (1.33). plugin-dev yalnızca şablon geliştirmede gerekiyor: projelerde kapalı, şablon klasöründe açık. Projede oturum başına tahminen 1,9–3,2 bin token tasarruf sağlar.
-- **Skill listesi** (`skillOverrides`): Masaüstü uygulamasının her oturuma eklediği agent-protocols ve engineering skill'leri yalnızca adıyla listelenir. Uzun açıklamaları bağlama girmez, Unity skill'lerine yer kalır; Claude bir adımda gerekirse yine çağırır. PROTOKOL'de bu iki grubun ne işe yaradığını anlatan tek satır var. unity-perf skill'leri gizli; Unity için yalnızca Unity'nin resmi skill'leri kullanılır.
-- **Eklentiler:** Kurulum ve güncelleme, agent-protocols ile engineering eksikse onları kullanıcı düzeyinde kurar (şablon sahibinin bilgisayarında sormadan, başkasında bir kez sorarak); `tianzhiying/unity-perf` bulunursa kaldırır. Masaüstü uygulaması eklentileri claude.ai hesabına göre getirdiği için hesaplar arasındaki fark böylece kapanır.
-- **Ajanlar ajan açamaz** (`env`): Kaç yardımcı ajan açılacağına Claude karar verir. Tek sınır, bir ajanın kendi ajanını açamaması: o maliyeti ana Claude göremez. Masaüstü uygulamasının bu değişkene uyduğu henüz doğrulanmadı.
-- **`/batch` kapalı** (`skillOverrides`): Her parça için ayrı worktree ve PR açan akışı, projelerin tek dal ve adım commit'i düzenine uymuyor. `/simplify` açık; Claude gerekirse kendisi kullanır.
-- Kurulumdan sonra yeni bir oturumda bir kez `/context` yazman önerilir: çekirdek dosyalar görünmeli, kapatılan plugin'lerin skill'leri görünmemeli.
-- **Bildirimler:** Masaüstü uygulamasında "görev bitti", "soru var" ve "izin gerekiyor" bildirimleri zaten varsayılan olarak açık, uygulama ayarlarından değiştirilebilir.
-- **Durum satırı (statusLine):** Sadece terminal arayüzünde görünüyor. Masaüstü uygulamasında gösterilmediği için eklenmedi.
-- **Yerel hafıza kapalı** (`autoMemoryEnabled`): Claude'un bilgisayarda tuttuğu otomatik hafıza projelerde kapalı; Claude onu ne okur ne de oraya yazar. Tüm hafıza projenin `docs/ai/` klasöründe ve git'te durur, böylece başka bir bilgisayarda çalışırken hiçbir şey kaybolmaz. Kurulum ve güncelleme, bilgisayarda kalmış eski notları önce projeye taşır, sonra o yerel klasörü siler.
-- **`.gitignore`:** Kurulum ve güncelleme, editöre ve bilgisayara özel dosyaları yok sayılanlara ekler: `.vscode`, `.idea`, `.vs`, Claude'un yerel ayarları ve worktree'leri, Windows ile macOS'un ürettiği dosyalar; Unity'de ayrıca Unity'nin ürettiği çözüm dosyaları. Var olan satırlara dokunmaz. Bu dosyalar git'te takip ediliyorsa takipten çıkarır: dosyalar bilgisayarda kalır, diğer bilgisayarda bir sonraki pull'da silinir ve editör onları yeniden oluşturur. Böylece `git status` temiz kalır ve bilgisayarlar arasında çakışma çıkmaz.
-- **`.gitattributes`:** Kurulum ve güncelleme `*.sh text eol=lf` satırını ekler, var olan satırlara dokunmaz. Windows'ta git satır sonlarını çevirdiği için (`core.autocrlf=true`) yeni bir klonda `.sh` betikleri (ör. test çalıştırıcı) CRLF ile geliyor ve bash'te çalışmıyordu. Unity projelerinde `.asset` dosyalarını metin sayan bir kural (`*.asset text eol=lf` gibi) varsa, Unity'nin ikili yazdığı `.asset` dosyaları (pişmiş NavMesh, ışık verisi, arazi) için onun arkasına `binary` satırları eklenir: yoksa her commit bu dosyalardaki CR LF baytlarını siler ve dosya öbür bilgisayarda bozuk çıkar (bir projenin NavMesh'inde görüldü).
+<details>
+<summary><b>Kurulumda uygulanan ayarlar</b></summary>
 
----
+- **İzin kuralları** (`.claude/settings.json`): adım commit'leri ve push'lar onay beklemeden çalışır (zorla push yalnızca `--force-with-lease` ile); Unity doğrulama komutları ve Claude in Chrome araçları da öyle. Silme, diğer paket eklemeleri, build ve serbest C# bypass modu dışında yine izin ister.
+- **Eklentiler:** superpowers projelerde kapalıdır, çünkü katı akışı protokolle çatışır; plugin-dev yalnızca şablon klasöründe açıktır. Oturum başına tahminen 1,9–3,2 bin token tasarruf sağlar.
+- **Skill listesi:** agent-protocols ve engineering skill'leri yalnızca adıyla listelenir. `/batch` kapalıdır (her parça için ayrı worktree ve PR, tek dallı adım commit'lerine uymuyor); `/simplify` açık kalır.
+- **İç içe ajan yok:** Kaç yardımcı ajan açılacağına Claude karar verir, ama bir yardımcı kendi ajanını açamaz.
+- **Yerel otomatik hafıza kapalı** (`autoMemoryEnabled: false`): hafıza yalnızca `docs/ai/` ve git'te durur; bilgisayarda kalmış notlar bir kez projeye taşınır.
+- **`.gitignore` ve `.gitattributes`:** editör ve bilgisayar dosyaları yok sayılır (gerekirse takipten çıkarılır), `.sh` dosyaları LF kalır ve Unity'nin ikili `.asset` dosyalarına `binary` satırları eklenir; böylece pişmiş veriler bilgisayarlar arasında bozulmaz.
 
-## Bağlam bütçesi
+</details>
 
-**Ölçüm** (bir Unity projesinde, 1.14'e geçtikten sonra `/context`): Çekirdek 20.939 karakter, **8,2 bin token** tuttu (CLAUDE.md 2k, PROTOKOL 3,6k, DURUM 1,2k, HAFIZA 1,4k). Bu, yaklaşık 2,5 karakter başına 1 token demek. Aşağıdaki satırlar bu oranla tahmin edildi:
+<details>
+<summary><b>Bağlam bütçesi</b></summary>
 
-| Durum | Her oturumda yüklenen | Yaklaşık token |
+Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,2 bin token** tuttu (token başına yaklaşık 2,5 karakter). Bu oranla tahminler:
+
+| Durum | Her oturumda yüklenen | ≈ Token |
 |---|---|---|
 | Yeni kurulmuş proje | ~12.200 karakter | ~4.900 |
-| Unity projesi (+ Unity bölümü ve ajan tanımı) | ~15.000 karakter | ~6.000 |
-| Sınırların sonuna kadar dolu bir proje | ~27.100 karakter | ~10.800 |
-
-Türkçe ile İngilizce arasındaki fark ölçülmedi: bir projenin eski Türkçe çekirdeğini (28.600 karakter) ölçmekten 2 Ekim'de vazgeçildi, yeni çekirdek kullanımda daha iyi bulundu. Gerektiğinde okunan dosyalar (tahmin): plan şablonu ~0,8 bin, `BAKIM.md` ~1,4 bin, `KURULUM.md` ~2,8 bin token.
-
-Kesin sayıyı görmek için projede Claude Code'u açıp `/context` yaz. Dosya bazında dökümü "Memory files" satırında görürsün.
-
-Sınırlar protokolde tanımlı ve Claude bunları kendisi korur. Claude'u değil, her mesajda yeniden yüklenen dosyaları sınırlarlar: sınır olmadan dosyalar şişiyor (bir projede DURUM 7.500 karaktere çıkmıştı) ve uzun CLAUDE.md'de kurallar daha az uygulanıyor. Bir dosya sınırı aşarsa Claude onu kendisi toparlar (CLAUDE.md dahil):
+| Unity projesi (Unity bölümü ve ajan tanımı) | ~15.000 karakter | ~6.000 |
+| Sınırlarına kadar dolu bir proje | ~27.100 karakter | ~10.800 |
 
 | Dosya | Sınır |
 |---|---|
-| `CLAUDE.md` | en fazla 160 satır ve 10.000 karakter |
-| `DURUM.md` | en fazla 30 satır ve 3.000 karakter; teknik borç `hafiza/teknik-borc.md`'ye gider |
-| `HAFIZA.md` | en fazla 40 satır ve 3.500 karakter |
-| Hafıza konu dosyası | yaklaşık 150 satırı ya da 15.000 karakteri geçerse bölünür |
-| Plan | bağımsız parçaları varsa ya da yaklaşık 15.000 karakteri geçerse fazlara bölünür; adım tanımı en fazla 6 satır; aktif plan parça parça okunur |
+| `CLAUDE.md` | 160 satır, 10.000 karakter |
+| `DURUM.md` | 30 satır, 3.000 karakter (teknik borç kendi dosyasına gider) |
+| `HAFIZA.md` | 40 satır, 3.500 karakter |
+| Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür |
+| Plan | ~15.000 karakteri geçince fazlara bölünür; adımlar en fazla 6 satır; parça parça okunur |
 
----
+</details>
 
-## Neden bu tasarım?
+<details>
+<summary><b>Tasarım kararları</b></summary>
 
-- **Çekirdek `@` ile eklenir:** `@dosya` ile eklenen dosyalar her oturumun başında yüklenir. Başında `@` olmayan düz bir dosya yolu yüklenmez. Bu yüzden `@` sadece her zaman gereken dört küçük dosya için kullanılıyor, geri kalanlar düz yolla gösteriliyor ve gerektiğinde okunuyor.
-- **CLAUDE.md sıkıştırmadan sonra yeniden okunur:** `/compact` sonrasında proje kökündeki CLAUDE.md diskten yeniden okunur. Durum her adımda diske yazıldığı için sıkıştırma ya da `/clear` iş kaybettirmez.
-- **Şablonun adı `CLAUDE.sablon.md`:** Alt klasörlerde `CLAUDE.md` adında bir dosya olsaydı, Claude o klasördeki bir dosyayı okuduğunda o dosyayı da otomatik yüklerdi. Farklı ad bunu engelliyor.
-- **Projeye özel kurallar `.claude/rules/` altında:** `paths:` alanı sayesinde yalnızca ilgili dosyalar okunduğunda yüklenirler ve her oturumda bağlamı doldurmazlar.
-- **Hafıza repoda tutuluyor:** Claude'un yerleşik otomatik hafızası sadece o bilgisayarda durur ve git'e girmez. Repodaki hafıza ise başka bir bilgisayarda ve bulut oturumlarında da kullanılabilir. Bu yüzden 1.25'ten beri otomatik hafıza projelerde kapalı; kişisel tercihler ve düzeltmeler de `docs/ai/hafiza/` klasörüne yazılır.
-- **Her adım ayrı commit:** Otomatik ilerlemede herhangi bir adıma kolayca geri dönmeyi sağlar.
-- **Claude'un dosyaları İngilizce:** Kısa maddeler hızlı taranıyor ve İngilizcenin aynı bilgi için daha az token tutması bekleniyor; kazanç ölçülmedi (bir projede çekirdek, içerik taşınarak 28.600 karakterden 20.939'a indi). Eski projelerdeki Türkçe hafıza "şablonu güncelle" ile bir kerelik ve kayıpsız çevrilir: `docs/ai/araclar/kayip-kontrol.py` eski metindeki her komutun, yolun, sayının ve tarihin yeni metinde durduğunu denetler, orijinaller git geçmişinde kalır.
-- **Kısaltırken bilgi kaybolmaz:** Hafıza toparlanırken ya da kısaltılırken `kayip-kontrol.py` iki şeye bakar: eski metindeki somut bilgiler (komut, yol, sayı, tarih, ad) yenisinde duruyor mu, ve hiçbir yeni satırda birlikte geçmeyen cümle parçaları var mı. İkincisi, satırın geri kalanı dururken düşen bir gerekçeyi, koşulu ya da istisnayı yakalar ("…yoksa referanslar bozulur" gibi). Claude listelenen her parçanın anlamının korunduğunu kontrol eder. El kitabı ipuçları da kısaltılırken "ne zaman okunur" işlerini korur; ortak satır, emin olunamayan girdinin başlığına bakılmasını söyler.
-- **Sınırlar karakterle de:** Satır sınırı uzun satırlarla aşılabiliyordu (bir projede 28 satırlık DURUM 7.500 karakterdi). Karakter sınırı ve ayrı teknik borç dosyası bunu önler.
-- **Kararları Claude verir:** Teknik ve tasarım seçimlerini, plana ne zaman başlanacağını ve kaç yardımcı ajan açılacağını kendisi seçer, gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler (git'in geri getiremeyeceği silmeler dahil) ve uydurulamayacak kimlik bilgileri sorulur; böylece soru-cevap turları ve kullanım hakkı azalır.
-- **Kurallar varsayılan, sabit sayı yok:** Protokolün kuralları varsayılandır; uymadığı bir durumda Claude amaca en iyi hizmet edeni yapar ve nedenini söyler. Yalnızca geri dönüşü zor işlemlerden önce sorma kuralı sabittir. "3 adımda plan", "8 adımda sor", "3 denemede dur", "plan başına 2 ajan" gibi eşikler 1.33'te kalktı; yerlerinde kuralın amacı yazıyor, böylece Claude duruma göre karar verebiliyor.
-- **Yardımcı ajanlar Claude'un kararı:** Paralel çok ajanlı sistemler en çok kullanım hakkı harcayanlar, bu yüzden Claude bir ajanı ancak kendi aramasından daha iyi iş çıkaracaksa açar: geniş keşif, bağımsız paralel işler, kapanış incelemesi. Aynı anda çalışmak toplam kullanımı artırmaz, sadece hızlandırır. Keşif CLAUDE.md yüklemeyen Explore ajanıyla yapılır.
+- **`@` yalnızca çekirdek için.** `@dosya` her oturumda yüklenir; düz yollar gerektiğinde okunur.
+- **Durum her adımda diskte,** bu yüzden `/compact` ve `/clear` iş kaybettirmez; `CLAUDE.md` sıkıştırmadan sonra yeniden okunur.
+- **Şablon dosyası `CLAUDE.md` değil `CLAUDE.sablon.md`,** böylece alt klasörlerden otomatik yüklenmez.
+- **`.claude/rules/` altındaki kurallar** `paths:` sayesinde yalnızca eşleşen dosyalarda yüklenir.
+- **Her adım ayrı commit,** böylece her adıma kolayca geri dönülür.
+- **Kayıpsız kısaltma:** `kayip-kontrol.py`, hafıza kısaltılırken ya da çevrilirken komutların, yolların, sayıların, tarihlerin ve düşebilecek cümle parçalarının korunduğunu denetler.
+- **Sabit eşik değil, varsayılan kural:** Claude kuralları duruma uyarlar ve nedenini söyler; yalnızca "geri dönüşü zor işlemlerden önce sor" kuralı sabittir.
+- **Yardımcı ajan yalnızca değdiğinde:** geniş keşif, bağımsız paralel işler, kapanış incelemesi.
 
----
+</details>
 
-## Sürüm
+## Belgeler
 
-Bu depo, şablonun **1.50** sürümünün (16 Ekim 2026) herkese açık kopyasıdır. Sürüm numarası `docs/ai/PROTOKOL.md` dosyasının 2. satırında da yazar.
+| Belge | İçerik |
+|---|---|
+| [`KILAVUZ.md`](KILAVUZ.md) | Kullanım kılavuzu: kurulum, günlük kullanım, güncelleme, sorun giderme |
+| [`docs/ai/PROTOKOL.md`](docs/ai/PROTOKOL.md) | Claude'un uyduğu çalışma protokolü |
+| [`docs/ai/KURULUM.md`](docs/ai/KURULUM.md) | Kurulum ve güncelleme adımları |
+| [`eklentiler/unity/KURULUM-UNITY.md`](eklentiler/unity/KURULUM-UNITY.md) | Unity eklentisinin kurulumu |
+| [`el-kitabi/`](el-kitabi) | El kitabı girdileri |
+
+## Teşekkür
+
+Unity eklentisinin bazı kısımları *Claude-Code-Game-Studios*'tan (sürüm `7ed2c3e`, 2026-09-24) uyarlanmıştır.
 
 ## Lisans
 
-[MIT](LICENSE)
+[MIT](LICENSE) · Sürüm **1.50** · 2026-10-16
