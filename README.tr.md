@@ -7,7 +7,7 @@ Claude işi planlar, her adımı doğrulayıp commit'ler ve hafızasını senin 
 böylece oturumlar ve bilgisayarlar arasında hiçbir şey kaybolmaz.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.50-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.51-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-eklentisi)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -148,23 +148,26 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | Synty: gündüzü geceye çevirme | URP'li projede Synty ortam asset'leri var |
 | Synty karakterlerine editörde poz verme | Projede Synty karakterleri var |
 | Ortam sesi (2D) ve 3D konumsal ses | Unity projesi |
-| Google Play'in önerdiği oyun yapısı (Level Up) | Hedefi Google Play olan Unity projesi |
+| Google Play'in önerdiği oyun yapısı (Level Up), R8 denetimi `r8-kontrol.py` ile | Hedefi Google Play olan Unity projesi |
 | App Store: Game Center, uygulama içi etkinlikler, ilk gönderim | Hedefi App Store olan Unity projesi |
 | Unity proje ayarları (6.3) ve git'te ikili `.asset` dosyaları | Unity projesi |
 | Unity CLI saha notları ve penceresiz editör | Unity projesi |
+| Unity'de oyuncu derlemesi: başsız komutlar, derleme belleği, mağaza derlemeleri, emülatörde denetim | Unity projesi |
 | Shader derleme takılmaları: ölç, izle, ısındır | Unity 6 projesi |
 | Tarayıcı bağlantısı: her Claude hesabına bir Chrome profili | Her proje |
 | Layer Lab GUI Pro arayüz paketleri | Projede GUI Pro kullanılıyor |
 | Firebase ile oyuncu hunisi, D1/D7 tutma ve Remote Config | Firebase SDK'sı olan mobil Unity projesi |
 | Mağaza sayfası ve ASO | Google Play'de ya da App Store'da yayında |
 | Mağaza etkinlikleri: Play tanıtım içeriği ve App Store uygulama içi etkinlikleri | Yayındaki oyun ya da uygulama |
-| C# kod zekâsı ve editörsüz derleme denetimi | Unity ya da herhangi bir C# projesi |
+| C# kod zekâsı, editörsüz derleme denetimi ve Unity dışında test | Unity ya da herhangi bir C# projesi |
 | Adil zorluk ve başarısızlık | Unity oyunu |
 | Hedef katmanları, güvenli bırakma noktaları ve sağlıklı liderlik tablosu | İlerlemesi, etkinlikleri ya da liderlik tablosu olan mobil oyun |
 | Rakip ya da referans oyun incelemesi | Oyun projesi, yalnızca istenince |
 | Renk körlüğüne dayanıklı palet (`cvd_palette.py` ile) | Renk eşleştirmeli oyun |
 | Lansman haftasında kısa video (Shorts, TikTok, Reels) | Yayındaki ya da çıkışa hazırlanan oyun |
 | Kısa video ölçümlerini okumak ve haftalık değerlendirme | Kısa video paylaşan proje |
+| Steam mağaza sayfası, Next Fest, Playtest ve demo, erişilebilirlik etiketleri | Steam'e çıkacak oyun |
+| Bulmaca ve casual oyunlarda ödüllü reklam: AdMob kuralları, yerleşim, ödül boyu | Ödüllü reklamı olan Unity oyunu |
 
 </details>
 
@@ -195,13 +198,13 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 |---|---|---|
 | Yeni kurulmuş proje | ~12.200 karakter | ~4.900 |
 | Unity projesi (Unity bölümü ve ajan tanımı) | ~15.000 karakter | ~6.000 |
-| Sınırlarına kadar dolu bir proje | ~27.100 karakter | ~10.800 |
+| Sınırlarına kadar dolu bir proje | ~27.600 karakter | ~11.000 |
 
 | Dosya | Sınır |
 |---|---|
 | `CLAUDE.md` | 160 satır, 10.000 karakter |
 | `DURUM.md` | 30 satır, 3.000 karakter (teknik borç kendi dosyasına gider) |
-| `HAFIZA.md` | 40 satır, 3.500 karakter |
+| `HAFIZA.md` | 40 satır, 4.000 karakter |
 | Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür |
 | Plan | ~15.000 karakteri geçince fazlara bölünür; adımlar en fazla 6 satır; parça parça okunur |
 
@@ -237,4 +240,4 @@ Unity eklentisinin bazı kısımları *Claude-Code-Game-Studios*'tan (sürüm `7
 
 ## Lisans
 
-[MIT](LICENSE) · Sürüm **1.50** · 2026-10-16
+[MIT](LICENSE) · Sürüm **1.51** · 2026-10-17

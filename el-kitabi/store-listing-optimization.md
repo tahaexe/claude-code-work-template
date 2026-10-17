@@ -1,11 +1,11 @@
 ---
-title: Store listing optimization (Google Play, App Store): limits, wording rules, experiments, custom pages, rating prompts
+title: Store listing optimization (Google Play, App Store): limits, wording rules, experiments, custom pages, rating prompts, replies to reviews
 condition: "Project that ships on Google Play or the App Store. Signs: Android or iOS among the targets in the game summary or memory; a store listing or App Store Connect record mentioned in the plans."
-read_when: Writing or changing store texts, icon, screenshots or preview videos; planning a store A/B test or an App Store custom product page; choosing when and how to ask for a rating; checking a listing before it is sent for review.
+read_when: Writing or changing store texts, icon, screenshots or preview videos; planning a store A/B test or an App Store custom product page; choosing when and how to ask for a rating; testing the rating prompt; replying to store reviews; sizing a listing test for little traffic; checking a listing before it is sent for review.
 requires: — (Play Console and App Store Connect, through the account's own Chrome profile; no third-party ASO tool or store API key)
-source: Play Console Help 6227309 (store listing experiments), 9866151 (preview assets), 9898842 (metadata policy) · Android Developers "In-app reviews" · Apple developer pages: product page, product page optimization, custom product pages, ratings and reviews · App Store Connect Help "Screenshot specifications" · App Review Guidelines 2.3.7. Read 2026-10-14; experiment, custom-page and asset rules re-checked by the session manager the same night; App Store screenshot sets checked by the session manager and Claude on 2026-10-15.
+source: Play Console Help 6227309 (store listing experiments), 9866151 (preview assets), 9898842 (metadata policy) · Android Developers "In-app reviews" · Apple developer pages: product page, product page optimization, custom product pages, ratings and reviews · App Store Connect Help "Screenshot specifications" · App Review Guidelines 2.3.7. Read 2026-10-14; experiment, custom-page and asset rules re-checked by the session manager the same night; App Store screenshot sets checked by the session manager and Claude on 2026-10-15. · Rating prompts and replies (1.51): a project session's research of 2026-10-16 (Android Developers 'In-app reviews' 2026-01-30 and 'Test in-app reviews', App Review Guidelines 5.6.1, Google Play Developer API 'Reply to Reviews' 2025-12-18; 5.6.1, the review rules and the reply API re-read 2026-10-17) · little-traffic test sizing: research topic 32 (2026-10-16), the arithmetic re-checked 2026-10-17
 tech: Google Play Console, App Store Connect
-added: 2026-10-14 · research by a project session, reviewed by the session manager · 2026-10-15 App Store screenshot sets (a project session's research, 1.46)
+added: 2026-10-14 · research by a project session, reviewed by the session manager · 2026-10-15 App Store screenshot sets (a project session's research, 1.46) · 2026-10-17 (1.51): rating prompt additions, replying to reviews, little-traffic test sizing
 ---
 # Store listing optimization
 
@@ -59,6 +59,11 @@ added: 2026-10-14 · research by a project session, reviewed by the session mana
   - Advanced settings: minimum detectable effect (smaller differences end as a draw) and confidence level. A smaller effect or a higher confidence makes the test run longer.
   - Experiments stop on their own after 6 months, and nothing is applied.
   - Low-traffic games mostly end in a draw: test the biggest lever first (icon, then the first screenshot), one asset per test.
+- **Little traffic: size the test first** (our arithmetic, 2026-10-16: two-proportion test, 90% confidence, 80% power, two arms):
+  - Read the last 28 days' store listing visitors and conversion first (Play Console › store listing performance).
+  - Visitors per arm n = 6.19 × [p1(1−p1) + p2(1−p2)] / (p2 − p1)²; days ≈ 2n / daily visitors. At 30% conversion a +20% lift needs ~760 per arm (8 days at 200 a day, 31 at 50), +10% ~2,960.
+  - +20% would take over 28 days → don't test: change directly and compare 28 days before and after.
+  - One variant, one change, whole weeks, duration fixed in advance; never stop on an early "significant" result; not during featuring, campaigns or release weeks; follow the applied variant's D1/D7.
 - **App Store product page optimization:**
   - Icon, screenshots and previews; up to 3 treatments against the original; one test at a time; up to 90 days; iOS 15+.
   - Treatments go through App Review. Alternate icons must already be in the shipped binary, so an icon test needs a build first.
@@ -71,12 +76,20 @@ added: 2026-10-14 · research by a project session, reviewed by the session mana
   - Use them for the game's different faces (e.g. boss fights, upgrades) with matching keywords.
 
 ## Rating prompts
-- **Apple:** the system prompt shows at most 3 times in 365 days, whatever the code asks. Ask after a completed level or task, never mid-play. Reply to reviews in App Store Connect. Reset the summary rating only rarely, with a new version.
+- **Apple:** the system prompt shows at most 3 times in 365 days, whatever the code asks. Ask after a completed level or task, never mid-play, never at launch (a later launch neither) and never as the result of a tap. Use only the system prompt: App Review 5.6.1 disallows custom review prompts, so no "Rate us?" pre-dialog on iOS either; a permanent Settings row that opens the App Store page is fine (append `?action=write-review`). Reset the summary rating only rarely, with a new version.
 - **Google Play In-App Review API:**
   - A time-bound quota applies: a second call within about a month may show nothing.
   - Never wire the API to a "Rate us" button; a button opens the store listing instead.
   - Ask nothing before or while the card shows ("Do you like the game?", "5 stars?"), and never change the card.
+- Testing: Play's card shows only on a device or emulator image with the Play Store (a "Google APIs" image has none), for an account that hasn't reviewed the app; an internal test track install has no quota. iOS shows the prompt every time in development builds and never in TestFlight.
 - A rule like "after the 5th round, 60 days apart, at most 3 a year, at the end of a won round" fits both stores. The studio's revenue package uses it.
+
+## Replying to reviews
+- Both stores tell the reviewer about a reply, and the reviewer may update the rating; replies are public and editable.
+- Reply in the reviewer's language, to the specific issue, in at most 350 characters (the Play API's limit); never ask for a higher rating; no personal data, spam, marketing or links (App Review 5.6.1, Play's policy).
+- When a fix ships, reply to the reviews it answers and say so in the release notes.
+- Measure in Play Console's reviews analysis (updated ratings with vs without a reply); vendor figures ("+0.42 stars") are correlations.
+- Play's Reply to Reviews API sees only production reviews with text from the last week and needs an OAuth client or a service account with the reply permission: not worth it at small volume, reply in the console.
 
 ## Before sending a listing for review
 - Count characters per field and language; check every image and video frame against the wording rules above.

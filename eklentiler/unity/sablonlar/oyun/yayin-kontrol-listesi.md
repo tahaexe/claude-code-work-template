@@ -32,6 +32,7 @@
 - [ ] Android: hedef API seviyesi mağaza şartına uygun; AAB; IL2CPP + ARM64; imzalama anahtarı güvende ve yedekli
 - [ ] iOS: Xcode projesi derleniyor; imzalama/provisioning tamam; izin açıklama metinleri (Info.plist) yazılı
 - [ ] Yalnızca gereken izinler isteniyor
+- [ ] Unity ayarları (`docs/ai/el-kitabi/unity-proje-ayarlari.md`): Unity açılış logosu kapalı; iOS'ta oyun ivmeölçeri okumuyorsa Accelerometer Frequency kapalı; Metal API doğrulaması kapalı; hedef FPS satırı var (yoksa oyun 30 FPS'te kalır)
 - [ ] Güvenli alan / çentik, ekran yönü ve farklı en-boy oranları doğru
 - [ ] Uygulama arka plana alınıp dönünce (arama, bildirim) doğru devam ediyor; kayıt kaybı yok
 - [ ] Düşük seviye cihazda performans, ısınma ve pil tüketimi kabul edilebilir
@@ -54,7 +55,7 @@
 - [ ] App Store ekran görüntüleri: zorunlu iPhone "Dynamic Island (orta boy ekran)" kümesi, bir büyük küme (6,9" ya da 6,5") ve oyun iPad'de çalışıyorsa iPad 13" (ölçüler: `docs/ai/el-kitabi/store-listing-optimization.md` › Limits)
 - [ ] Yaş derecelendirmesi alındı
 - [ ] Gizlilik politikası ve kullanım şartları hazır; Google Play veri güvenliği ve App Store gizlilik formları politikayla aynı
-- [ ] Fiyatlandırma tüm bölgelerde ayarlı
+- [ ] Fiyatlandırma tüm bölgelerde ayarlı; Play'de dolardan çevrilen ürünlerin Türkiye fiyatı aynı basamağın App Store Türkiye fiyatı (`docs/ai/el-kitabi/google-play-level-up.md` › Play Console work)
 - [ ] Doğrudan yayın ayarları: Play'de üretim kanalı, %100 yayın, yönetilen yayın kapalı; App Store'da otomatik yayın, aşamalı yayın kapalı; test kanalı ve TestFlight yok
 - [ ] Play'de ilk yayın: mağaza sayfası, bütün çeviriler, görseller, uygulama içi ürünler ve beyanlar ilk "incelemeye gönder"den önce girildi; inceleme sürerken değişiklik gönderilmiyor (uygulamayı sıranın sonuna itebilir). İlk yayında yönetilen yayın yok: onay gelince yayına girer
 - [ ] Oyuncunun göreceği yeni içerik ya da süreli bir oyun içi etkinlik varsa mağaza etkinliği: Play'de tanıtım içeriği, App Store'da uygulama içi etkinlik (Major Update ya da uygun rozet); içerik o tarihlerde gerçekten oyunda; incelemesi için en az 4 gün önce gönderildi (`docs/ai/el-kitabi/store-events.md`)

@@ -32,7 +32,7 @@ added: 2026-10-15 · written by Claude from the published works at the session m
 - Guilt and chore loops (we avoid them): streaks that shame or reset to zero after one missed day, a FOMO timer on everything, energy or lives walls that stop play, appointments (come back at a set hour or lose it), nagging notifications.
 - Why: self-determination theory, applied to games by Ryan, Rigby and Przybylski: players stay when play feels chosen (autonomy), masterable (competence) and shared (relatedness); pressure to return feels controlling and wears the enjoyment down. Zagal, Björk and Lewis list "playing by appointment" among the dark patterns of game design.
 - Softer forms: a streak with a grace day that never drops to zero; daily rewards that pile up or can be claimed late; events of about a week so busy players fit them in.
-- Our calm games (Lantern-type mahjong, cozy puzzles for older players) have no lives and no energy (Lantern's design rule; decide it per game in the game summary).
+- Our calm games (mahjong, cozy puzzles for older players) have no lives and no energy (a project's design rule; decide it per game in the game summary).
 - Store and platform rules:
   - Promotional push only after an explicit in-app opt-in, with an in-app opt-out (App Review 4.5.4); no manipulative practices (5.6).
   - Android 13+ asks the player for the notification permission (`POST_NOTIFICATIONS`): ask when its value is clear (e.g. after the first daily reward), never at first launch; a return loop built on push reaches only those who agreed.

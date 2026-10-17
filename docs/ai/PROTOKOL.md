@@ -1,5 +1,5 @@
 # Working Protocol
-<!-- Version 1.50 · 2026-10-16 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
+<!-- Version 1.51 · 2026-10-17 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
 
 Goal for every task here: understand it, follow a plan step by step, use little context, keep knowledge in durable memory.
 - The user's explicit instruction overrides this protocol. Its rules are defaults: where one doesn't fit, do what serves the goal and say why in one line; only the next rule is fixed.
@@ -69,7 +69,7 @@ Small deviation (same goal, different detail) → update the plan, log it, conti
 - No temporary state as durable ("editor closed now", "test broken for now"); prefer the method. Note what would invalidate an entry ("recheck if Unity is upgraded").
 - Memory contradicts code → code wins; fix memory. Before relying on a file/function named in memory, check it exists.
 - Only the main session writes memory and plan files; helper agents never do.
-- Limits (`LC_ALL=C.UTF-8 wc -m`): CLAUDE.md ≤160 lines/10,000 characters · DURUM ≤30/3,000 · HAFIZA ≤40/3,500 · split a topic file over ~150 lines/~15,000; DURUM holds one-liners, details in plans and `hafiza/`. Over a limit → `BAKIM.md` → "Memory tidy-up".
+- Limits (`LC_ALL=C.UTF-8 wc -m`): CLAUDE.md ≤160 lines/10,000 characters · DURUM ≤30/3,000 · HAFIZA ≤40/4,000 · split a topic file over ~150 lines/~15,000; DURUM holds one-liners, details in plans and `hafiza/`. Over a limit → `BAKIM.md` → "Memory tidy-up".
 
 ## 6. Protect context and usage
 - Read nothing "just in case": index → relevant file → relevant section.

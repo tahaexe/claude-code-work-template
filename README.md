@@ -7,7 +7,7 @@ Claude plans the work, verifies and commits every step, and keeps its memory in 
 so nothing is lost between sessions or machines.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.50-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.51-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-add-on)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -149,23 +149,26 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Synty: turning day into night | Synty environment assets with URP |
 | Posing Synty characters in the editor | The project has Synty characters |
 | Ambient (2D) and 3D positional sound | Unity project |
-| Google Play's recommended game structure (Level Up) | Unity project targeting Google Play |
+| Google Play's recommended game structure (Level Up), with the R8 check `r8-kontrol.py` | Unity project targeting Google Play |
 | App Store: Game Center, In-App Events, first submission | Unity project targeting the App Store |
 | Unity project settings (6.3) and binary `.asset` files in git | Unity project |
 | Unity CLI field notes and the windowless editor | Unity project |
+| Unity player builds: headless commands, build memory, store builds, emulator checks | Unity project |
 | Shader compile hitches: measure, trace, warm up | Unity 6 project |
 | Browser connection: a Chrome profile per Claude account | Every project |
 | Layer Lab GUI Pro UI packs | The project uses GUI Pro |
 | Player funnels, D1/D7 retention and Remote Config with Firebase | Mobile Unity project with the Firebase SDK |
 | Store listing and ASO | Released on Google Play or the App Store |
 | Store events: Play promotional content and App Store In-App Events | Released game or app |
-| C# code intelligence and an editor-free compile check | Unity or any C# project |
+| C# code intelligence, an editor-free compile check and tests outside Unity | Unity or any C# project |
 | Fair difficulty and failure | Unity game |
 | Goal layers, safe stopping points and healthy leaderboards | Mobile game with progression, events or leaderboards |
 | Competitor or reference game study | Game project, on request only |
 | Colour-blind-safe palettes (with `cvd_palette.py`) | Colour-matching game |
 | Short videos in launch week (Shorts, TikTok, Reels) | Released or launching game |
 | Reading short-video metrics and a weekly review | Project that posts short videos |
+| Steam store page, Next Fest, Playtest and demo, accessibility tags | Game planned for Steam |
+| Rewarded ads in puzzle and casual games: AdMob's rules, placements, sizing | Unity game with rewarded ads |
 
 </details>
 
@@ -196,13 +199,13 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 |---|---|---|
 | Freshly installed project | ~12,200 characters | ~4,900 |
 | Unity project (Unity section and agent definition) | ~15,000 characters | ~6,000 |
-| A project filled to its limits | ~27,100 characters | ~10,800 |
+| A project filled to its limits | ~27,600 characters | ~11,000 |
 
 | File | Limit |
 |---|---|
 | `CLAUDE.md` | 160 lines, 10,000 characters |
 | `DURUM.md` | 30 lines, 3,000 characters (technical debt goes to its own file) |
-| `HAFIZA.md` | 40 lines, 3,500 characters |
+| `HAFIZA.md` | 40 lines, 4,000 characters |
 | Memory topic file | Split past ~150 lines or 15,000 characters |
 | Plan | Phased past ~15,000 characters; steps of at most 6 lines; read piece by piece |
 
@@ -238,4 +241,4 @@ Parts of the Unity add-on are adapted from *Claude-Code-Game-Studios* (version `
 
 ## License
 
-[MIT](LICENSE) · Version **1.50** · 2026-10-16
+[MIT](LICENSE) · Version **1.51** · 2026-10-17

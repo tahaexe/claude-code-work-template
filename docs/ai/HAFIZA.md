@@ -1,5 +1,5 @@
 # Memory Index
-<!-- ≤40 lines, ≤3,500 characters · paths relative to docs/ai/ · one line per memory file: content → when to read; handbook entries share one line · read files only when needed -->
+<!-- ≤40 lines, ≤4,000 characters · paths relative to docs/ai/ · one line per memory file: content → when to read; handbook entries share one line · read files only when needed -->
 
 - `hafiza/kararlar.md`: durable technical and design decisions with reasons. → Before changing an area's structure, or for "why is it like this?".
 - `hafiza/dersler.md`: pitfalls, hard-won knowledge, user corrections, by topic. → When planning, read only the relevant headings.

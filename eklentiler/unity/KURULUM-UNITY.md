@@ -1,5 +1,5 @@
 # Unity Add-on: Install and Update
-<!-- Version 1.49 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
+<!-- Version 1.51 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
 
 ## Yeni proje (New project)
 The user chose Unity but the working folder has no Unity project → do this before the general install:
@@ -8,6 +8,7 @@ The user chose Unity but the working folder has no Unity project → do this bef
 3. **Create:** run the `unity:new-unity-project` skill with these answers; don't re-ask known answers.
    - Editor: newest installed LTS; none fitting → download it (several GB; silently on the owner's computer per the global CLAUDE.md, else ask once).
    - Template: the URP template for 2D or 3D.
+   - Own log (`unity projects new` has no log option, so its editor writes the shared `Editor.log`): create with the editor itself, e.g. `"<Editor>/Unity.exe" -batchmode -quit -createProject <path> -cloneFromTemplate "<Editor>/Data/Resources/PackageManager/ProjectTemplates/<template>.tgz" -logFile <path>/Logs/claude/create.log` (6000.3.17f1: 3D URP `com.unity.template.3d-cross-platform-17.0.14.tgz`, 2D `com.unity.template.2d-cross-platform-2d-6.1.2.tgz`; ~3 min, a heavy job where a queue exists).
    - Source control: local Git + Unity `.gitignore` (don't ask; step commits depend on it). Git LFS only if the user wants.
    - Settings: right after creation, the baseline of `el-kitabi/unity-proje-ayarlari.md` (template folder) for the chosen platforms.
    - Packages: what the skill suggests for the genre and platform + `com.unity.pipeline` + `com.unity.test-framework`; skip the skill's MCP setup (Unity CLI first). Don't integrate ads or IAP during setup; write them to the game summary and **Up next**.
