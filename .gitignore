@@ -11,3 +11,6 @@ reports/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Python bytecode of the repo tools
+yayin/__pycache__/

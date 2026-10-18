@@ -20,9 +20,11 @@
 - [ ] En düşük hedef cihazda hedef FPS: ‹gerçek / hedef›
 - [ ] Bellek ve yükleme süreleri bütçe içinde
 - [ ] Uç durumlar test edildi
+- [ ] Arayüz her sürümde ekran matrisiyle test edildi: telefon ve tablet profilleri, güvenli alan, iki dil; otomatik denetimler yeşil (`docs/ai/el-kitabi/arayuz-kalitesi-testleri.md`)
+- [ ] His ve akıcılık denendi: dokunuşa aynı karede cevap, menülerde hedef FPS, titreşim ve "Hareketi azalt" ayarı (`docs/ai/el-kitabi/oyun-hissi.md`)
 
 ## İçerik
-- [ ] Geçici varlıklar değiştirildi
+- [ ] Geçici varlıklar değiştirildi; mağazaya gri kutu, yer tutucu, çıplak Unity arayüzü ya da "New Text" çıkmıyor; değişen her ekran en iyi iki örnekle yan yana puanlandı, hiçbir ölçüt 4'ün altında değil (`docs/ai/el-kitabi/arayuz-kalitesi.md`)
 - [ ] Metinler düzeltildi; koda gömülü metin yok
 - [ ] Yerelleştirme tamam: ‹diller›
 - [ ] Ses miksajı son hâlinde
@@ -38,7 +40,7 @@
 - [ ] Düşük seviye cihazda performans, ısınma ve pil tüketimi kabul edilebilir
 - [ ] Uygulama içi satın alma ve satın alımları geri yükleme test edildi (varsa)
 - [ ] Reklamlar ve onay akışı (GDPR / ATT) test edildi (varsa)
-- [ ] Geçiş reklamının yeri (varsa): bir yere götüren düğmeye basınca (İleri, Devam, Tekrar → reklam → bölüm) ya da bölüm başında çıkmıyor; sonuç ekranında, dokunma beklemeden, puan sayımından ~0,5 sn sonra çıkıyor; reklam kapanana kadar paneldeki düğmeler gizli, reklam yoksa düğmeler hemen geliyor (`docs/ai/el-kitabi/google-play-level-up.md` §9)
+- [ ] Geçiş reklamının yeri (varsa): bir yere götüren düğmeye basınca (İleri, Devam, Tekrar → reklam → bölüm) ya da bölüm başında çıkmıyor; sonuç ekranında, puan sayımından ~0,5 sn sonra, yalnız reklam yüklüyse ve oyuncu o kısa beklemede dokunmadıysa çıkıyor; paneldeki düğmeler baştan görünür ve basılabilir, beklemedeki bir dokunuş reklamı iptal ediyor; gezinme düğmeleri reklamın çevresinde hiç gizlenmiyor (Apple bunu reddediyor); reklam kapanınca oyuncu aynı ekranda (`docs/ai/el-kitabi/google-play-level-up.md` §9)
 - [ ] Google Play yapısı (`docs/ai/el-kitabi/google-play-level-up.md`): "Build order" bölümündeki parçalar ve 7. bölümdeki yönergeler tamam ya da eksikler gerekçesiyle yazılı; Play Games Ödülleri teklifleri Play Console'da etkin
 - [ ] Play Console'daki önerilen işlemler ve Android vitals (son sürüm) gözden geçirildi; düzeltilecekler planda (R8, uçtan uca ekran gibi)
 - [ ] Android vitals'ta bellek ölçümleri (son sürüm) Play'in eşiklerinin altında; Şubat 2027'den itibaren bütün Play'de şart (`docs/ai/el-kitabi/google-play-level-up.md` §7, Memory)

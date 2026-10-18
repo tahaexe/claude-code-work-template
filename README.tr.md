@@ -7,7 +7,7 @@ Claude işi planlar, her adımı doğrulayıp commit'ler ve hafızasını senin 
 böylece oturumlar ve bilgisayarlar arasında hiçbir şey kaybolmaz.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.51-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.52-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-eklentisi)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -25,6 +25,7 @@ böylece oturumlar ve bilgisayarlar arasında hiçbir şey kaybolmaz.
 - **Hafıza repoda.** Kararlar, dersler ve güncel durum `docs/ai/` klasöründe durur ve git ile oturumlar, bilgisayarlar ve bulut oturumları arasında taşınır. `/clear` ve `/compact` iş kaybettirmez.
 - **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 5 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
 - **Sınırları belli özerklik.** Teknik kararları Claude verir ve gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler ve kimlik bilgileri için durup sorar.
+- **Kalite çıtası.** Oyuncunun ya da izleyicinin göreceği her işte Claude önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına inceletir; kapanışta iş denenir ve o örneklerin yanında dürüstçe değerlendirilir, zayıfsa yayından önce düzeltilir.
 - **Unity eklentisi.** Önce Unity CLI, penceresiz test çalıştırıcı, C# kod zekâsı, SOLID ve servis yapısına dayanan kod kuralları, oyun tasarım şablonları ve her arayüz adımından sonra görsel stil kontrolü.
 - **Koşullu el kitabı.** Google Play, App Store, Firebase, ASO, shader'lar, Synty asset'leri ve daha fazlası üzerine sahada denenmiş notlar. Yalnızca işe yarayacağı projelere kurulur, diğerlerinde bağlam harcamaz.
 - **Kendi profilinde tarayıcı işi.** Claude in Chrome ile Claude, Chrome'daki kendi profilinde çalışır (Play Console, App Store Connect, bir sayfayı kontrol etmek) ve senin profillerine dokunmaz.
@@ -123,7 +124,7 @@ Kurulumda Unity seçilince şunlar eklenir:
 | Eklenen | Nerede | Ne zaman yüklenir |
 |---|---|---|
 | Unity bölümü: skill'ler, Unity CLI, doğrulama, C# kod zekâsı | `CLAUDE.md` | Her oturumda |
-| Yalnızca okuyan Unity uzmanı ajanı | `.claude/agents/unity-uzmani.md` | Çağrıldığında |
+| Yalnızca okuyan Unity uzmanı ajanı: mimari ve plan incelemesi, kapanışta kalite çıtasına göre inceleme | `.claude/agents/unity-uzmani.md` | Çağrıldığında |
 | Kod kuralları: varlıklar, oyun kodu, arayüz, test, shader | `.claude/rules/unity-*.md` | Eşleşen dosyalar okunduğunda |
 | Kendi log dosyası, süre sınırı ve tek içe aktarma işçisiyle penceresiz test çalıştırıcı | `docs/ai/araclar/testler.sh` | Editör kapalıyken testlerde |
 | C# kod zekâsı (`csharp-lsp` eklentisi, `csharp-ls` sunucusu) | `.claude/settings.local.json` | Her oturumda |
@@ -140,7 +141,7 @@ Kurulumda Unity seçilince şunlar eklenir:
 El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri üzerine resmi belgelerden, makalelerden ve saha çalışmasından derlenmiş notları tutar. Her girdinin bir koşulu vardır: yalnızca koşulun tuttuğu projeye kurulur ve yalnızca ilgili işte okunur. Girdiler plan adayı ekleyebilir (örneğin Google Play Level Up yapısı); bir projede girdiye eklenen notlar güncellemede şablona önerilir.
 
 <details>
-<summary><b>21 girdinin tamamı</b></summary>
+<summary><b>26 girdinin tamamı</b></summary>
 
 | Girdi | Ne zaman kurulur |
 |---|---|
@@ -168,6 +169,11 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | Kısa video ölçümlerini okumak ve haftalık değerlendirme | Kısa video paylaşan proje |
 | Steam mağaza sayfası, Next Fest, Playtest ve demo, erişilebilirlik etiketleri | Steam'e çıkacak oyun |
 | Bulmaca ve casual oyunlarda ödüllü reklam: AdMob kuralları, yerleşim, ödül boyu | Ödüllü reklamı olan Unity oyunu |
+| Arayüz kalite çıtası: liderlerin yaptıkları, ekran tarifleri, dürüst yan yana karşılaştırma | Oyuncuya arayüz gösteren Unity oyunu |
+| Arayüzün görsel kuralları ve tuzakları: palet, yazı, düğme, dokunma, güvenli alan, iki dil | Oyuncuya arayüz gösteren Unity oyunu |
+| Oyun hissi: arayüz hareketi, hareketi azaltma, titreşim | Arayüzü ya da dokunmatik girdisi olan Unity oyunu |
+| Arayüz test listesi: telefon ve tablet profillerinde ekran matrisi, 23 otomatik denetim | Oyuncuya arayüz gösteren Unity oyunu |
+| Arayüz test düzeneği: ortak paket mimarisi, cihaz profilleriyle çekim | Oyuncuya arayüz gösteren Unity oyunu |
 
 </details>
 
@@ -240,4 +246,4 @@ Unity eklentisinin bazı kısımları *Claude-Code-Game-Studios*'tan (sürüm `7
 
 ## Lisans
 
-[MIT](LICENSE) · Sürüm **1.51** · 2026-10-17
+[MIT](LICENSE) · Sürüm **1.52** · 2026-10-18

@@ -125,9 +125,10 @@ Before each release prep Claude reads Play Console's recommended actions and And
 - **Edge-to-edge** ("Edge-to-edge may not display for all users", "Your app uses deprecated APIs or parameters for edge-to-edge"):
   - Target SDK 35+ → Android 15+ draws behind the system bars: UI inside `Screen.safeArea` (UI rule); check on an Android 15+ device with a cutout.
   - Deprecated calls (`Window.setStatusBarColor`, `setNavigationBarColor`…): open the warning in Play Console and read where they start. Unity's classes (`com.unity3d.player…`) → not project code; a newer patch of the same Unity line may drop them (an upgrade asks first; the warning doesn't block publishing). A plugin (ads, Firebase…) → update it. Own code → AndroidX insets.
-- **Interstitial placement** (studio rule since 2026-10-14, after Play's Ads policy, Help 9857753: it bans unexpected full-screen ads, e.g. after a tap before the tap's action happens or at a level's start, and names the spot after a game's score screen as one that interrupts nothing):
+- **Interstitial placement** (studio rule since 2026-10-14, after Play's Ads policy, Help 9857753: it bans unexpected full-screen ads, e.g. after a tap before the tap's action happens or at a level's start, and names the spot after a game's score screen as one that interrupts nothing; revised 2026-10-17 after Apple's Guideline 4 rejection of Bilgi 1.4: "The app requires customers to view advertisements prior to using it"):
   - Never between a tap and where it leads (Next/Continue/Retry → ad → level), never at level start.
-  - On the result screen without waiting for a tap, ~0.5 s after the score count-up; the panel's buttons stay hidden until the ad closes, so no tap comes just before the ad or lands on it. No ad or no fill → buttons at once.
+  - On the result screen, ~0.5 s after the score count-up, only if the ad is loaded and the player hasn't tapped during that short wait. The panel's buttons are visible and usable from the start; a tap before the ad cancels it (shared package `ResultScreenAdFlow` from `monetization-v0.19`: `ShowAtResultScreen(…, touched)`, `InterstitialOutcome.DroppedByTouch`). Input is off only from the show call until the ad closes. After the ad the player is on the same screen with the buttons usable.
+  - Never hide or delay navigation buttons around an interstitial: App Store review rejects it (Guideline 4) and it makes the ad feel forced.
 
 ## Play Console work (Claude in Chrome)
 Claude enters the values; the user keeps the payments profile and program terms:

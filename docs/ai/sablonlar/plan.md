@@ -23,6 +23,12 @@
 - **Constraints / watch out:** ‹…›
 - **Related memory:** ‹docs/ai/hafiza/… › heading›
 
+## Review
+<!-- Work players or viewers see (PROTOKOL §3): written before the steps; the closure judges the work by it. Otherwise delete this section. -->
+- **Best examples:** ‹2-3 references: what they do (measured where possible), what we take, what we avoid›
+- **Expert:** ‹agent and its plan review: findings, what changed in the plan›
+- **Bar at closure:** ‹how "beside the best" is checked: side-by-side, scores, tests, feel on a device›
+
 ## Phase map
 <!-- Only if the work was split; each phase is its own plan file. Otherwise delete this section. -->
 1. ‹Phase 1: goal› ← this plan

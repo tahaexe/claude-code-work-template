@@ -1,7 +1,7 @@
 # Working Protocol
-<!-- Version 1.51 · 2026-10-17 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
+<!-- Version 1.52 · 2026-10-18 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
 
-Goal for every task here: understand it, follow a plan step by step, use little context, keep knowledge in durable memory.
+Goal for every task here: understand it, follow a plan step by step, use little context, keep knowledge in durable memory; what players or viewers see must stand beside the best of its kind (careless work counts as not done).
 - The user's explicit instruction overrides this protocol. Its rules are defaults: where one doesn't fit, do what serves the goal and say why in one line; only the next rule is fixed.
 - Hard-to-reverse operations (deletion git can't undo, package upgrade or removal, data migration, external service): ask first unless the approved plan explicitly includes them. Every commit is pushed automatically (§4).
 - **Language:** Turkish with the user. Claude's own files (this protocol, DURUM, HAFIZA, `hafiza/`, plans, rules, handbook): terse English bullets; compress wording, never facts. User-facing files stay Turkish (`manuel-testler.md`, `tasarim/`). Code, comments, commit messages: English.
@@ -28,7 +28,7 @@ Infer intent; the user doesn't memorize commands. Before changing files, state y
 - **Needs a plan** (your call): several steps or systems, uncertainty, architectural impact, or the user asked for one.
 
 ## 3. Plan
-1. **Explore:** memory notes the index points to, then relevant code. Broad scans and research → a helper agent (general exploration: the built-in **Explore** agent, cheaper, doesn't load CLAUDE.md); only its summary enters the main context.
+1. **Explore:** memory notes the index points to, then relevant code. **Review** (work players or viewers see): study the best examples of the same work first (look, play and feel; for videos the leading channels) and have the area's expert agent (e.g. `unity-uzmani`) review the plan; findings → the plan's **Review** section, the yardstick at closure. Broad scans and research → a helper agent (general exploration: the built-in **Explore** agent, cheaper, doesn't load CLAUDE.md); only its summary enters the main context.
 2. **Ask:** only what §1 "Decide yourself" allows, before writing code.
 3. **Write:** `planlar/YYYY-MM-DD-short-name.md` from `sablonlar/plan.md` (ASCII file name). Gist of exploration in **Context** (files, how the system works now, constraints) so later steps and sessions don't rescan. Each step: files, **Tool** (skill or CLI; else `—`), **Verify** method; ≤6 lines per step, decisions one line each.
 4. **Split:** independent parts or a plan file over ~15,000 characters → phases. The first plan holds a short phase map; write each phase's detailed plan after the previous one ends (no new approval within the map).

@@ -1,0 +1,19 @@
+---
+title: "UI test harness: shared package layout and capture on device profiles"
+condition: "Unity game project with player-facing UI (every studio game; not Project J or other non-game apps)."
+read_when: "Building or extending the project's UI test harness or the shared UI quality package; capturing screens on device profiles; a capture that comes out blank or with wrong contrast."
+requires: "Unity Test Framework; arayuz-kalitesi-testleri.md (what the harness checks)"
+source: "unity-uzmani's architecture for the studio's UI tests, 2026-10-18 (plan and closure reviews) · prior art in two projects (capture helpers, layout tests, eval probes)"
+tech: "Unity 6000.3 (uGUI 2.0), Unity Test Framework"
+added: "2026-10-18 · template 1.52 · split from the UI test list (the studio's UI market research for the session manager)"
+---
+# UI test harness
+
+## Architecture (unity-uzmani, 2026-10-18)
+- **One shared UPM package** from a private git repo, pinned by tag (copies in ~15 projects would drift): `com.studio.uiquality`.
+  - `Runtime` (asmdef `Studio.UiQuality`): `UiScreen` (width, height, safe area, density; `Override(profile)`, `Clear()`), `SafeAreaFitter` reading it, `NonDrawingGraphic`, `UiRole`, `UiTextRule` (Body, Button, Title, Legal; maxLines), `UiMotionSettings` + `UiMotion` helpers (Open, Close, Press, Count, Celebrate, Idle; reduce motion → fades ≤ 0.15 s, counters jump, idle loops killed), native reduce-motion readers (iOS: a .mm calling `UIAccessibilityIsReduceMotionEnabled()`; Android: `ValueAnimator.areAnimatorsEnabled()`, `animator_duration_scale` below API 26) and haptics bridge (iOS feedback generators, Android `performHapticFeedback`).
+  - `Tests/TestKit` (asmdef with `UNITY_INCLUDE_TESTS`): `DeviceProfiles` (the one table of arayuz-kalitesi-testleri.md §1), abstract `UiScreenCatalog` ScriptableObject (screens and states with `Open(state, ctx)` and `Close`), `CaptureHarness` (a generalised `OnPhone` capture: disabled camera with a profile-size render texture; switch only root canvases (`isRootCanvas`), setting `renderMode = ScreenSpaceCamera` and `worldCamera` together; toggle `CanvasScaler` off and on, wait 4 frames, `Canvas.ForceUpdateCanvases()`; render the game camera(s) into the texture first, then the UI camera on top with no colour clear and post-processing off; 8-bit sRGB texture (`new RenderTexture(w, h, 24)` in a linear project, or `GraphicsFormat.R8G8B8A8_SRGB`) read into `new Texture2D(w, h, TextureFormat.RGBA32, false, false)`, since a UI-only, linear or HDR capture makes every contrast and dimmer number wrong; render twice because the first can be blank while shaders compile; release the texture in `finally`), `UiChecks` (arayuz-kalitesi-testleri.md #1-#23), `UiReport`.
+  - `Editor`: static checks (importers, atlas membership, literal strings, UpperCase style, `Screen.*` scan, TMP material instances).
+- **Each project:** `"testables": ["com.studio.uiquality"]` in `Packages/manifest.json` (test asmdefs inside an immutable git package compile only then; verify on the first project); `Assets/Tests/UiQuality/<Game>.UiQuality.Tests.asmdef`; a `<Game>UiCatalog` asset (projects without asmdefs keep it in Assembly-CSharp and the tests find it with `AssetDatabase.FindAssets("t:UiScreenCatalog")`); one `[TestFixtureSource]` over catalog × profile × language.
+- **Running:** batchmode with graphics; pixel checks need a GPU, geometry checks may run with `-nographics` (verify per project). The capture camera's culling mask must include every canvas layer; Overlay-only shaders and UI particles need a look on the shots.
+- **Until the package exists:** start from a project's capture helpers (an `OnPhone` capture, `Shots.SaveWithHud`) and layout tests; a project's eval scripts (open a screen, measure motion) stay manual probes for an open editor.

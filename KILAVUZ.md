@@ -79,6 +79,8 @@ Claude seçtiği yolu tek satırla söyler (ör. "→ Plan hazırlıyorum"); ist
 
 **Otomatik ilerleme yalnızca şu durumlarda durur:** doğrulama geçmiyor ve denemeye değer fikir kalmamışsa, planın bir varsayımı yanlış çıkarsa, bir test hatalı görünüp plan onu değiştirmeyi içermiyorsa, planda olmayan ve geri dönüşü zor bir işlem (git'in geri getiremeyeceği silme, paket yükseltme ya da kaldırma, veri taşıma) gerekirse ya da senin kararın gerekirse.
 
+**Kalite çıtası:** oyuncunun ya da izleyicinin göreceği işlerde (ekran, his, sanat, mağaza sayfası, video) Claude plandan önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına (Unity'de `unity-uzmani`) inceletir; bulgular planın başındaki "Review" (İnceleme) bölümüne yazılır. Kapanışta iş denenir, uzman sonucu inceler ve Claude "en iyilerin yanında nasıl duruyor?" sorusunu dürüstçe cevaplar; zayıfsa önce düzeltilir. Özensiz iş yapılmamış sayılır.
+
 **Plan bitince:** Claude özet verir, yeni manuel testleri `docs/ai/manuel-testler.md`'ye ekler ve çalıştırılamadığı için "değerlendirilmedi" kalan kontrolleri söyler. Manuel testleri istediğin zaman topluca yaparsın ("test oturumu yapalım" demen yeter). Yeni işe geçmeden `/clear` yaz; durum dosyalarda kayıtlı olduğu için hiçbir şey kaybolmaz.
 
 **Claude karar verir:** Teknik ve tasarım seçimlerini, plana ne zaman başlayacağını ve kaç yardımcı ajan açacağını kendisi seçer, gerekçesini tek satırla yazar. Kurallar varsayılandır: uymadığı bir durumda Claude amaca en iyi hizmet edeni yapar ve nedenini söyler. Sana yalnızca kapsam, para, geri dönüşü zor işlemler ve senin vermen gereken kimlik bilgileri için sorar. Plan sürerken büyük bir iş verirsen hangisinin önce yapılacağına da kendisi karar verir ve söyler.

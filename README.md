@@ -7,7 +7,7 @@ Claude plans the work, verifies and commits every step, and keeps its memory in 
 so nothing is lost between sessions or machines.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.51-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.52-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-add-on)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -25,6 +25,7 @@ so nothing is lost between sessions or machines.
 - **Memory in the repository.** Decisions, lessons and the current state live in `docs/ai/` and travel with git across sessions, computers and cloud sessions. `/clear` and `/compact` never lose work.
 - **Lean context.** Only a small core (about 5k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
 - **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials.
+- **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tested and judged honestly beside those examples, and weak work is fixed before it ships.
 - **Unity add-on.** Unity CLI first, a headless test runner, C# code intelligence, code rules built on SOLID and services, game design templates and a visual style check after every UI step.
 - **Conditional handbook.** Field-tested notes on Google Play, the App Store, Firebase, ASO, shaders, Synty assets and more, installed only into projects where they apply, so they cost nothing elsewhere.
 - **Browser work in its own profile.** With Claude in Chrome, Claude works in its own Chrome profile (Play Console, App Store Connect, checking a page) and never touches yours.
@@ -124,7 +125,7 @@ Choosing Unity at install adds:
 | Added | Where | Loaded |
 |---|---|---|
 | Unity section: skills, Unity CLI, verification, C# code intelligence | `CLAUDE.md` | Every session |
-| Read-only Unity expert agent | `.claude/agents/unity-uzmani.md` | When called |
+| Read-only Unity expert agent: architecture and plan review, closure review against the quality bar | `.claude/agents/unity-uzmani.md` | When called |
 | Code rules: assets, game code, UI, tests, shaders | `.claude/rules/unity-*.md` | When matching files are read |
 | Headless test runner with its own log file, a time limit and one import worker | `docs/ai/araclar/testler.sh` | Tests with the editor closed |
 | C# code intelligence (`csharp-lsp` plugin, `csharp-ls` server) | `.claude/settings.local.json` | Every session |
@@ -141,7 +142,7 @@ Choosing Unity at install adds:
 The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and asset packs, compiled from official docs, articles and field work. Each entry has a condition: it's installed only where the condition holds and read only during related work. Entries can add plan candidates (for example the Google Play Level Up structure), and notes a project adds to an entry are proposed back to the template on update.
 
 <details>
-<summary><b>All 21 entries</b></summary>
+<summary><b>All 26 entries</b></summary>
 
 | Entry | Installed when |
 |---|---|
@@ -169,6 +170,11 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Reading short-video metrics and a weekly review | Project that posts short videos |
 | Steam store page, Next Fest, Playtest and demo, accessibility tags | Game planned for Steam |
 | Rewarded ads in puzzle and casual games: AdMob's rules, placements, sizing | Unity game with rewarded ads |
+| UI quality bar: what the leaders do, screen recipes, an honest side-by-side | Unity game with player-facing UI |
+| UI visual rules and traps: palette, type, buttons, touch, safe area, two languages | Unity game with player-facing UI |
+| Game feel: UI motion, reduce motion, haptics | Unity game with player-facing UI or touch input |
+| UI test list: a screen matrix on phone and tablet profiles, 23 automated checks | Unity game with player-facing UI |
+| UI test harness: shared package layout, capture on device profiles | Unity game with player-facing UI |
 
 </details>
 
@@ -241,4 +247,4 @@ Parts of the Unity add-on are adapted from *Claude-Code-Game-Studios* (version `
 
 ## License
 
-[MIT](LICENSE) · Version **1.51** · 2026-10-17
+[MIT](LICENSE) · Version **1.52** · 2026-10-18

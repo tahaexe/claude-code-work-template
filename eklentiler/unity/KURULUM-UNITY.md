@@ -1,5 +1,5 @@
 # Unity Add-on: Install and Update
-<!-- Version 1.51 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
+<!-- Version 1.52 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
 
 ## Yeni proje (New project)
 The user chose Unity but the working folder has no Unity project → do this before the general install:
@@ -47,7 +47,7 @@ The user chose Unity but the working folder has no Unity project → do this bef
     - Show `docs/ai/tasarim/oyun-ozeti.md` (create it from the add-on template if missing) with missing fields filled by you as proposals (from the answers and the project); apply the user's corrections.
     - Add a `HAFIZA.md` line: game summary → "read when planning gameplay or scope".
     - Write the MVP and build-order items to DURUM's **Up next** as plan candidates (in build order); the first one starts with the composition root and service interfaces (game code rule → Services).
-    - Add an **Up next** line: "Draft the style guide before the first UI or visual work; the user corrects it (`docs/ai/sablonlar/oyun/gorsel-stil.md` → `docs/ai/tasarim/gorsel-stil.md`)".
+    - Add an **Up next** line: "Draft the style guide before the first UI or visual work; the user corrects it (`docs/ai/sablonlar/oyun/gorsel-stil.md` → `docs/ai/tasarim/gorsel-stil.md`); then one finished-looking screen before content multiplies".
 11. **Architecture check** (project with existing code): grep the scripts for global singletons (`static … Instance`), `FindObjectOfType`/`Find(` and very large manager classes. Found and no composition root or DI → one **Up next** line: "Service architecture migration: composition root first, then one system per step, verified in tests and Play mode (game code rule → Migrating old code)". Never change code here. Skip if that line or a migration plan exists, or the user declined it (`hafiza/kararlar.md`).
 
 ## Güncelleme (Update)

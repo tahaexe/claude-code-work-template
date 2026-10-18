@@ -3,7 +3,7 @@
 
 ## Plan closure
 1. **Verify:** check each acceptance criterion against tool output seen in this session. A check that couldn't run or was never tried is "not assessed" in the report, never "passed". Non-automatable checks (e.g. game feel, on-device performance) go to manual tests.
-2. **Review (your call):** worth it when the plan was risky (save data, purchases, data migration), weakly verified automatically (scenes, prefabs, UI) or long, and the project has a review agent for the area (e.g. `unity-uzmani` for Unity code): have it review the files the plan changed; ask only for bugs and requirement gaps. The plan changed what the player sees and `tasarim/gorsel-stil.md` exists → also pass the step screenshots for a visual consistency review. Small, test-verified plan → no review; report "review: not needed". Serious findings → a fix plan (PROTOKOL §3), not fixes inside the closure. Follow-ups not fixed now → `hafiza/teknik-borc.md`.
+2. **Review:** work players or viewers see (screens, feel, art, store pages, videos) → always: the area's expert agent reviews the result (with the step screenshots; `tasarim/gorsel-stil.md` exists → visual consistency too), then an honest check against the plan's **Review** section: was it tested (UI, feel, smoothness), and how does it stand beside the best examples? Weak → fixed before it ships; the answer goes in **Result**. Other plans (your call): worth it when the plan was risky (save data, purchases, data migration), weakly verified automatically (scenes, prefabs, UI) or long, and the project has a review agent for the area (e.g. `unity-uzmani` for Unity code): have it review the files the plan changed; ask only for bugs and requirement gaps. Small, test-verified plan → no review; report "review: not needed". Serious findings → a fix plan (PROTOKOL §3), not fixes inside the closure. Follow-ups not fixed now → `hafiza/teknik-borc.md`.
 3. **Result:** plan status `done`; in **Result** write what changed, known limits, recommendations.
 4. **Move durable knowledge** (only what will matter later):
    - decisions not specific to the plan → `hafiza/kararlar.md`
@@ -14,7 +14,7 @@
 7. **DURUM:** clear the active plan or move to the next approved plan/phase; add the finished plan to **Recently completed** as one line ≤150 characters (max 5; drop the oldest).
 8. **Tidy:** apply "Memory tidy-up" below only to memory files changed in this plan.
 9. **Commit** (if git): `docs: close plan <short-name>`.
-10. **Report** (Turkish): short summary, how many manual tests were added (the list is in `manuel-testler.md`), checks not assessed, review findings (if any), CLAUDE.md rules added, the next task and `/clear` before a new task. If the project has `docs/ai/sablonlar/oyun/`, suggest the fitting doc: prototype report after a prototype plan, playtest report when a build goes to players, post-mortem after a major milestone.
+10. **Report** (Turkish): short summary, how many manual tests were added (the list is in `manuel-testler.md`), checks not assessed, review findings (if any) and the honest check's answer, CLAUDE.md rules added, the next task and `/clear` before a new task. If the project has `docs/ai/sablonlar/oyun/`, suggest the fitting doc: prototype report after a prototype plan, playtest report when a build goes to players, post-mortem after a major milestone.
 
 Cancelled plan: status `cancelled`, reason in **Result**, archive, update DURUM.
 
