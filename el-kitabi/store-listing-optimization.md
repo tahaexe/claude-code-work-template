@@ -1,18 +1,18 @@
 ---
 title: Store listing optimization (Google Play, App Store): limits, wording rules, experiments, custom pages, rating prompts, replies to reviews
 condition: "Project that ships on Google Play or the App Store. Signs: Android or iOS among the targets in the game summary or memory; a store listing or App Store Connect record mentioned in the plans."
-read_when: Writing or changing store texts, icon, screenshots or preview videos; planning a store A/B test or an App Store custom product page; choosing when and how to ask for a rating; testing the rating prompt; replying to store reviews; sizing a listing test for little traffic; checking a listing before it is sent for review.
+read_when: Writing or changing store texts, icon, screenshots or preview videos; planning a store A/B test or an App Store custom product page; choosing when and how to ask for a rating; testing the rating prompt; replying to store reviews; sizing a listing test for little traffic; checking a listing before it is sent for review; a game's first Play Console submission (declarations, forms).
 requires: — (Play Console and App Store Connect, through the account's own Chrome profile; no third-party ASO tool or store API key)
-source: Play Console Help 6227309 (store listing experiments), 9866151 (preview assets), 9898842 (metadata policy) · Android Developers "In-app reviews" · Apple developer pages: product page, product page optimization, custom product pages, ratings and reviews · App Store Connect Help "Screenshot specifications" · App Review Guidelines 2.3.7. Read 2026-10-14; experiment, custom-page and asset rules re-checked by the session manager the same night; App Store screenshot sets checked by the session manager and Claude on 2026-10-15. · Rating prompts and replies (1.51): a project session's research of 2026-10-16 (Android Developers 'In-app reviews' 2026-01-30 and 'Test in-app reviews', App Review Guidelines 5.6.1, Google Play Developer API 'Reply to Reviews' 2025-12-18; 5.6.1, the review rules and the reply API re-read 2026-10-17) · little-traffic test sizing: research topic 32 (2026-10-16), the arithmetic re-checked 2026-10-17
+source: Play Console Help 6227309 (store listing experiments), 9866151 (preview assets), 9898842 (metadata policy) · Android Developers "In-app reviews" · Apple developer pages: product page, product page optimization, custom product pages, ratings and reviews · App Store Connect Help "Screenshot specifications" · App Review Guidelines 2.3.7. Read 2026-10-14; experiment, custom-page and asset rules re-checked by the session manager the same night; App Store screenshot sets checked by the session manager and Claude on 2026-10-15. · Rating prompts and replies (1.51): a project session's research of 2026-10-16 (Android Developers 'In-app reviews' 2026-01-30 and 'Test in-app reviews', App Review Guidelines 5.6.1, Google Play Developer API 'Reply to Reviews' 2025-12-18; 5.6.1, the review rules and the reply API re-read 2026-10-17) · little-traffic test sizing: research topic 32 (2026-10-16), the arithmetic re-checked 2026-10-17 · 2026-10-18: App Store Connect Help 'App preview specifications', Apple 'Show more with app previews', Unity Recorder 5.1 Movie Recorder, Time.captureDeltaTime; ASOMobile 2026 and yellowHEAD 2024 (captions)
 tech: Google Play Console, App Store Connect
-added: 2026-10-14 · research by a project session, reviewed by the session manager · 2026-10-15 App Store screenshot sets (a project session's research, 1.46) · 2026-10-17 (1.51): rating prompt additions, replying to reviews, little-traffic test sizing
+added: 2026-10-14 · research by a project session, reviewed by the session manager · 2026-10-15 App Store screenshot sets (a project session's research, 1.46) · 2026-10-17 (1.51): rating prompt additions, replying to reviews, little-traffic test sizing · 2026-10-18 (template 1.53): screenshot order and captions, App Store preview files and content, recording in Unity (the studio's store video and screenshot research), a game's first Play submission (shared lessons)
 ---
 # Store listing optimization
 
 ## Summary
 - Listing changes are free and reach all organic traffic, so they are among the cheapest ways to raise installs.
 - This entry has the hard limits, the wording that gets a listing rejected or removed, and how to test one asset at a time.
-- Promotional content (Play) and In-App Events (App Store): `store-events.md`.
+- Promotional content (Play) and In-App Events (App Store): `store-events.md`. The words themselves (claims ledger, machine-sounding patterns, fresh review, listing audit): `metin-denetimi.md`.
 
 ## Limits
 - **Google Play:**
@@ -43,12 +43,23 @@ added: 2026-10-14 · research by a project session, reviewed by the session mana
   - Awards from Google Play ("Best of") are allowed.
 - **App Store** (App Review Guideline 2.3.7): no trademarked terms, popular app names, pricing or irrelevant phrases packed into the name, subtitle or keywords.
 
+## Screenshots: order and captions
+- The App Store shows the first three screenshots in search: frame 1 the promise, 2 the play, 3 what sets the game apart. Check every set at search size (~350 px wide) beside the genre's leaders.
+- One message a frame, at most five words, an active verb or an outcome ("No timers, no lives"), not a label ("Plan every peg"); at least 60 pt in the design file (ASOMobile 2026).
+- Mostly game, little empty ground: bring the camera close; large bold captions with strong contrast (yellowHEAD 2024). Play: captions under 20% of the image (above).
+- A bottom band vs a corner box has no measured winner: test it with a Play store listing experiment before changing a shared layout.
+
 ## Preview video
 - **Play** (a YouTube link):
-  - Monetization off; public or unlisted, never private; not age-restricted; embeddable.
-  - Real gameplay as early as possible within the first 10 seconds. Only the first 30 seconds autoplay, muted.
+  - Monetization off; public or unlisted, never private; not age-restricted; embeddable; one video's link (no playlist, channel or timestamp), a local version per market where it differs.
+  - Google's recommendations, not conditions: real gameplay within the first 10 seconds and at least ~80% real use; few logos and cutscenes; captions; no black side bars; no "Best", "#1", "Download" or sale wording; either orientation, whichever suits the game. Only the first 30 seconds autoplay, muted. The feature graphic is the video's cover (keep its focal point).
   - A game needs a preview video to appear in some parts of Google Play.
-- **App Store:** up to 3 previews of ≤30 s each, made from real app footage.
+- **App Store:** up to 3 previews per language and size, 15-30 s each, made from real app footage.
+  - File: ≤ 500 MB; H.264 (`.mov`, `.m4v`, `.mp4`; up to High Profile Level 4.0, 10-12 Mbps) or ProRes 422 HQ; at most 30 fps; stereo AAC 256 kbps, 44.1 or 48 kHz.
+  - The accepted resolution, not the device's: 886×1920 portrait for the classes *Dynamic Island (large display)*, *Dynamic Island (medium display)* and *Face ID (large display)* (Apple names classes, not inches), 5.5" 1080×1920, iPad 13" and 11" 1200×1600 (these two not re-verified). When the UI is the same across sizes and languages, one file at the largest required size is scaled down; a language without previews shows the nearest one's.
+  - Poster frame: the 5 s mark by default, seen when autoplay is off; changing it on an approved preview needs a new version.
+  - Content: only footage from the app; no people, hands or devices (graphic touch marks are fine); more gameplay than cutscenes; no prices or dates; say so if the game has in-app purchases (in the footage or the last frame). It autoplays muted in search and on the product page: on-screen text carries the message, long enough to read.
+- **Recording in Unity:** Recorder's Movie Recorder (Custom size, e.g. 886×1920; H.264 MP4 or ProRes; audio needs *Project Settings › Audio › Default Speaker Mode* Mono or Stereo; the Simulator view can't be recorded), or frames at a fixed step (`Time.captureDeltaTime`) plus `AudioRenderer`, joined with ffmpeg. `Time.unscaledTime` ignores `captureDeltaTime`: UI motion on unscaled time doesn't follow a fixed-step capture.
 - Music in a video needs a license that covers the store; prefer the game's own sound.
 
 ## Experiments: test one asset at a time
@@ -92,6 +103,12 @@ added: 2026-10-14 · research by a project session, reviewed by the session mana
 - Play's Reply to Reviews API sees only production reviews with text from the last week and needs an OAuth client or a service account with the reply permission: not worth it at small volume, reply in the console.
 
 ## Before sending a listing for review
-- Count characters per field and language; check every image and video frame against the wording rules above.
+- Count characters per field and language; check every image and video frame against the wording rules above; new or changed text passes metin-denetimi.md §1-3 (claims, patterns, fresh review).
 - Record what changed and why in the project's store notes. Sending for review needs the session manager's approval.
 - Anything paid (ads, boosts, featuring purchases) is out of scope; never open it.
+- **A game's first Play submission** (Project M 1.0 and Project N, 2026-10-17; first-release rules: google-play-level-up.md › Direct release):
+  - A never-published app's listing can't be saved through the API (an edit commit answered 400 with `changesNotSentForReview`, 403 without): enter the first listing in Play Console with "Save as draft".
+  - The Advertising ID declaration isn't among the dashboard's App content tasks, but the Publishing overview's quick check flags it once a release is saved: fill it with the other forms (*App content › Advertising ID*).
+  - Forms move under the pointer: IARC opens its sections one by one and a click on an unopened one is lost; in Data safety choosing "required" moves the purpose list. Take a fresh screenshot before each click; answer "Stay" if a stale click hits the side menu and a leave-page prompt appears.
+  - Play switches on the "Google Play Games on PC" form factor for a new game by itself: check the Publishing overview's pending changes and turn it off (*Advanced settings › Form factors*) unless the game was tested on PC.
+  - The listing editor has no alt-text fields; the AI-generated-asset labels sit in the wizard's review step, and "Label and submit" in that dialog saves them at once.

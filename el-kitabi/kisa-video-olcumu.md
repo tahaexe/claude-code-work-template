@@ -1,11 +1,11 @@
 ---
 title: "Reading short-video metrics (YouTube Shorts, TikTok, Instagram Reels) and a weekly review"
 condition: "Project or folder that posts short videos for its games (YouTube Shorts, TikTok, Instagram Reels). Signs: a promo calendar, a short-video upload queue or posting plan in DURUM, plans or memory. Unsure → ask the user one question."
-read_when: "Judging posted clips; planning the next cut or test; the weekly promo review; a clip or an account with near-zero views; setting up metric pulls (YouTube Analytics API)."
+read_when: "Judging posted clips; planning the next cut or test; studying another channel's outlier clip; the weekly promo review and its learnings ledger; a clip or an account with near-zero views; setting up metric pulls (YouTube Analytics API)."
 requires: "YouTube Analytics API with the channel owner's OAuth consent for `yt-analytics.readonly` (free; the consent click belongs to the owner or the session manager, never a project session); TikTok Studio and Instagram insights read by hand in the account's own Chrome profile"
-source: "Research by the promo session, 2026-10-16, pages read that day: YouTube blog 'engaged views explained' (2026-08-19) and Help 12220281 (both re-read), Help 9314415, 11914225, 16391400, 12942217; YouTube Analytics API revision history, metrics, dimensions and channel reports; TikTok Creator Academy (analytics), Display API video object (2026-08-24), Newsroom (For You 2020, Account Check 2024, Content Check Lite 2025, guidelines 2025); Instagram Help 202865988324236, 'Instagram ranking explained' (2023), Trial Reels (2024), Graph API media insights; third-party sources are marked [3P] in the text (Search Engine Journal 2023, 1of10 2026, Social Media Today 2025-2026, Social Samosa 2025)"
+source: "Research by the promo session, 2026-10-16, pages read that day: YouTube blog 'engaged views explained' (2026-08-19) and Help 12220281 (both re-read), Help 9314415, 11914225, 16391400, 12942217; YouTube Analytics API revision history, metrics, dimensions and channel reports; TikTok Creator Academy (analytics), Display API video object (2026-08-24), Newsroom (For You 2020, Account Check 2024, Content Check Lite 2025, guidelines 2025); Instagram Help 202865988324236, 'Instagram ranking explained' (2023), Trial Reels (2024), Graph API media insights; third-party sources are marked [3P] in the text (Search Engine Journal 2023, 1of10 2026, Social Media Today 2025-2026, Social Samosa 2025) · beat sheet and learnings ledger: ideas from coreyhaines31/marketingskills (video edit anatomy, the niche-outlier loop, the hook system, product-marketing learnings; read 2026-10-18), rewritten"
 tech: "YouTube Shorts, TikTok, Instagram Reels; YouTube Analytics API v2. Definitions move (YouTube changed view counting in 2025 and 2026): recheck monthly (checked 2026-10-16)."
-added: "2026-10-16 · template 1.50 · research by the promo session, approved by the session manager as a handbook entry with its weekly routine · 2026-10-17 (1.51): weekly step 2 corrected from the first real API pull (the shorts filter, the Cloud project's API switch)"
+added: "2026-10-16 · template 1.50 · research by the promo session, approved by the session manager as a handbook entry with its weekly routine · 2026-10-17 (1.51): weekly step 2 corrected from the first real API pull (the shorts filter, the Cloud project's API switch) · 2026-10-18 (template 1.53): outlier beat sheet, learnings ledger"
 ---
 # Reading short-video metrics
 
@@ -63,3 +63,15 @@ added: "2026-10-16 · template 1.50 · research by the promo session, approved b
 - One variable per test, as a new cut of the same footage, never a re-upload; decide after at least 3 pairs.
 - Instagram: Trial Reels keep tests off the profile grid.
 - A clean, watermark-free master for each platform.
+
+## Studying an outlier clip (beat sheet)
+- Inside a plan's Review step or on request only (automatic reference research stays rejected). Pick clips in our genres at roughly 10× their own channel's average views: an outlier for its channel, not a famous channel.
+- Watch it in the account's own Chrome profile and write a beat sheet, one row per beat: time (s) · what moves on screen · cut and shot length · on-screen text (words, place, how long) · sound (music hit, effect, voice) · job (hook, payoff, turn, loop). Then the first 2 seconds on their own, and the tempo (cuts per 5 s) across the clip.
+- From the sheet take 3-5 signature moves we can make with our own footage (e.g. the payoff in the first frame, then the build-up).
+- A hook is picture, text and sound together, each adding something (the text says what the picture can't, the sound lands on the action), never three copies of one message.
+- Against our own retention: weak first seconds → change the picture; viewers leaving at 3-15 s → fix the turn after the hook, not the hook.
+- Take the technique, never the content: no footage, music, text or beat-for-beat copy (TikTok's unoriginal-content rule; only our own gameplay).
+
+## Learnings ledger
+- One table per channel or game, next to the weekly review: lesson (concrete enough to change the next cut) · evidence (numbers and sample: clips, views, weeks) · where applied · status (`active`, `watch`, or `retired` with the reason).
+- A lesson enters only after a test reached its planned size (Tests: at least 3 pairs) or a pattern held in at least two campaigns or games. Retired lessons stay, with why.

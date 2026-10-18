@@ -1,5 +1,5 @@
 # Working Protocol
-<!-- Version 1.52 · 2026-10-18 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
+<!-- Version 1.53 · 2026-10-18 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
 
 Goal for every task here: understand it, follow a plan step by step, use little context, keep knowledge in durable memory; what players or viewers see must stand beside the best of its kind (careless work counts as not done).
 - The user's explicit instruction overrides this protocol. Its rules are defaults: where one doesn't fit, do what serves the goal and say why in one line; only the next rule is fixed.

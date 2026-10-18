@@ -5,7 +5,7 @@ read_when: Planning or adding Analytics events; reading where players quit; sett
 requires: — (uses the Firebase packages already in the project; adding a Firebase package the game lacks, e.g. Remote Config, is its own planned step)
 source: Firebase Unity setup https://firebase.google.com/docs/unity/setup (updated 2026-10-13) · codelab "Implement A/B tests with Firebase Remote Config" https://firebase.google.com/codelabs/implement-a-b-tests-with-firebase-remote-config · pricing https://firebase.google.com/pricing (Remote Config quota and the 2026-09-01 Blaze change, verified 2026-10-14)
 tech: Firebase Unity SDK (Analytics, Remote Config, A/B Testing); Unity 6000.x; Android API 24+, iOS 15+
-added: 2026-10-14 · research by two project sessions (the second: currency events, sample sizes, fixed gates), reviewed by the session manager (binomial figures recomputed)
+added: 2026-10-14 · research by two project sessions (the second: currency events, sample sizes, fixed gates), reviewed by the session manager (binomial figures recomputed) · 2026-10-18 (template 1.53): the GA4 audit before a first release (Project F 1.0, the session manager's standard of 2026-10-17)
 ---
 # Player funnels, retention and remote tuning (Firebase, mobile)
 
@@ -58,6 +58,15 @@ added: 2026-10-14 · research by two project sessions (the second: currency even
   - App Store App Privacy: Product Interaction.
   - The game's privacy page.
 - PC builds: Firebase's desktop libraries are a beta for development only and Analytics has no desktop support. No Firebase Analytics in a shipped PC/Steam build; plan PC measurement separately.
+
+## Before the first release: GA4 audit (studio standard)
+Every Firebase game, before its first release (Project F's GA4 property was empty, and two other games' too; 2026-10-17). Applied in Project F 1.0; Google's own pages not re-read for this list:
+1. **Custom dimensions:** every event parameter the game sends (e.g. `level_name`, `success`, `source`, `item_name`) is an event-scoped custom dimension in *GA4 › Admin › Custom definitions*. Not retroactive: register a new parameter before the build that sends it (one not seen in the data yet can be typed in).
+2. **Event data retention 14 months** (*Data collection and modification › Data retention*; the default is 2 months, and explorations look back only that far).
+3. **Play's pre-launch robots:** the report runs on Firebase Test Lab devices. When `Settings.System` "firebase.test.lab" is "true", collect no analytics (send no events); Crashlytics and ads stay on (Google's ad networks filter Test Lab traffic themselves: Test Lab docs). Unity: `new AndroidJavaClass("android.provider.Settings$System").CallStatic<string>("getString", resolver, "firebase.test.lab")` (Project F `Assets/_Game/Ads/TestLabDevice.cs`). Emulator test: `adb shell settings put system firebase.test.lab true`, afterwards `settings delete system firebase.test.lab`.
+4. **AdMob link** (*GA4 › Product links › Google AdMob links*): without it no `ad_impression`, so no ads per player. GA4 lists only AdMob apps with store details: after store approval add the store listing to the AdMob app, then link.
+5. **Developer traffic filter** (*Data filters › Create filter › Developer traffic*: events carrying `debug_mode` or `debug_event`, exclude): "Testing" first, "Active" after a DebugView check; "Active" is permanent, matching events never come back.
+6. **End-to-end check:** on an emulator `adb shell setprop debug.firebase.analytics.app <package>` (verbose log: `setprop log.tag.FA VERBOSE`, `setprop log.tag.FA-SVC VERBOSE`); open the game, give consent, play a level; logcat shows "Logging event" and "Successful upload ... 204", and *GA4 › Realtime* shows the event and its parameter values. DebugView may show the device late or never (Project F: empty for 6 minutes while Realtime had the events). Afterwards `setprop debug.firebase.analytics.app .none.` and uninstall.
 
 ## Verification
 - DebugView shows each planned event once per action, with the right parameters, and no duplicates of automatic events.

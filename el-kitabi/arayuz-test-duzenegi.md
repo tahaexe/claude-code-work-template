@@ -1,11 +1,11 @@
 ---
-title: "UI test harness: shared package layout and capture on device profiles"
+title: "UI test harness: shared package layout, capture on device profiles, headless capture and fake input"
 condition: "Unity game project with player-facing UI (every studio game; not Project J or other non-game apps)."
-read_when: "Building or extending the project's UI test harness or the shared UI quality package; capturing screens on device profiles; a capture that comes out blank or with wrong contrast."
+read_when: "Building or extending the project's UI test harness or the shared UI quality package; capturing screens on device profiles; a headless capture that hangs or comes out blank; driving fake taps in a headless Play-mode probe."
 requires: "Unity Test Framework; arayuz-kalitesi-testleri.md (what the harness checks)"
-source: "unity-uzmani's architecture for the studio's UI tests, 2026-10-18 (plan and closure reviews) · prior art in two projects (capture helpers, layout tests, eval probes)"
-tech: "Unity 6000.3 (uGUI 2.0), Unity Test Framework"
-added: "2026-10-18 · template 1.52 · split from the UI test list (the studio's UI market research for the session manager)"
+source: "unity-uzmani's architecture for the studio's UI tests, 2026-10-18 (plan and closure reviews) · prior art in two projects (capture helpers, layout tests, eval probes) · Project B's headless capture and input findings, 2026-10-17 (Input System backgroundBehavior, InputTestFixture)"
+tech: "Unity 6000.3 (uGUI 2.0), Unity Test Framework, Input System"
+added: "2026-10-18 · template 1.52 · split from the UI test list (the studio's UI market research for the session manager) · template 1.53: two capture and input findings from the shared lessons"
 ---
 # UI test harness
 
@@ -16,4 +16,8 @@ added: "2026-10-18 · template 1.52 · split from the UI test list (the studio's
   - `Editor`: static checks (importers, atlas membership, literal strings, UpperCase style, `Screen.*` scan, TMP material instances).
 - **Each project:** `"testables": ["com.studio.uiquality"]` in `Packages/manifest.json` (test asmdefs inside an immutable git package compile only then; verify on the first project); `Assets/Tests/UiQuality/<Game>.UiQuality.Tests.asmdef`; a `<Game>UiCatalog` asset (projects without asmdefs keep it in Assembly-CSharp and the tests find it with `AssetDatabase.FindAssets("t:UiScreenCatalog")`); one `[TestFixtureSource]` over catalog × profile × language.
 - **Running:** batchmode with graphics; pixel checks need a GPU, geometry checks may run with `-nographics` (verify per project). The capture camera's culling mask must include every canvas layer; Overlay-only shaders and UI particles need a look on the shots.
+- **Fake input in a headless Play-mode probe** (an eval, not a test; Project B, 2026-10-17): a press queued with `InputSystem.QueueStateEvent` on an added `Mouse` never reached the game, because a batchmode editor has no focus and the default `backgroundBehavior` drops unfocused devices' events. For the probe set `InputSystem.settings.backgroundBehavior = IgnoreFocus` and `editorInputBehaviorInPlayMode = AllDeviceInputAlwaysGoesToGameView`, `InputSystem.EnableDevice` if disabled, `MakeCurrent()`; queue the release a few frames later (press and release in one input update never make `wasPressedThisFrame` true); restore the settings and remove the device afterwards. PlayMode tests use `InputTestFixture`, which already solves this with its own fake runtime.
 - **Until the package exists:** start from a project's capture helpers (an `OnPhone` capture, `Shots.SaveWithHud`) and layout tests; a project's eval scripts (open a screen, measure motion) stay manual probes for an open editor.
+
+## Headless capture
+- **Headless capture works** (Project B, 2026-10-17): `Time.captureFramerate`, `Camera.Render` + `ReadPixels` and `AudioRenderer` run in a batchmode editor with graphics; what hangs is the game's own `yield return new WaitForEndOfFrame()`, which never returns without rendering to the screen. Turn waits that don't read the screen into `yield return null`; the headless capture then matched the windowed one (same events on the same frames, mean pixel difference 0.2 on still frames).

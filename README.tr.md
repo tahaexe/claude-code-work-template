@@ -7,7 +7,7 @@ Claude işi planlar, her adımı doğrulayıp commit'ler ve hafızasını senin 
 böylece oturumlar ve bilgisayarlar arasında hiçbir şey kaybolmaz.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.52-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.53-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-eklentisi)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -141,14 +141,14 @@ Kurulumda Unity seçilince şunlar eklenir:
 El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri üzerine resmi belgelerden, makalelerden ve saha çalışmasından derlenmiş notları tutar. Her girdinin bir koşulu vardır: yalnızca koşulun tuttuğu projeye kurulur ve yalnızca ilgili işte okunur. Girdiler plan adayı ekleyebilir (örneğin Google Play Level Up yapısı); bir projede girdiye eklenen notlar güncellemede şablona önerilir.
 
 <details>
-<summary><b>26 girdinin tamamı</b></summary>
+<summary><b>36 girdinin tamamı</b></summary>
 
 | Girdi | Ne zaman kurulur |
 |---|---|
 | Synty Sidekick: yüz ifadeleri ve göz kırpma | Projede Sidekick karakterleri var |
 | Synty: gündüzü geceye çevirme | URP'li projede Synty ortam asset'leri var |
 | Synty karakterlerine editörde poz verme | Projede Synty karakterleri var |
-| Ortam sesi (2D) ve 3D konumsal ses | Unity projesi |
+| Ses: ortam sesi (2D) ve 3D konumsal ses, mobil oyunda karışım ve ses oturumu, müzik satın alma | Unity projesi |
 | Google Play'in önerdiği oyun yapısı (Level Up), R8 denetimi `r8-kontrol.py` ile | Hedefi Google Play olan Unity projesi |
 | App Store: Game Center, uygulama içi etkinlikler, ilk gönderim | Hedefi App Store olan Unity projesi |
 | Unity proje ayarları (6.3) ve git'te ikili `.asset` dosyaları | Unity projesi |
@@ -159,21 +159,28 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | Layer Lab GUI Pro arayüz paketleri | Projede GUI Pro kullanılıyor |
 | Firebase ile oyuncu hunisi, D1/D7 tutma ve Remote Config | Firebase SDK'sı olan mobil Unity projesi |
 | Mağaza sayfası ve ASO | Google Play'de ya da App Store'da yayında |
-| Mağaza etkinlikleri: Play tanıtım içeriği ve App Store uygulama içi etkinlikleri | Yayındaki oyun ya da uygulama |
+| Mağaza etkinlikleri: Play tanıtım içeriği, App Store uygulama içi etkinlikleri ve öne çıkarılma başvurusu, sezonlar | Yayındaki oyun ya da uygulama |
 | C# kod zekâsı, editörsüz derleme denetimi ve Unity dışında test | Unity ya da herhangi bir C# projesi |
 | Adil zorluk ve başarısızlık | Unity oyunu |
 | Hedef katmanları, güvenli bırakma noktaları ve sağlıklı liderlik tablosu | İlerlemesi, etkinlikleri ya da liderlik tablosu olan mobil oyun |
-| Rakip ya da referans oyun incelemesi | Oyun projesi, yalnızca istenince |
+| Rakip ya da referans oyun incelemesi, yorumlardan oyuncunun kendi sözleri | Oyun projesi, yalnızca istenince |
 | Renk körlüğüne dayanıklı palet (`cvd_palette.py` ile) | Renk eşleştirmeli oyun |
 | Lansman haftasında kısa video (Shorts, TikTok, Reels) | Yayındaki ya da çıkışa hazırlanan oyun |
-| Kısa video ölçümlerini okumak ve haftalık değerlendirme | Kısa video paylaşan proje |
+| Kısa video ölçümlerini okumak, haftalık değerlendirme ve sıra dışı bir klibi saniye saniye çözümleme | Kısa video paylaşan proje |
 | Steam mağaza sayfası, Next Fest, Playtest ve demo, erişilebilirlik etiketleri | Steam'e çıkacak oyun |
 | Bulmaca ve casual oyunlarda ödüllü reklam: AdMob kuralları, yerleşim, ödül boyu | Ödüllü reklamı olan Unity oyunu |
 | Arayüz kalite çıtası: liderlerin yaptıkları, ekran tarifleri, dürüst yan yana karşılaştırma | Oyuncuya arayüz gösteren Unity oyunu |
 | Arayüzün görsel kuralları ve tuzakları: palet, yazı, düğme, dokunma, güvenli alan, iki dil | Oyuncuya arayüz gösteren Unity oyunu |
-| Oyun hissi: arayüz hareketi, hareketi azaltma, titreşim | Arayüzü ya da dokunmatik girdisi olan Unity oyunu |
+| Oyun hissi: dokunuşa cevap süresi, arayüz hareketi, hareketi azaltma, titreşim, ekran sarsıntısı | Arayüzü ya da dokunmatik girdisi olan Unity oyunu |
 | Arayüz test listesi: telefon ve tablet profillerinde ekran matrisi, 23 otomatik denetim | Oyuncuya arayüz gösteren Unity oyunu |
-| Arayüz test düzeneği: ortak paket mimarisi, cihaz profilleriyle çekim | Oyuncuya arayüz gösteren Unity oyunu |
+| Arayüz test düzeneği: ortak paket mimarisi, cihaz profilleriyle çekim, başsız çekim ve sahte dokunuş | Oyuncuya arayüz gösteren Unity oyunu |
+| Oyun simgesi: okunurluk ve dönüşüm, mağaza dosyaları, paketteki simge, simge denemesi, alternatif ve sezon simgeleri | Google Play'de ya da App Store'da yayında |
+| Mobil URP'de sevimli stilize görünüş: yüzler, karakter gölgelendirme ve efektler, low-poly sahnede ucuz derinlik | Karakterli ya da low-poly sahneli mobil URP oyunu |
+| İlk dakika: eğitim, ilk kazanç, açılma temposu, ilk reklam ve teklif | Bölümlü mobil oyun |
+| Günlük bir geri dönüş nedeni için yerel bildirimler (Android 13+, iOS) | Günlük bulmacası, ödülü ya da etkinliği olan mobil oyun |
+| Windows'ta Claude Code: Git Bash'in yol çevirmesi, dosyaya Windows yolu yazmak, Python bayrakları, curl'de Türkçe metin | Windows'ta Claude Code'la çalışılan proje |
+| Herkese açık metnin denetimi: iddia defteri, yapay zekâ yazmış gibi duran kalıplar, taze gözden geçirme, mağaza sayfası puanlaması | Mağaza, site, basın ya da video metni yayınlayan proje |
+| Kendi sahnelerini render eden bir kanal için YouTube küçük resmi: gerçek kare, Test & compare, politika sınırları | Kendi sahnelerini render eden YouTube kanalı |
 
 </details>
 
@@ -246,4 +253,4 @@ Unity eklentisinin bazı kısımları *Claude-Code-Game-Studios*'tan (sürüm `7
 
 ## Lisans
 
-[MIT](LICENSE) · Sürüm **1.52** · 2026-10-18
+[MIT](LICENSE) · Sürüm **1.53** · 2026-10-18

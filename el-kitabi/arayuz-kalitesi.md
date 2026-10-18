@@ -50,7 +50,7 @@ plan_candidates:
 - **Rewarded offer** (odullu-reklam.md): opt-in button with a video icon (clapperboard or play, not a monitor) and the reward as a number; declining keeps the game going; one colour for rewarded across the game. No ad ready: disabled with a small spinner, hidden after ~5 s, and the next option becomes the primary.
 - **Settings.** Job: control and trust. Rows: sound, music, haptics (separate), language, reduce motion, privacy choices, privacy policy, licences, restore purchases (iOS), support, version. Rows ≥ 56 dp, grouped, switches with on/off text, not colour alone. No login, rate, push or social rows unless the game really has them.
 - **Popups.** One at a time from a queue; none over the first session's first level; at most one at app start (daily reward OR offer). Width 86-92% of the portrait width, title ribbon, close × at the top right with a ≥ 48 dp hit area, dimmer 70-82% black (leaders ~78%; judge it on a screenshot: linear colour space lightens it), content padding ≥ 24 dp, empty area ≤ 40% of the panel.
-- **First launch and tutorial.** Playable in ≤ 10 s; level 1 is the tutorial; spotlight (dim + hole) and a hand that taps with a ring pulse; one line of ≤ 7 words at a time; first win in 30-60 s; no permission or offer before the first win.
+- **First launch and tutorial** (ilk-dakika.md): playable in ≤ 10 s; level 1 is the tutorial; spotlight (dim + hole) and a hand that taps with a ring pulse; one line of ≤ 7 words at a time; first win in 30-60 s; no permission or offer before the first win.
 - **Loading.** Never blank: logo or scene art and a progress bar; hide hitches behind a fade ≤ 0.3 s.
 
 ## 4. Don'ts

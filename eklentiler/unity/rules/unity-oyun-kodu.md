@@ -3,7 +3,7 @@ paths:
   - "Assets/**/*.cs"
 ---
 # Unity C# and gameplay code rules
-<!-- unity add-on v1.23 · paths fitted to the project at install; if the project follows a different but consistent convention, follow it -->
+<!-- unity add-on v1.53 · paths fitted to the project at install; if the project follows a different but consistent convention, follow it -->
 
 ## Architecture
 - Composition over deep MonoBehaviour inheritance; interfaces for shared behaviour (`IDamageable`, `IInteractable`).
@@ -27,6 +27,10 @@ paths:
 - Every time-based calculation uses `Time.deltaTime` (`Time.fixedDeltaTime` in physics); frame-rate independent.
 - Naming: public members `PascalCase`, private fields `_camelCase`, locals `camelCase`. Prefer `readonly` and `const`.
 - Check destroyed Unity objects with `== null`; `is null` and `?.` bypass Unity's null check.
+
+## Errors
+- **No silent failures:** players lose progress and money to them. No empty `catch` and no catch that hides the failure behind a default value. A save that fails to read or parse keeps its file and backup (move it aside), never overwritten with defaults. IAP, ad and network failures are logged with context (operation, product or placement id, exception) and leave the player a way on (retry, close, a message), never a button that silently does nothing.
+- `async void` only at event entry points (UI callbacks, Unity messages), with a try/catch inside; everything below returns `Awaitable` or `Task` and is awaited, so its exception reaches a handler.
 
 ## Memory and performance
 - No allocations in hot paths (`Update`, physics callbacks): string concatenation, new lists, LINQ, boxing.

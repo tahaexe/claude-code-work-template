@@ -12,6 +12,8 @@
 - [ ] Build boyutu bütçe içinde
 - [ ] Tüm varlıklar dahil ve yükleniyor
 - [ ] Hata ayıklama ve geliştirici özellikleri kapalı (Development Build, hile menüleri, ayrıntılı loglar)
+- [ ] Android: yerel hata ayıklama sembolleri pakette (derleme betiğinde `DebugSymbols.level = SymbolTable`, `format = IncludeInBundle`; AAB'de `BUNDLE-METADATA/com.android.tools.build.debugsymbols` var), yoksa Play uyarır ve çökmeler okunamaz (`docs/ai/el-kitabi/unity-derleme-ve-bellek.md`)
+- [ ] Uygulama simgesi pakette doğru: AAB'deki `base/res/mipmap-xxxhdpi-v4/app_icon.png` ve Xcode projesindeki simge gözle denetlendi; Unity'nin varsayılan simgesi sessizce girebiliyor (`docs/ai/el-kitabi/oyun-simgesi.md`)
 
 ## Kalite
 - [ ] Açık kritik ya da büyük hata yok (istisnalar gerekçesiyle yazılı)
@@ -44,7 +46,7 @@
 - [ ] Google Play yapısı (`docs/ai/el-kitabi/google-play-level-up.md`): "Build order" bölümündeki parçalar ve 7. bölümdeki yönergeler tamam ya da eksikler gerekçesiyle yazılı; Play Games Ödülleri teklifleri Play Console'da etkin
 - [ ] Play Console'daki önerilen işlemler ve Android vitals (son sürüm) gözden geçirildi; düzeltilecekler planda (R8, uçtan uca ekran gibi)
 - [ ] Android vitals'ta bellek ölçümleri (son sürüm) Play'in eşiklerinin altında; Şubat 2027'den itibaren bütün Play'de şart (`docs/ai/el-kitabi/google-play-level-up.md` §7, Memory)
-- [ ] App Store yapısı (`docs/ai/el-kitabi/app-store-game-center.md`): Game Center girişi ve başarımlar, satın alımları geri yükleme düğmesi tamam ya da eksikler gerekçesiyle yazılı; incelemeye göndermeden önceki maddeler (§7) gözden geçirildi
+- [ ] App Store yapısı (`docs/ai/el-kitabi/app-store-game-center.md`): Game Center girişi ve başarımlar, satın alımları geri yükleme düğmesi tamam ya da eksikler gerekçesiyle yazılı; incelemeye göndermeden önceki maddeler (§7) gözden geçirildi; erişilebilirlik beyanları bu sürümde yeniden denendi (renk dışında ayırt etme için Gri Tonlama turu)
 
 ## Platform: PC (varsa)
 - [ ] En düşük ve önerilen sistem gereksinimleri yazılı
@@ -54,6 +56,7 @@
 
 ## Mağaza ve dağıtım
 - [ ] Mağaza sayfası metni, ekran görüntüleri, tanıtım videosu ve görseller güncel
+- [ ] İddialar denetlendi: mağaza (her dil), site, basın kiti ve video metinleri `store/facts.md`'ye karşı okundu; değişen iddia geçtiği her yerde düzeltildi, "son kontrol edilen sürüm" bu sürüm; yeni ya da değişen metin taze bir gözden geçirmeden geçti; fiyat ve hukuk iddiaları sana soruldu (`docs/ai/el-kitabi/metin-denetimi.md`)
 - [ ] App Store ekran görüntüleri: zorunlu iPhone "Dynamic Island (orta boy ekran)" kümesi, bir büyük küme (6,9" ya da 6,5") ve oyun iPad'de çalışıyorsa iPad 13" (ölçüler: `docs/ai/el-kitabi/store-listing-optimization.md` › Limits)
 - [ ] Yaş derecelendirmesi alındı
 - [ ] Gizlilik politikası ve kullanım şartları hazır; Google Play veri güvenliği ve App Store gizlilik formları politikayla aynı

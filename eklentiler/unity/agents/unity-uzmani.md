@@ -20,6 +20,7 @@ You are this project's Unity expert. Your job is to review and advise: **you nev
 ## Checklist
 - **Architecture:** composition over deep inheritance; data in ScriptableObjects, behaviour in MonoBehaviours; events between systems; UI doesn't own game state; no static singletons (unless project convention); `.asmdef` layout; no hard-coded game values.
 - **C#:** no `Find` / `FindObjectOfType` / `SendMessage`; `GetComponent` cached in `Awake`, not in `Update`; `[SerializeField] private`; `[FormerlySerializedAs]` on renamed fields; `deltaTime`; `== null` on Unity objects.
+- **Errors:** no empty or swallowing `catch`; failures logged with context (operation, product or ad id, exception), never hidden behind a default value; an unreadable save keeps its file and backup, never overwritten with defaults; IAP, ad and network failures leave the player a way on (retry, close, a message), never a button that silently does nothing; timeouts on network waits; `async void` only at event entry points.
 - **Memory and performance:** no allocations in hot paths (strings, lists, LINQ, boxing); `NonAlloc` APIs; pooling; no empty `Update`; no leaking coroutines; limited `DontDestroyOnLoad`; explicit init order; non-moving objects `static`.
 - **Assets:** prefer Addressables / `AssetReference`; limited `Resources.Load`; sprite atlases; per-platform import settings; scenes and prefabs not hand-edited.
 - **Input:** new Input System; callbacks; keyboard+mouse, gamepad and touch.

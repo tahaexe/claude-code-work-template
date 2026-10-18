@@ -7,7 +7,7 @@ Claude plans the work, verifies and commits every step, and keeps its memory in 
 so nothing is lost between sessions or machines.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.52-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.53-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-add-on)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -142,14 +142,14 @@ Choosing Unity at install adds:
 The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and asset packs, compiled from official docs, articles and field work. Each entry has a condition: it's installed only where the condition holds and read only during related work. Entries can add plan candidates (for example the Google Play Level Up structure), and notes a project adds to an entry are proposed back to the template on update.
 
 <details>
-<summary><b>All 26 entries</b></summary>
+<summary><b>All 36 entries</b></summary>
 
 | Entry | Installed when |
 |---|---|
 | Synty Sidekick: facial expressions and blinking | The project has Sidekick characters |
 | Synty: turning day into night | Synty environment assets with URP |
 | Posing Synty characters in the editor | The project has Synty characters |
-| Ambient (2D) and 3D positional sound | Unity project |
+| Sound: ambient (2D) and 3D positional sound, the mobile mix and audio session, buying music | Unity project |
 | Google Play's recommended game structure (Level Up), with the R8 check `r8-kontrol.py` | Unity project targeting Google Play |
 | App Store: Game Center, In-App Events, first submission | Unity project targeting the App Store |
 | Unity project settings (6.3) and binary `.asset` files in git | Unity project |
@@ -160,21 +160,28 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Layer Lab GUI Pro UI packs | The project uses GUI Pro |
 | Player funnels, D1/D7 retention and Remote Config with Firebase | Mobile Unity project with the Firebase SDK |
 | Store listing and ASO | Released on Google Play or the App Store |
-| Store events: Play promotional content and App Store In-App Events | Released game or app |
+| Store events: Play promotional content, App Store In-App Events and featuring nominations, seasons | Released game or app |
 | C# code intelligence, an editor-free compile check and tests outside Unity | Unity or any C# project |
 | Fair difficulty and failure | Unity game |
 | Goal layers, safe stopping points and healthy leaderboards | Mobile game with progression, events or leaderboards |
-| Competitor or reference game study | Game project, on request only |
+| Competitor or reference game study, with players' own words from reviews | Game project, on request only |
 | Colour-blind-safe palettes (with `cvd_palette.py`) | Colour-matching game |
 | Short videos in launch week (Shorts, TikTok, Reels) | Released or launching game |
-| Reading short-video metrics and a weekly review | Project that posts short videos |
+| Reading short-video metrics, a weekly review and an outlier clip's beat sheet | Project that posts short videos |
 | Steam store page, Next Fest, Playtest and demo, accessibility tags | Game planned for Steam |
 | Rewarded ads in puzzle and casual games: AdMob's rules, placements, sizing | Unity game with rewarded ads |
 | UI quality bar: what the leaders do, screen recipes, an honest side-by-side | Unity game with player-facing UI |
 | UI visual rules and traps: palette, type, buttons, touch, safe area, two languages | Unity game with player-facing UI |
-| Game feel: UI motion, reduce motion, haptics | Unity game with player-facing UI or touch input |
+| Game feel: response timing, UI motion, reduce motion, haptics, screen shake | Unity game with player-facing UI or touch input |
 | UI test list: a screen matrix on phone and tablet profiles, 23 automated checks | Unity game with player-facing UI |
-| UI test harness: shared package layout, capture on device profiles | Unity game with player-facing UI |
+| UI test harness: shared package layout, capture on device profiles, headless capture and fake input | Unity game with player-facing UI |
+| Game icon: what reads and converts, store files, the build's icon, icon tests, alternate and seasonal icons | Released on Google Play or the App Store |
+| Cute stylized look on mobile URP: faces, character shading and effects, cheap depth for low-poly scenes | Mobile URP game with characters or low-poly scenery |
+| The first minute: tutorial, first win, unlock pacing, first ad and offer | Mobile game with levels |
+| Local notifications for a daily reason to return (Android 13+, iOS) | Mobile game with a daily puzzle, reward or event |
+| Claude Code on Windows: Git Bash path conversion, Windows paths in files, Python flags, non-ASCII text through curl | Project worked on with Claude Code on Windows |
+| Public text check: claims ledger, machine-sounding patterns, fresh review, store listing audit | Project that publishes store, site, press or video text |
+| YouTube thumbnails for a channel that renders its own scenes: real frames, Test & compare, policy limits | YouTube channel that renders its own scenes |
 
 </details>
 
@@ -247,4 +254,4 @@ Parts of the Unity add-on are adapted from *Claude-Code-Game-Studios* (version `
 
 ## License
 
-[MIT](LICENSE) · Version **1.52** · 2026-10-18
+[MIT](LICENSE) · Version **1.53** · 2026-10-18
