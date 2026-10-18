@@ -3,11 +3,11 @@
 # Claude Code Work Template
 
 **A plan-first working system for Claude Code.**<br>
-Claude plans the work, verifies and commits every step, and keeps its memory in your repository,<br>
-so nothing is lost between sessions or machines.
+Claude plans the work, error-checks and commits every step, tests thoroughly once before each release<br>
+and keeps its memory in your repository, so nothing is lost between sessions or machines.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.53-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.54-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-add-on)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -21,11 +21,12 @@ so nothing is lost between sessions or machines.
 
 ## Features
 
-- **Plan-first execution.** Small jobs are done right away. Big ones are explored, turned into a plan and carried out step by step; every step is verified, recorded in the plan, committed and pushed.
+- **Plan-first execution.** Small jobs are done right away. Big ones are explored, turned into a plan and carried out step by step; every step gets an error check (it compiles, its log is clean), is recorded in the plan, committed and pushed.
 - **Memory in the repository.** Decisions, lessons and the current state live in `docs/ai/` and travel with git across sessions, computers and cloud sessions. `/clear` and `/compact` never lose work.
 - **Lean context.** Only a small core (about 5k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
-- **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials.
-- **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tested and judged honestly beside those examples, and weak work is fixed before it ships.
+- **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials. If a machine-level `CLAUDE.md` names a session manager, those questions go to the manager instead.
+- **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tried and judged honestly beside those examples, and weak work is fixed before it ships.
+- **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Before each release one thorough stage runs every existing suite, the release checklist and a pre-release test list: levels, saves, purchases, ads and consent, the clock, interruptions, screens, sound, performance and store compliance.
 - **Unity add-on.** Unity CLI first, a headless test runner, C# code intelligence, code rules built on SOLID and services, game design templates and a visual style check after every UI step.
 - **Conditional handbook.** Field-tested notes on Google Play, the App Store, Firebase, ASO, shaders, Synty assets and more, installed only into projects where they apply, so they cost nothing elsewhere.
 - **Browser work in its own profile.** With Claude in Chrome, Claude works in its own Chrome profile (Play Console, App Store Connect, checking a page) and never touches yours.
@@ -34,14 +35,15 @@ so nothing is lost between sessions or machines.
 
 ```text
 Request
- ├─ Small job → do → verify → commit + push
+ ├─ Small job → do → error check → commit + push
  └─ Big job   → explore → (question) → write plan → start
                  (waits for your approval only if the decision is yours or the job has phases)
                                                ↓
-    Every step:  apply → verify → record in plan → commit + push → next step
+    Every step:  apply → error check → record in plan → commit + push → next step
                  (blocker · decision · risky operation not in the plan → stops and asks)
                                                ↓
-    Closing:     summary + manual tests + memory update + archive
+    Closing:     eye check + summary + manual tests + memory + archive
+    Release:     the pre-release test stage (every suite, checklist, test list, report)
 ```
 
 | Layer | Files | Loaded |
@@ -75,7 +77,7 @@ Claude's own files are terse English bullets to save tokens. File and folder nam
    - When multi-step work starts in a project without docs/ai/PROTOKOL.md, suggest installing in one sentence; don't insist.
    ```
 3. **Install into a project.** Open Claude Code in the project folder and say *"install the template"* (*"şablonu kur"*). Claude detects the project type (Unity or other), copies the files, sets up git, permission rules and `CLAUDE.md`, and writes project-specific rules.
-4. **Update later.** Pull this repository, then say *"update the template"* (*"şablonu güncelle"*) in the project. Only the fixed files are refreshed; plans, memory and `CLAUDE.md` are kept.
+4. **Update later.** Pull this repository. A project updates itself at its next plan closure; to update at once, say *"update the template"* (*"şablonu güncelle"*). Only the fixed files are refreshed; plans, memory and `CLAUDE.md` are kept.
 
 > [!IMPORTANT]
 > **Language.** Claude talks to you in Turkish by default, and the files written for you (manual tests, game design documents, the [user guide](KILAVUZ.md)) are in Turkish. To work in English, change `Turkish with the user` to `English with the user` on line 7 of `docs/ai/PROTOKOL.md`, and the two "Turkish" mentions in steps 10 and 12 of `docs/ai/KURULUM.md`, before installing. In a project that's already installed, edit its copy.
@@ -124,10 +126,10 @@ Choosing Unity at install adds:
 
 | Added | Where | Loaded |
 |---|---|---|
-| Unity section: skills, Unity CLI, verification, C# code intelligence | `CLAUDE.md` | Every session |
+| Unity section: skills, Unity CLI, the error check and eye check, C# code intelligence | `CLAUDE.md` | Every session |
 | Read-only Unity expert agent: architecture and plan review, closure review against the quality bar | `.claude/agents/unity-uzmani.md` | When called |
 | Code rules: assets, game code, UI, tests, shaders | `.claude/rules/unity-*.md` | When matching files are read |
-| Headless test runner with its own log file, a time limit and one import worker | `docs/ai/araclar/testler.sh` | Tests with the editor closed |
+| Headless test runner with its own log file, a time limit and one import worker | `docs/ai/araclar/testler.sh` | The pre-release test stage, editor closed |
 | C# code intelligence (`csharp-lsp` plugin, `csharp-ls` server) | `.claude/settings.local.json` | Every session |
 | Game design templates: game summary with design pillars, GDD, visual style guide, prototype and playtest reports, post-mortem, release checklist | `docs/ai/sablonlar/oyun/` | When used |
 
@@ -135,14 +137,14 @@ Choosing Unity at install adds:
 - **Architecture.** SOLID and services behind interfaces with a single entry point. Singleton-heavy code gets a migration plan candidate, never a silent rewrite.
 - **Visual identity.** A style guide is drafted before the first UI job, and after every visible change Claude compares a screenshot with it.
 - **Works in the background.** The editor runs windowless, so builds and tests don't steal your focus.
-- **Store release prep.** Claude prepares store versions and builds into `Builds/`; uploading and submitting for review stay with you, and signing passwords are never written anywhere.
+- **Store release prep.** Claude prepares store versions and builds into `Builds/`; uploading and submitting for review stay with you (or follow a session manager's rules), and signing passwords are never written anywhere.
 
 ## Handbook
 
 The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and asset packs, compiled from official docs, articles and field work. Each entry has a condition: it's installed only where the condition holds and read only during related work. Entries can add plan candidates (for example the Google Play Level Up structure), and notes a project adds to an entry are proposed back to the template on update.
 
 <details>
-<summary><b>All 36 entries</b></summary>
+<summary><b>All 37 entries</b></summary>
 
 | Entry | Installed when |
 |---|---|
@@ -173,7 +175,7 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | UI quality bar: what the leaders do, screen recipes, an honest side-by-side | Unity game with player-facing UI |
 | UI visual rules and traps: palette, type, buttons, touch, safe area, two languages | Unity game with player-facing UI |
 | Game feel: response timing, UI motion, reduce motion, haptics, screen shake | Unity game with player-facing UI or touch input |
-| UI test list: a screen matrix on phone and tablet profiles, 23 automated checks | Unity game with player-facing UI |
+| UI test list: a screen matrix on 5 phone and tablet profiles in the pre-release stage, 23 automated checks | Unity game with player-facing UI |
 | UI test harness: shared package layout, capture on device profiles, headless capture and fake input | Unity game with player-facing UI |
 | Game icon: what reads and converts, store files, the build's icon, icon tests, alternate and seasonal icons | Released on Google Play or the App Store |
 | Cute stylized look on mobile URP: faces, character shading and effects, cheap depth for low-poly scenes | Mobile URP game with characters or low-poly scenery |
@@ -182,6 +184,7 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Claude Code on Windows: Git Bash path conversion, Windows paths in files, Python flags, non-ASCII text through curl | Project worked on with Claude Code on Windows |
 | Public text check: claims ledger, machine-sounding patterns, fresh review, store listing audit | Project that publishes store, site, press or video text |
 | YouTube thumbnails for a channel that renders its own scenes: real frames, Test & compare, policy limits | YouTube channel that renders its own scenes |
+| Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens, sound, performance, crashes and analytics, store compliance) with how, the pass bar and a report | Game shipping to a store |
 
 </details>
 
@@ -254,4 +257,4 @@ Parts of the Unity add-on are adapted from *Claude-Code-Game-Studios* (version `
 
 ## License
 
-[MIT](LICENSE) · Version **1.53** · 2026-10-18
+[MIT](LICENSE) · Version **1.54** · 2026-10-19

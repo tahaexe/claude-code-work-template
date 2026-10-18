@@ -11,7 +11,7 @@
 | Purpose | Command |
 |---|---|
 | Build | ‹…› |
-| Test | ‹…› |
+| Test (pre-release test stage only) | ‹…› |
 | Lint / format | ‹…› |
 | Run | ‹…› |
 

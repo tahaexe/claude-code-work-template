@@ -3,7 +3,7 @@ paths:
   - "Assets/**/*.cs"
 ---
 # Unity C# and gameplay code rules
-<!-- unity add-on v1.53 · paths fitted to the project at install; if the project follows a different but consistent convention, follow it -->
+<!-- unity add-on v1.54 · paths fitted to the project at install; if the project follows a different but consistent convention, follow it -->
 
 ## Architecture
 - Composition over deep MonoBehaviour inheritance; interfaces for shared behaviour (`IDamageable`, `IInteractable`).
@@ -13,7 +13,7 @@ paths:
 - No static singletons for game state; pass dependencies via the Inspector or explicit setup (follow the project's service locator or DI if it has one).
 - **Services:** game-wide services (save, audio, input, ads, IAP, analytics, scene loading) are plain C# classes behind interfaces (`ISaveService`), created in one composition root (bootstrap scene or entry point) and handed to consumers (constructor, `Init(...)` or the project's locator/DI); gameplay code never `new`s them or reaches them through a static singleton. Default: a hand-written composition root, no package; a DI container (e.g. VContainer) only by plan, recorded in `hafiza/kararlar.md`.
 - **SOLID:** one responsibility per class (no do-everything `GameManager`); dependencies point one way (gameplay → services, never services → gameplay or UI); extend with new classes or ScriptableObjects instead of growing switches; interfaces only where they pay off (services, several implementations, test fakes); hot paths may trade abstraction for speed.
-- **Migrating old code:** one system per plan step: put the singleton behind an interface, register it at the composition root, move its call sites, then remove the static access; verify with tests and Play mode.
+- **Migrating old code:** one system per plan step: put the singleton behind an interface, register it at the composition root, move its call sites, then remove the static access; verify with the error check and Play mode.
 - State machines define states and transitions explicitly.
 - Each system has a clear interface; logic is separate from presentation so it can be tested.
 - Each code folder has its own `.asmdef`.

@@ -37,7 +37,7 @@ Her bilgisayarda bir kez:
 ### Başka biri kullanacaksa
 1. **Erişim:** Depo herkese açık; GitHub'dan klonlamak yeterli. Şablonu kendine göre değiştirmek isteyen depoyu fork'layabilir.
 2. **Onun bilgisayarında:** Claude masaüstü uygulaması ve kendi Claude hesabı → depoyu klonlar → yukarıdaki global bloğu kendi klasör yollarıyla ekler (sahip satırı olmadan) → Unity için Unity Hub ve editörü kurar (C# kod zekâsı için .NET 10 SDK'sını da). Unity CLI'ı ve eklentileri Claude kurmadan önce bir kez sorar.
-3. **Güncellemeler:** Sahip push'ladıkça GitHub Desktop'ta **Pull**, sonra projelerde `şablonu güncelle`. Yeni sürümü Claude zaten hatırlatır.
+3. **Güncellemeler:** Sahip push'ladıkça GitHub Desktop'ta **Pull**. Projeleri Claude bir sonraki plan kapanışında kendisi günceller; beklemek istemezsen `şablonu güncelle` de.
 4. **Bilmesi gerekenler:** Claude Türkçe konuşur; çoğu plana onay beklemeden başlar; her commit otomatik push'lanır, gerekirse zorla push da yapar (`--force-with-lease`); tarayıcı işlerini izin almadan yapar; kurulum bazı eklentileri ekler (agent-protocols üçüncü taraf, kendi hook'u var). Şablon klasöründe Claude şablonu değiştirmez; şablon yalnızca sahibin bilgisayarında geliştirilir.
 
 ## 2. Bir projeye kurmak: `şablonu kur`
@@ -61,7 +61,7 @@ Kurulum sırasında yalnızca şu durumlarda onayın istenir:
 
 | Ne istiyorsun | Örnek | Ne olur |
 |---|---|---|
-| Yeni bir iş | "Envanter sistemi ekleyelim" | Küçük işse doğrudan yapar; büyükse plan hazırlar, gösterir ve başlar. Plan senin kararını gerektiriyorsa (kapsam, para, geri dönüşü zor işlem) ya da fazlara bölünüyorsa onayını bekler. Plan sonuna kadar kendi ilerler; her adım doğrulanır, plana işlenir, commit'lenir ve push'lanır |
+| Yeni bir iş | "Envanter sistemi ekleyelim" | Küçük işse doğrudan yapar; büyükse plan hazırlar, gösterir ve başlar. Plan senin kararını gerektiriyorsa (kapsam, para, geri dönüşü zor işlem) ya da fazlara bölünüyorsa onayını bekler. Plan sonuna kadar kendi ilerler; her adımda hata kontrolü yapılır (derleniyor mu, çalışınca günlükte hata var mı), plana işlenir, commit'lenir ve push'lanır |
 | Planı önce görmek | "önce planı göster" | Plana başlamadan onayını bekler |
 | Bekleyen planı onaylamak | "tamam", "olur" | Plan başlar |
 | Devam etmek | "devam", "kaldığımız yerden" | Önce yarım kalan işi toparlar ve kısa bir derleme kontrolü yapar, sonra sıradaki adıma geçer |
@@ -73,15 +73,17 @@ Kurulum sırasında yalnızca şu durumlarda onayın istenir:
 | Bir şey hatırlatmak | "bilgin olsun: …", "bunu hatırla: …" | Uygun hafıza dosyasına yazar |
 | Hafızayı toparlamak | "hafıza bakımı" | Tekrarları birleştirir, eskimiş bilgileri düzeltir |
 | Tarayıcıda bir iş | "Play Console'da ürünleri oluştur", "şu sayfaya bak" | Chrome'daki kendi profilinde izin almadan kendisi yapar (Claude in Chrome); yalnızca Claude'un kendi güvenlik onayları kalır |
-| Sürüm çıkmak | "8.3 sürümünü hazırla", "sürüm çıkalım" | Mağazalarda yeni sürümü doğrudan yayın olarak oluşturur (Play'de üretim kanalı ve %100, App Store'da otomatik yayın; test kanalı ve TestFlight yok) ve verilerini girer, Android ve iOS build'lerini `Builds/` klasörüne alır, sonra bekler. Build'leri mağazalara sen yükler, incelemeye sen gönderirsin; Android imzası için keystore şifresini açık editöre sen girersin |
+| Sürüm çıkmak | "8.3 sürümünü hazırla", "sürüm çıkalım" | Önce yayın öncesi test aşaması: bütün testler bir kez, yayın kontrol listesi ve test listesi, raporuyla. Sonra mağazalarda yeni sürümü doğrudan yayın olarak oluşturur (Play'de üretim kanalı ve %100, App Store'da otomatik yayın; test kanalı ve TestFlight yok) ve verilerini girer, Android ve iOS build'lerini `Builds/` klasörüne alır, sonra bekler. Build'leri mağazalara sen yükler, incelemeye sen gönderirsin (bilgisayarda oturum yöneticisi varsa onun kuralı geçerli); Android imzası için keystore şifresini açık editöre sen girersin |
 
 Claude seçtiği yolu tek satırla söyler (ör. "→ Plan hazırlıyorum"); istersen hemen yönünü değiştirirsin.
 
-**Otomatik ilerleme yalnızca şu durumlarda durur:** doğrulama geçmiyor ve denemeye değer fikir kalmamışsa, planın bir varsayımı yanlış çıkarsa, bir test hatalı görünüp plan onu değiştirmeyi içermiyorsa, planda olmayan ve geri dönüşü zor bir işlem (git'in geri getiremeyeceği silme, paket yükseltme ya da kaldırma, veri taşıma) gerekirse ya da senin kararın gerekirse.
+**Otomatik ilerleme yalnızca şu durumlarda durur:** hata kontrolü geçmiyor ve denemeye değer fikir kalmamışsa, planın bir varsayımı yanlış çıkarsa, yayın öncesi test aşamasında kırmızı bir testin nedeni anlaşılmıyorsa (oyun hatası mı, eskimiş test mi), planda olmayan ve geri dönüşü zor bir işlem (git'in geri getiremeyeceği silme, paket yükseltme ya da kaldırma, veri taşıma) gerekirse ya da senin kararın gerekirse.
 
 **Kalite çıtası:** oyuncunun ya da izleyicinin göreceği işlerde (ekran, his, sanat, mağaza sayfası, video) Claude plandan önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına (Unity'de `unity-uzmani`) inceletir; bulgular planın başındaki "Review" (İnceleme) bölümüne yazılır. Kapanışta iş denenir, uzman sonucu inceler ve Claude "en iyilerin yanında nasıl duruyor?" sorusunu dürüstçe cevaplar; zayıfsa önce düzeltilir. Özensiz iş yapılmamış sayılır.
 
-**Plan bitince:** Claude özet verir, yeni manuel testleri `docs/ai/manuel-testler.md`'ye ekler ve çalıştırılamadığı için "değerlendirilmedi" kalan kontrolleri söyler. Manuel testleri istediğin zaman topluca yaparsın ("test oturumu yapalım" demen yeter). Yeni işe geçmeden `/clear` yaz; durum dosyalarda kayıtlı olduğu için hiçbir şey kaybolmaz.
+**Test düzeni** (18 Ekim 2026'dan beri): geliştirirken test yazılmaz ve koşturulmaz; her adımda yalnız hata kontrolü yapılır (kod hatasız derleniyor mu, editörsüz derleme yeter; oyun açılınca günlükte hata var mı). Her büyük parçanın sonunda Claude işi 2-3 dakika kendisi oynar ve ekran görüntüsü alır. Yayından önce bir kez, kapsamlı bir test aşaması yapılır: bütün bölümler botla ya da çözücüyle, kayıt, satın alma, reklam, ödül ve gün değişimi, iki dilde ekranlar, mevcut otomatik testlerin hepsi, emülatörde mağaza derlemesi, elle test listesi ve uzmanın incelemesi. Yeni test yalnız orada, gerektiği kadar yazılır. Yayına girmeyecek prototipte bu aşama yok.
+
+**Plan bitince:** Claude özet verir, yeni manuel testleri `docs/ai/manuel-testler.md`'ye ekler ve çalıştırılamadığı için "değerlendirilmedi" kalan kontrolleri söyler. Şablonun yeni bir sürümü çıkmışsa projeyi kendisi günceller ("şablonu güncelle"; CLAUDE.md'nin projeye özel kısmı, hafıza ve planlar korunur) ve ne değiştiğini tek satırla söyler. Manuel testleri istediğin zaman topluca yaparsın ("test oturumu yapalım" demen yeter). Yeni işe geçmeden `/clear` yaz; durum dosyalarda kayıtlı olduğu için hiçbir şey kaybolmaz.
 
 **Claude karar verir:** Teknik ve tasarım seçimlerini, plana ne zaman başlayacağını ve kaç yardımcı ajan açacağını kendisi seçer, gerekçesini tek satırla yazar. Kurallar varsayılandır: uymadığı bir durumda Claude amaca en iyi hizmet edeni yapar ve nedenini söyler. Sana yalnızca kapsam, para, geri dönüşü zor işlemler ve senin vermen gereken kimlik bilgileri için sorar. Plan sürerken büyük bir iş verirsen hangisinin önce yapılacağına da kendisi karar verir ve söyler.
 
@@ -94,7 +96,7 @@ Claude seçtiği yolu tek satırla söyler (ör. "→ Plan hazırlıyorum"); ist
 1. Önce GitHub Desktop'ta şablon deposu için **Fetch origin** ve **Pull** yap; şablonun yeni sürümü böyle gelir.
 2. Projenin klasöründe `şablonu güncelle` yaz.
 
-Yeni sürüm çıktığında Claude bunu projede oturumun ilk cevabında tek satırla hatırlatır. Her sürümden sonra güncellemen gerekmez; güncelleme birikimlidir, aradaki tüm sürümler tek seferde gelir.
+Yeni sürüm çıktığında Claude bunu projede oturumun ilk cevabında tek satırla söyler ve projeyi bir sonraki plan kapanışında kendisi günceller (1.54'ten beri); beklemek istemezsen `şablonu güncelle` yazarsın. Güncelleme birikimlidir, aradaki tüm sürümler tek seferde gelir.
 
 - **Yenilenenler:** Çalışma kuralları (PROTOKOL, KURULUM, BAKIM), şablonlar, izin kuralları ve ayarlar, `.gitignore`'daki editör ve bilgisayar satırları, `.gitattributes`'taki `.sh` satır sonu kuralı (Unity'de ikili `.asset` dosyalarını koruyan satırlar da), Unity eklentisi, projeye uyan el kitabı girdileri. Git'te takip edilen editör dosyaları (`.vscode` gibi) takipten çıkarılır: dosyalar bilgisayarında kalır, diğer bilgisayarda bir sonraki pull'da silinir ve editör onları yeniden oluşturur.
 - **Korunanlar:** Planlar, hafıza, `DURUM.md` ve projenin CLAUDE.md dosyası. CLAUDE.md'de yapısal bir değişiklik gerekiyorsa Claude yapar ve söyler. İstisnalar: El kitabı girdilerinin hafıza satırı ve plan adayları eklenir ya da güncellenir (ör. mevcut Android oyunlarında Google Play Level Up); bilgisayarda kalmış yerel notlar da hafızaya eklenir (aşağıda).

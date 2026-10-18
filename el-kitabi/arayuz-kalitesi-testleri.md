@@ -1,18 +1,18 @@
 ---
 title: "UI test list before every release: screen matrix, automated checks, honest review"
 condition: "Unity game project with player-facing UI (every studio game; not Project J or other non-game apps)."
-read_when: "Before every store release; after any change to a screen, popup, font, palette or localisation; when adding a screen; in a UI pass; when writing or extending the project's UI tests."
+read_when: "In the pre-release test stage of every store release (the only time the matrix runs); when writing or extending the project's UI tests (only in that stage)."
 requires: "Unity Test Framework (PlayMode test assembly under Assets/); a GPU for pixel checks (batchmode with graphics, not -nographics); Python 3 with Pillow for sheets (a side-by-side sheet script)"
 source: "Companion of arayuz-kalitesi.md, arayuz-kurallari.md and oyun-hissi.md (thresholds and sources there) · unity-uzmani plan and closure reviews 2026-10-18 · the market review's verification rounds of platform rules and TMP source, and its frame-by-frame result-screen timings · prior art in the studio's projects (an Overlay → Camera capture helper, layout and readability captures, a non-drawing raycast target, a shop view with currency fallbacks, allocation tests with Is.Not.AllocatingGCMemory, a soak runner, render stats, UI audit evals), template el-kitabi/araclar/cvd_palette.py"
 tech: "Unity 6000.3 (uGUI 2.0 with TextMeshPro), Unity Test Framework, Android and iOS"
-added: "2026-10-18 · template 1.52 · the studio's UI market research for the session manager; owner's words: 'UI assetler özenle hazırlansın, test edilsin.'"
+added: "2026-10-18 · template 1.52 · the studio's UI market research for the session manager; owner's words: 'UI assetler özenle hazırlansın, test edilsin.' · template 1.54: the matrix only in the pre-release test stage, on 5 profiles (the owner's test decision, 2026-10-18; the test review's measurement: 396 s for 8 profiles, 607 s for 10)"
 ---
 # UI test list
 
-Rule: everything measurable is an automated test that fails the run; only taste stays manual (§3 and the honest side-by-side, arayuz-kalitesi.md §5). A release needs a green run on the whole matrix in both languages, plus the honest review.
+Rule: everything measurable is an automated check that fails the run; only taste stays manual (§3 and the honest side-by-side, arayuz-kalitesi.md §5). The matrix runs once per release, in the pre-release test stage (BAKIM.md): green on its 5 profiles in both languages, plus the honest review. While developing: one screenshot per visible step (the UI rule), no matrix.
 
 ## 1. Screen matrix
-- **Profiles** (portrait; landscape games swap width and height, move the top inset to both the left and the right edge and test both rotations; the bottom keeps the home indicator or gesture bar, and the 3-button nav bar moves to a side edge). Density = device pixels per dp/pt; for minimum-size checks the strict (higher) density is used. Insets = unsafe pixels at top / bottom (edge-to-edge on Android 15+).
+- **Profiles** (portrait; landscape games swap width and height, move the top inset to both the left and the right edge and test both rotations; the bottom keeps the home indicator or gesture bar, and the 3-button nav bar moves to a side edge). Density = device pixels per dp/pt; for minimum-size checks the strict (higher) density is used. Insets = unsafe pixels at top / bottom (edge-to-edge on Android 15+). **The matrix: android-small, android-20x9, iphone-375pt, iphone-6.9, ipad-13**; android-16x9 and iphone-6.3 serve store shots, android-21x9 is optional.
   | Profile | Pixels | Density | Insets top / bottom (px) | Why |
   |---|---|---|---|---|
   | android-small | 720x1280 | 2.0 | 48 / 96 | old small phone, 3-button nav: worst case for text and touch |
@@ -61,7 +61,7 @@ Rule: everything measurable is an automated test that fails the run; only taste 
 - The 1-second test: show a shot for one second and ask "what do I tap?" The answer must be the primary.
 
 ## 4. Honest review
-- The side-by-side sheet with two references and the 1-5 scores (below 4 anywhere → fix before sending; scores in the plan's closure): arayuz-kalitesi.md §5.
+- The side-by-side sheet with two references and the 1-5 scores of the scored screens, against the floor and target (the only place they are set): arayuz-kalitesi.md §5.
 
 ## 5. Dry run (2026-10-18, on screenshots)
 - Project M lose popup before the fix fails #7 (pink heart on the gold button 1.86:1), #9 (two equal buttons, no single largest primary; video shown by a monitor icon) and #19 (card 1.10:1 on the dimmed scene; upper half empty). The drawn fix passes them (worked example in arayuz-kalitesi.md §5).

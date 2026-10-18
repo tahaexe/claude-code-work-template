@@ -23,7 +23,7 @@ added: "2026-10-18 · template 1.53 · four art research notes of the studio mer
 - Particles: the built-in Particle System with URP Particles Unlit (transparent, premultiply or additive); no soft particles, camera fading or distortion unless the depth texture is already on; one system per effect kind, `Emit(EmitParams, n)` at each point; `maxParticles` sized for the largest level, warmed once.
 - Not on mobile: VFX Graph (needs compute shaders and SSBOs, no OpenGL ES: its requirements page, not re-read for 1.53); preview toon packages in production.
 - **Disappear or pop:** scale (0.3-0.5 s, soft ease-in) with a rise, a short squash and particles, the body staying opaque; not `discard`, alpha clip or a dithered dissolve: discard forces late depth testing on tile-based GPUs (Arm GPU Best Practices 2025, not re-read for 1.53).
-- Measure draws, SetPass calls and triangles in a soak; overdraw with RenderDoc on a phone.
+- Measure draws, SetPass calls and triangles in the pre-release stage's soak; overdraw with RenderDoc on a phone.
 
 ## Cheap depth for low-poly scenes (no real-time shadows)
 - Order on mobile: baked light for static scenery, light probes for moving objects, fake shadows instead of real-time ones; no dynamic lights (one directional light is the cheapest if one is needed).
@@ -31,4 +31,4 @@ added: "2026-10-18 · template 1.53 · four art research notes of the studio mer
 - Contact blobs under every prop (soft dark quads, one premultiplied material, one draw) are the biggest win: props stop floating.
 - Distance fog is set at edit time (Lighting window or the scene builder), never at runtime: from Unity 6.1 fog can't be changed at runtime by default (UUM-90451, "As Designed"). URP's switch back is a keyword the manual names `k_UseDynamicBranchFogKeyword` (the issue writes `k_DynamicBranchFogKeyword`); it costs performance, so it stays off in shipping builds. Shaders that must keep exact colours (a measured palette) simply don't apply fog.
 - Vertex AO: a few hemisphere rays per vertex at bake time into vertex colours, read by your own shader (URP Simple Lit ignores vertex colour); no third-party baker needed.
-- Check every step with the same captures and the palette checks; measure the cost in a soak.
+- Check every step with one capture (the UI rule's single screenshot) and the palette checks; the cost is measured in the pre-release stage's soak.

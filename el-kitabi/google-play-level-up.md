@@ -120,7 +120,7 @@ Before each release prep Claude reads Play Console's recommended actions and And
   - Usual remaining cause: package-wide keep rules in `Assets/Plugins/Android/proguard-user.txt` (`-keep class com.google.firebase.** { *; }` style) that exempt whole libraries from R8. Libraries ship their own consumer rules; keep only the JNI and reflection entry points the C# side calls (e.g. the Unity plugins' bridge classes).
   - PGS: the plugin's own `scripts/proguard.txt` has 23 keeps, many package-wide (`gms.common.api.**`, `signin.**`, `dynamite.**`, `nearby.**`…). One project's block (2026-10-10, matched to the calls its C# makes) needs 4: `com.google.games.bridge.**`, `com.google.android.gms.games.**`, `com.google.android.gms.tasks.**`, `com.google.android.gms.common.api.Status`. Game Stats or Saved Games may need more: check every release build with `r8-kontrol.py`.
   - Measure first: DEX total `unzip -l <aab> | grep '\.dex$'`; scores (AGP 8.10+) in `BUNDLE-METADATA/com.android.tools/r8.json`. Small DEX → low priority.
-  - One library per step; after each, the release build on a device: startup, sign-in, ads, purchases, Firebase/Crashlytics. A missing keep shows as `ClassNotFoundException` or a JNI error in logcat.
+  - One library per step; each step's error check is the release build run on a device or emulator through startup, sign-in, ads, purchases and Firebase/Crashlytics with logcat read: a missing keep shows as `ClassNotFoundException` or a JNI error.
   - **`r8-kontrol.py`** (template tool `el-kitabi/araclar/r8-kontrol.py`, standard library Python; copy to `docs/ai/araclar/r8-kontrol.py`): reads an AAB or APK and lists every Java class that C# (IL2CPP metadata) or native libraries name but the DEX lacks, classes Java loads by reflection (WorkManager's Room database, AdMob's Unity Ads adapter) and C# paths managed stripping removed; `--compare <old> <new>` before a release also flags callable methods lost on named classes (and resources with `--bundletool`). Each allowance carries its reason; the template's are SDK-level, a project adds its own and keeps them when it takes a newer copy. The 2026-10-16 copy stops `--compare` from calling a method lost when R8 only rebinds the call to the defining superclass (Project E had 13 such false alarms): older project copies take the template's engine before their next `--compare`. Project E's AAB pair, 2026-10-17: same verdicts as its own copy except the project allowances, peak 185 MB.
 - **Edge-to-edge** ("Edge-to-edge may not display for all users", "Your app uses deprecated APIs or parameters for edge-to-edge"):
   - Target SDK 35+ → Android 15+ draws behind the system bars: UI inside `Screen.safeArea` (UI rule); check on an Android 15+ device with a cutout.
@@ -150,7 +150,7 @@ Claude enters the values; the user keeps the payments profile and program terms:
 - Play Console demands a closed test before production (new personal developer accounts) → Google's rule: tell the user.
 
 ## Verification
-- **EditMode tests** (on the grant class, with a fake store and a fake save):
+- **EditMode tests** (written in the pre-release test stage; on the grant class, with a fake store and a fake save):
   - The same order arriving twice grants the item once.
   - If saving fails, confirm isn't called.
   - An owned one-time item isn't granted again, but its order is confirmed.

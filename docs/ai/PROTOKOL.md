@@ -1,19 +1,20 @@
 # Working Protocol
-<!-- Version 1.53 · 2026-10-18 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
+<!-- Version 1.54 · 2026-10-19 · Same in every project; project facts go to CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
 
 Goal for every task here: understand it, follow a plan step by step, use little context, keep knowledge in durable memory; what players or viewers see must stand beside the best of its kind (careless work counts as not done).
 - The user's explicit instruction overrides this protocol. Its rules are defaults: where one doesn't fit, do what serves the goal and say why in one line; only the next rule is fixed.
 - Hard-to-reverse operations (deletion git can't undo, package upgrade or removal, data migration, external service): ask first unless the approved plan explicitly includes them. Every commit is pushed automatically (§4).
+- **Manager:** a machine-level CLAUDE.md may name a session manager; then whatever this protocol or the project leaves to the user (questions, decisions, sign-ins, clicks, `/clear`, uploads, store submission) goes to the manager, under its rules.
 - **Language:** Turkish with the user. Claude's own files (this protocol, DURUM, HAFIZA, `hafiza/`, plans, rules, handbook): terse English bullets; compress wording, never facts. User-facing files stay Turkish (`manuel-testler.md`, `tasarim/`). Code, comments, commit messages: English.
 
-**Files** (`docs/ai/`): `DURUM.md` state, `HAFIZA.md` memory index (both loaded every session) · `hafiza/*.md` incl. `teknik-borc.md` (tech debt): read when the index points there and the task needs it · `planlar/*.md` plans (`planlar/arsiv/` finished), `sablonlar/plan.md` template · `manuel-testler.md` the user's manual tests · `BAKIM.md` plan closure, memory tidy-up · `KURULUM.md` install, template update
+**Files** (`docs/ai/`): `DURUM.md` state, `HAFIZA.md` memory index (both loaded every session) · `hafiza/*.md` incl. `teknik-borc.md` (tech debt): read when the index points there and the task needs it · `planlar/*.md` plans (`planlar/arsiv/` finished), `sablonlar/plan.md` template · `manuel-testler.md` the user's manual tests · `BAKIM.md` plan closure, pre-release test stage, memory tidy-up · `KURULUM.md` install, template update
 
 ## 1. Read intent, choose the path yourself
 Infer intent; the user doesn't memorize commands. Before changing files, state your path in one line ("→ Plan hazırlıyorum", "→ Küçük iş, doğrudan yapıyorum", "→ Aktif plandan devam: adım 4/7").
 - **Decide yourself:** make technical and design choices; give the reason in one line, say it is reversible. Ask only about scope, money, hard-to-reverse operations, or credentials/identity you cannot invent: one short question, with options if possible. Browser work → yourself with the Claude in Chrome tools, only in your account's own Chrome profile (never another profile or browser), without asking permission or handing it to the user (built-in safety confirmations remain); no own profile yet or not connected → `el-kitabi/tarayici-baglantisi.md`; still not connected → say so, ask before another browser.
 - **New task** → size it (§2).
 - **Continue** ("devam", "kaldığımız yerden", "bitir şunu") → tidy up first: read the active plan (§6), compare `git status` and recent commits with it; a half-done or ticked but uncommitted step: work out how much is done, then finish, verify, record, commit; a change of unclear purpose: ask, never delete; an earlier session's leftovers (this project's editor, emulator, dev server; unsure whose → leave it): reuse if the next step needs it, else close cleanly (editor: save first). Then a short compile check (CLAUDE.md command; skip if slow): broken → fix it before the next step. Then the next step.
-- **Session start, greeting, status question** ("nerede kalmıştık?") → 1-2 line summary from DURUM and the active plan; if a plan is active, offer to continue. In a session's first reply: template PROTOKOL (folder: global CLAUDE.md) newer than line 2 here → one line suggesting "şablonu güncelle".
+- **Session start, greeting, status question** ("nerede kalmıştık?") → 1-2 line summary from DURUM and the active plan; if a plan is active, offer to continue. In a session's first reply: template PROTOKOL (folder: global CLAUDE.md) newer than line 2 here → one line: it updates at the next plan closure (`BAKIM.md`).
 - **Plan view** ("planı göster", "tüm planlar") → don't read the whole plan; grep the step lines, list: `✓` done · `→` next · `○` waiting · `⛔` blocked. "Tüm planlar" → active plan + **Up next** + recently completed.
 - **Plan edit** ("4. adımdan sonra şunu ekle", "şunu çıkar", "sıraya koy") → insert the step (Files/Tool/Verify), renumber, update **Progress**, log, show the short list, commit. Never edit a done step; add a fix step. Ask first only if goal or scope changes. "Sıraya koy" → **Up next**.
 - **Plan approval** ("tamam", "olur", "başla" after a plan is shown) → status `in-progress`, start.
@@ -38,8 +39,8 @@ Infer intent; the user doesn't memorize commands. Before changing files, state y
 ## 4. Execute: default auto, sequential
 Each step:
 1. Only that step's work, with its **Tool**; read only the files needed (big files: search first, then open the relevant part).
-2. **Verify:** the plan's method and CLAUDE.md commands. Only tool output seen in this session counts; a check that didn't run or timed out **does not pass**: log "not verified". What can't be verified automatically → the plan's **Manual tests** (Turkish); continue.
-3. **Record:** tick `[x]`, update **Progress**, one **Progress log** line in the template's fixed format (date · step · what · tool · verify: command run and short result), new decisions to **Decisions**, update DURUM.md.
+2. **Verify = error check** (plan's method, CLAUDE.md commands): clean compile or build (editor-free is enough); a run logs no errors. No tests written or run while developing (they wait for the pre-release test stage); nothing started only to test. A plan's or phase's last step adds an **eye check**: use it yourself 2-3 minutes as a player or user would, take screenshots. Only tool output seen in this session counts; a check that didn't run or timed out **does not pass**: log "not verified". The rest → the plan's **Manual tests** (Turkish); continue.
+3. **Record:** tick `[x]`, update **Progress**, one **Progress log** line in the plan template's fixed format, new decisions to **Decisions**, update DURUM.md.
 4. **Commit and push** (if git): the step's files + companions (e.g. Unity `.meta`) + plan + DURUM; check `git status` first, never add unrelated changes (no `git add -A` / `git add .`). English message: `feat: add inventory UI (plan: envanter, step 3/7)`; no `--no-verify`. Push if a remote exists: rejected → `git pull --rebase --autostash` once, push again; conflict → resolve it if both sides' intent is clear, else `git rebase --abort`, ask; network/server error → continue, retry after the next commit. Force push: your call, with `--force-with-lease`.
 5. Mode `auto` → next step without waiting; `step-by-step` → short summary, then stop.
 
@@ -47,11 +48,11 @@ Each step:
 - Verification keeps failing, no well-founded idea left.
 - A plan assumption proved wrong; goal or scope must change.
 - A hard-to-reverse operation outside the approved plan.
-- A test looks wrong and the plan doesn't include changing it. Never delete or loosen a test or hard-code its result to make it pass.
+- A red test in the pre-release test stage with an unclear cause (bug or stale test). Never delete or loosen a test or hard-code its result to hide a bug.
 - A decision only the user can make (§1).
 
 Small deviation (same goal, different detail) → update the plan, log it, continue. Out-of-scope idea → **Up next**, tech debt → `hafiza/teknik-borc.md`; not now.
-**Plan finished** → `BAKIM.md` → "Plan closure".
+**Plan finished** → `BAKIM.md` → "Plan closure". **Before a release** (store build, deploy) → `BAKIM.md` → "Pre-release test stage".
 
 ## 5. Memory
 | Information | Where |
@@ -77,6 +78,6 @@ Small deviation (same goal, different detail) → update the plan, log it, conti
 - **Active plan:** don't read it whole: the header, **Context**, the next step and the last log lines (search, then read that part); other sections when needed.
 - Filter long output (build/test logs); errors and a summary are enough.
 - **Helper agents:** your call; each costs tokens, so use one where it beats searching yourself: broad exploration, independent work in parallel, a closure review (`BAKIM.md`). An expert agent for the area → exploration and opinion in one call. Agents don't spawn agents (settings).
-- **Name-only skills** (descriptions hidden by settings): `agent-protocols:*` methods (debugging, TDD, security, performance, review, docs, CI), `engineering:*` team/ops checklists (architecture, tech debt, testing strategy, incidents, deploys); use one when a step needs it. Plan mode or a plan/spec skill may be used, but the valid plan is the §3 file (its template); no skill's workflow replaces this protocol.
+- **Name-only skills** (descriptions hidden by settings): `agent-protocols:*` methods (debugging, TDD, security, performance, review, docs, CI), `engineering:*` team/ops checklists (architecture, tech debt, testing strategy, incidents, deploys); use one when a step needs it (TDD and test skills only in the pre-release test stage). Plan mode or a plan/spec skill may be used, but the valid plan is the §3 file (its template); no skill's workflow replaces this protocol.
 - State is written to disk every step. After compaction, an interruption (e.g. usage limit) or when unsure → §1 **Continue** tidy-up.
 - When a plan ends or the topic changes, suggest `/clear` to the user.

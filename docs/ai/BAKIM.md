@@ -1,9 +1,9 @@
-# Maintenance: Plan Closure and Memory Tidy-up
-<!-- Read only when needed: a plan ends, a file exceeds a limit, or the user asks for a tidy-up. -->
+# Maintenance: Plan Closure, Pre-release Test Stage, Memory Tidy-up
+<!-- Read only when needed: a plan ends, a release is next, a file exceeds a limit, or the user asks for a tidy-up. -->
 
 ## Plan closure
-1. **Verify:** check each acceptance criterion against tool output seen in this session. A check that couldn't run or was never tried is "not assessed" in the report, never "passed". Non-automatable checks (e.g. game feel, on-device performance) go to manual tests.
-2. **Review:** work players or viewers see (screens, feel, art, store pages, videos) → always: the area's expert agent reviews the result (with the step screenshots; `tasarim/gorsel-stil.md` exists → visual consistency too), then an honest check against the plan's **Review** section: was it tested (UI, feel, smoothness), and how does it stand beside the best examples? Weak → fixed before it ships; the answer goes in **Result**. Other plans (your call): worth it when the plan was risky (save data, purchases, data migration), weakly verified automatically (scenes, prefabs, UI) or long, and the project has a review agent for the area (e.g. `unity-uzmani` for Unity code): have it review the files the plan changed; ask only for bugs and requirement gaps. Small, test-verified plan → no review; report "review: not needed". Serious findings → a fix plan (PROTOKOL §3), not fixes inside the closure. Follow-ups not fixed now → `hafiza/teknik-borc.md`.
+1. **Verify:** check each acceptance criterion against tool output seen in this session: the error check and the eye check (PROTOKOL §4); no test suite runs here (the pre-release test stage runs them). A check that couldn't run or was never tried is "not assessed" in the report, never "passed". Non-automatable checks (e.g. game feel, on-device performance) go to manual tests.
+2. **Review:** work players or viewers see (screens, feel, art, store pages, videos) → always: the area's expert agent reviews the result (with the step and eye-check screenshots; `tasarim/gorsel-stil.md` exists → visual consistency too), then an honest check against the plan's **Review** section: was it tried (UI, feel, smoothness), and how does it stand beside the best examples? Weak → fixed before it ships; the answer goes in **Result**. Other plans (your call): worth it when the plan was risky (save data, purchases, ads, rewards and time, data migration) or long, and the project has a review agent for the area (e.g. `unity-uzmani` for Unity code): have it review the files the plan changed; ask only for bugs and requirement gaps. Small plan with a clean error check → no review; report "review: not needed". Serious findings → a fix plan (PROTOKOL §3), not fixes inside the closure. Follow-ups not fixed now → `hafiza/teknik-borc.md`.
 3. **Result:** plan status `done`; in **Result** write what changed, known limits, recommendations.
 4. **Move durable knowledge** (only what will matter later):
    - decisions not specific to the plan → `hafiza/kararlar.md`
@@ -14,9 +14,16 @@
 7. **DURUM:** clear the active plan or move to the next approved plan/phase; add the finished plan to **Recently completed** as one line ≤150 characters (max 5; drop the oldest).
 8. **Tidy:** apply "Memory tidy-up" below only to memory files changed in this plan.
 9. **Commit** (if git): `docs: close plan <short-name>`.
-10. **Report** (Turkish): short summary, how many manual tests were added (the list is in `manuel-testler.md`), checks not assessed, review findings (if any) and the honest check's answer, CLAUDE.md rules added, the next task and `/clear` before a new task. If the project has `docs/ai/sablonlar/oyun/`, suggest the fitting doc: prototype report after a prototype plan, playtest report when a build goes to players, post-mortem after a major milestone.
+10. **Template update:** the template's PROTOKOL (folder: global CLAUDE.md) newer than line 2 here → run `KURULUM.md` → "Güncelleme (Update)" yourself now (it keeps the project's own CLAUDE.md lines, memory and plans); one line on what changed for this project goes into the report.
+11. **Report** (Turkish): short summary, how many manual tests were added (the list is in `manuel-testler.md`), checks not assessed, review findings (if any) and the honest check's answer, CLAUDE.md rules added, the next task and `/clear` before a new task. If the project has `docs/ai/sablonlar/oyun/`, suggest the fitting doc: prototype report after a prototype plan, playtest report when a build goes to players, post-mortem after a major milestone.
 
 Cancelled plan: status `cancelled`, reason in **Result**, archive, update DURUM.
+
+## Pre-release test stage
+Before every release (store build, deploy), once per version and thorough: a release plan's last step, then its closure (expert review, honest check). Not for a prototype that won't ship: the error and eye checks are enough there.
+1. **Run:** every existing test suite once; the release checklist; the test list (`el-kitabi/yayin-oncesi-test-listesi.md` where installed: in games every level through the real controller, saves with a relaunch and an old save, purchases, ads, rewards and the clock, ad and navigation flows, screens in both languages, the store build on an emulator) with its report (item, result, evidence) in the plan; then the manual list.
+2. **Red:** a bug is fixed before the release; a stale or flaky test is updated, or disabled with its reason in `hafiza/teknik-borc.md`. Never delete or loosen a test or hard-code its result to hide a bug; unclear cause → stop and ask (PROTOKOL §4).
+3. **New tests** only here, as many as needed, where a bug would cost players or money; a test for a fixed bug is seen failing without the fix first.
 
 ## Memory tidy-up
 - **Duplicates:** merge entries that say the same thing, entry by entry. Never rewrite a whole file as a summary.

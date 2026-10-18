@@ -27,7 +27,7 @@
 <!-- Work players or viewers see (PROTOKOL §3): written before the steps; the closure judges the work by it. Otherwise delete this section. -->
 - **Best examples:** ‹2-3 references: what they do (measured where possible), what we take, what we avoid›
 - **Expert:** ‹agent and its plan review: findings, what changed in the plan›
-- **Bar at closure:** ‹how "beside the best" is checked: side-by-side, scores, tests, feel on a device›
+- **Bar at closure:** ‹how "beside the best" is checked: side-by-side, scores, eye check, feel on a device›
 
 ## Phase map
 <!-- Only if the work was split; each phase is its own plan file. Otherwise delete this section. -->
@@ -35,15 +35,18 @@
 2. ‹Phase 2: goal›
 
 ## Steps
-<!-- One commit each. Tool and Verify are required. ≤6 lines per step; independent parts or >~15,000 characters → split into phases. -->
+<!-- One commit each. Tool and Verify are required. Verify = the error check (PROTOKOL §4), no tests; the last step adds the eye check. A release plan ends with the pre-release test stage (`BAKIM.md`). ≤6 lines per step; independent parts or >~15,000 characters → split into phases. -->
 - [ ] **1. ‹Step name›**: ‹what›
   - Files: `‹…›`
   - Tool: ‹skill or CLI (e.g. `unity:ui`, Unity CLI); else —›
-  - Verify: ‹command, test or check›
+  - Verify: ‹error check: e.g. editor-free compile clean, no errors in the log›
 - [ ] **2. ‹Step name›**: ‹what›
   - Files: `‹…›`
   - Tool: ‹…›
-  - Verify: ‹…›
+  - Verify: ‹error check; last step of the plan or phase: + eye check (2-3 min, screenshots)›
+- [ ] **N. Pre-release test stage** ‹release plans only›: ‹the release checklist and the test list (`el-kitabi/yayin-oncesi-test-listesi.md`), every existing test suite once›
+  - Tool: ‹…›
+  - Verify: ‹the test report: item, result, evidence›
 
 ## Risks and open questions
 - ‹…›

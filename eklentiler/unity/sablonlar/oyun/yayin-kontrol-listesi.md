@@ -1,5 +1,5 @@
 # Yayın Kontrol Listesi: ‹Sürüm› · ‹Platform›
-<!-- Yayın hazırlığı planında bu liste plana kopyalanır ve maddeleri kabul kriteri olur. Uygun olmayan maddeyi silme, "Yok" diye işaretle. Otomatik doğrulanamayanlar Manuel test listesine gider. -->
+<!-- Yayın hazırlığı planında bu liste plana kopyalanır ve maddeleri kabul kriteri olur. Uygun olmayan maddeyi silme, "Yok" diye işaretle. Otomatik doğrulanamayanlar Manuel test listesine gider. Testlerin nasıl yapılacağı ve rapor şablonu: `docs/ai/el-kitabi/yayin-oncesi-test-listesi.md` (yayın öncesi test aşaması, planın son adımı). -->
 
 - **Yayın tarihi:** YYYY-AA-GG · **Karar:** [ ] YAYINLA · [ ] BEKLET
 
@@ -17,16 +17,17 @@
 
 ## Kalite
 - [ ] Açık kritik ya da büyük hata yok (istisnalar gerekçesiyle yazılı)
-- [ ] Kritik yoldaki tüm özellikler test edildi; tüm testler geçiyor
+- [ ] Yayın öncesi test aşaması bitti: test listesinin bu oyuna uyan bütün maddeleri denendi, rapor (madde, sonuç, kanıt) planda (`docs/ai/el-kitabi/yayin-oncesi-test-listesi.md`)
+- [ ] Mevcut otomatik testlerin hepsi bir kez koştu; kırmızı kalan yok: oyun hatası düzeltildi, eskimiş ya da kararsız test gerekçesiyle devre dışı ve teknik borçta
 - [ ] Uzun oynama testi (4+ saat) sorunsuz; bellek sızıntısı yok
 - [ ] En düşük hedef cihazda hedef FPS: ‹gerçek / hedef›
 - [ ] Bellek ve yükleme süreleri bütçe içinde
 - [ ] Uç durumlar test edildi
-- [ ] Arayüz her sürümde ekran matrisiyle test edildi: telefon ve tablet profilleri, güvenli alan, iki dil; otomatik denetimler yeşil (`docs/ai/el-kitabi/arayuz-kalitesi-testleri.md`)
+- [ ] Arayüz yayın öncesi aşamada ekran matrisiyle denendi: 5 telefon ve tablet profili, güvenli alan, iki dil; otomatik denetimler yeşil (`docs/ai/el-kitabi/arayuz-kalitesi-testleri.md`)
 - [ ] His ve akıcılık denendi: dokunuşa aynı karede cevap, menülerde hedef FPS, titreşim ve "Hareketi azalt" ayarı (`docs/ai/el-kitabi/oyun-hissi.md`)
 
 ## İçerik
-- [ ] Geçici varlıklar değiştirildi; mağazaya gri kutu, yer tutucu, çıplak Unity arayüzü ya da "New Text" çıkmıyor; değişen her ekran en iyi iki örnekle yan yana puanlandı, hiçbir ölçüt 4'ün altında değil (`docs/ai/el-kitabi/arayuz-kalitesi.md`)
+- [ ] Geçici varlıklar değiştirildi; mağazaya gri kutu, yer tutucu, çıplak Unity arayüzü ya da "New Text" çıkmıyor; ana ekran, HUD, kazanma, kaybetme ve mağaza en iyi iki örnekle yan yana puanlandı ve puan tabanını geçti; önceki ve sonraki puanlar raporda (taban ve hedef: `docs/ai/el-kitabi/arayuz-kalitesi.md` §5)
 - [ ] Metinler düzeltildi; koda gömülü metin yok
 - [ ] Yerelleştirme tamam: ‹diller›
 - [ ] Ses miksajı son hâlinde
@@ -58,6 +59,7 @@
 - [ ] Mağaza sayfası metni, ekran görüntüleri, tanıtım videosu ve görseller güncel
 - [ ] İddialar denetlendi: mağaza (her dil), site, basın kiti ve video metinleri `store/facts.md`'ye karşı okundu; değişen iddia geçtiği her yerde düzeltildi, "son kontrol edilen sürüm" bu sürüm; yeni ya da değişen metin taze bir gözden geçirmeden geçti; fiyat ve hukuk iddiaları sana soruldu (`docs/ai/el-kitabi/metin-denetimi.md`)
 - [ ] App Store ekran görüntüleri: zorunlu iPhone "Dynamic Island (orta boy ekran)" kümesi, bir büyük küme (6,9" ya da 6,5") ve oyun iPad'de çalışıyorsa iPad 13" (ölçüler: `docs/ai/el-kitabi/store-listing-optimization.md` › Limits)
+- [ ] Tablet: arayüz tablet boylarında düzgün (ekran matrisi); Play'de 7 ve 10 inç tablet görüntüleri, her boyda en az 4. PC'de Google Play Games yalnız stüdyonun seçtiği oyunlarda, öbürlerinde form faktörü kapalı; Android XR şimdilik yok (`docs/ai/el-kitabi/store-listing-optimization.md`)
 - [ ] Yaş derecelendirmesi alındı
 - [ ] Gizlilik politikası ve kullanım şartları hazır; Google Play veri güvenliği ve App Store gizlilik formları politikayla aynı
 - [ ] Fiyatlandırma tüm bölgelerde ayarlı; Play'de dolardan çevrilen ürünlerin Türkiye fiyatı aynı basamağın App Store Türkiye fiyatı (`docs/ai/el-kitabi/google-play-level-up.md` › Play Console work)
@@ -65,7 +67,7 @@
 - [ ] Play'de ilk yayın: mağaza sayfası, bütün çeviriler, görseller, uygulama içi ürünler ve beyanlar ilk "incelemeye gönder"den önce girildi; inceleme sürerken değişiklik gönderilmiyor (uygulamayı sıranın sonuna itebilir). İlk yayında yönetilen yayın yok: onay gelince yayına girer
 - [ ] Oyuncunun göreceği yeni içerik ya da süreli bir oyun içi etkinlik varsa mağaza etkinliği: Play'de tanıtım içeriği, App Store'da uygulama içi etkinlik (Major Update ya da uygun rozet); içerik o tarihlerde gerçekten oyunda; incelemesi için en az 4 gün önce gönderildi (`docs/ai/el-kitabi/store-events.md`)
 - [ ] Mağazalarda yeni sürüm oluşturuldu ve sürüm verileri girildi: sürüm adı, iki dilde yenilikler notu, gerekiyorsa mağaza sayfası (Claude, Play Console ve App Store Connect'te Chrome'dan)
-- [ ] Build'ler mağazalara yüklendi ve incelemeye gönderildi (sen; Claude yüklemez, göndermez)
+- [ ] Build'ler mağazalara yüklendi ve incelemeye gönderildi (sen; Claude yüklemez, göndermez; oturum yöneticisi olan bilgisayarda yöneticinin kuralı geçerli)
 
 ## Yayına hazırlık
 - [ ] Analitik veri alıyor; çökme raporlama kurulu

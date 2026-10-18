@@ -21,6 +21,7 @@ added: 2026-10-14 · research by a project session, reviewed by the session mana
   - Screenshots: 2 to 8 per device type, JPEG or 24-bit PNG (no alpha), 320-3,840 px, long side at most 2× the short side.
   - Games, to be eligible for recommendation formats that use screenshots: ≥3 in-game screenshots, all 16:9 landscape (≥1920×1080) or all 9:16 portrait (≥1080×1920).
   - Alt text ≤140 characters on the feature graphic and on every screenshot.
+  - Tablets and Chromebooks ("Large screens"; every mobile release since the studio's 2026-10-18 rule; Play Console's 7" and 10" slots take the same shots): at least 4 screenshots of the real game, 9:16 portrait or 16:9 landscape; that section allows sides of 1,080-7,680 px while the general rule caps 3,840, so stay within 1,080-3,840 (Help 9866151, re-read 2026-10-19). No added text near the edges, some surfaces crop. The UI matrix's tablet profile checks layout only; tablet store shots are taken 9:16.
 - **App Store:**
   - Name 30, subtitle 30, promotional text 170 (changes any time without a new version; no search weight).
   - Keywords 100 characters: comma-separated, no spaces. No plurals of words already used, no category names, no "app", no competitor or trademarked names.
