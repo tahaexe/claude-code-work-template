@@ -1,4 +1,5 @@
 # Plan: ‹Title›
+<!-- The plan index: short, read on every restart. Each step's details live in its own file `planlar/‹this plan's name›/NN-‹slug›.md` (template `sablonlar/adim.md`), read only while that step runs. -->
 
 - **Status:** draft <!-- draft · approved · in-progress · on-hold · done · cancelled -->
 - **Mode:** auto <!-- auto: runs to the end · step-by-step: stops after each step -->
@@ -17,11 +18,11 @@
 - **Out:** ‹…›
 
 ## Context
-<!-- Gist of exploration so later steps and sessions don't rescan the code. ≤25 lines. -->
+<!-- Gist of exploration so later steps and sessions don't rescan the code. ≤15 lines; what only one step needs goes into its step file. -->
 - **Relevant files:** `‹path›`: ‹role›
 - **Current state:** ‹how the system works now›
 - **Constraints / watch out:** ‹…›
-- **Related memory:** ‹docs/ai/hafiza/… › heading›
+- **Related memory:** ‹hafiza/… › heading›
 
 ## Review
 <!-- Work players or viewers see (PROTOKOL §3): written before the steps; the closure judges the work by it. Otherwise delete this section. -->
@@ -31,38 +32,27 @@
 - **Bar at closure:** ‹how "beside the best" is checked: side-by-side, scores, eye check, feel on a device›
 
 ## Phase map
-<!-- Only if the work was split; each phase is its own plan file. Otherwise delete this section. -->
+<!-- Only if the work was split; each phase is its own plan file (index + step folder). Otherwise delete this section. -->
 1. ‹Phase 1: goal› ← this plan
 2. ‹Phase 2: goal›
 
-## Steps
-<!-- One format only, so a restart, the plan view and status tools read just these lines: each step is one checkbox line `- [ ] **N. Short title**: details`; a sub-step `- [ ] **N.M Short title**: details` (e.g. 4.1, 6a.1); ticked `[x]` when done; Files, Tool and Verify on indented lines below it, never as checkboxes; no other checkboxes in this section. DURUM: **Active plan:** `planlar/<this file>.md` N/M steps done; **Next action:** the next step's number (PROTOKOL §4). One commit each. Tool and Verify are required. Verify = the error check (PROTOKOL §4), no tests; the last step adds the eye check. A release plan ends with the pre-release test stage (`BAKIM.md`). ≤6 lines per step; independent parts or >~15,000 characters (after the older log entries moved out: Progress log) → split into phases (each phase file's steps in this format). -->
-- [ ] **1. ‹Short title›**: ‹what›
-  - Files: `‹…›`
-  - Tool: ‹skill or CLI (e.g. `unity:ui`, Unity CLI); else —›
-  - Verify: ‹error check: e.g. editor-free compile clean, no errors in the log›
-- [ ] **2. ‹Short title›**: ‹what›
-  - Files: `‹…›`
-  - Tool: ‹…›
-  - Verify: ‹error check; last step of the plan or phase: + eye check (2-3 min, screenshots)›
-- [ ] **N. Pre-release test stage**: ‹release plans only: the release checklist and the test list (`el-kitabi/yayin-oncesi-test-listesi.md`), every existing test suite once›
-  - Tool: ‹…›
-  - Verify: ‹the test report: item, result, evidence›
+## Steps index
+<!-- One format only, so a restart, the plan view and status tools read just these lines: one checkbox line per step `- [ ] **N. Short title**: one-line what → `planlar/‹plan›/NN-‹slug›.md`` (a sub-step `- [ ] **N.M Short title**: …` with its own file `NN-M-‹slug›.md`, e.g. 4.1, 6a.1); no other checkboxes in this section. States on the line: `[ ]` ○ to do (Yapılacak) · `[~]` ▶ in progress (Devam ediyor) · `[x]` ✓ done (Tamamlandı) · blocked: `⛔ ‹why›` at the line's end (Engellendi), the box unchanged. Files, Tool, Verify, Kaldığım yer, the step's log, decisions and Final test live only in the step file, one per step, written with the plan (a later phase's when that phase's plan is written). DURUM: **Active plan:** `planlar/‹this file›.md` N/M steps done; **Next action:** `Adım N başla: …` or `Adım N devam: …` (PROTOKOL §4). One commit per step. Penultimate step: the comprehensive test stage (BAKIM.md); last: the release or delivery. No stage in a prototype that won't ship or in a plan whose work ships with a later release plan: its Final tests run in that plan's stage. Index over ~15,000 characters or independent parts → phases. -->
+- [ ] **1. ‹Short title›**: ‹one-line what› → `planlar/‹plan›/01-‹slug›.md`
+- [ ] **2. ‹Short title›**: ‹one-line what› → `planlar/‹plan›/02-‹slug›.md`
+- [ ] **‹N-1›. Comprehensive test**: every step file's Final test one by one; a release: the release checklist and the test list (`el-kitabi/yayin-oncesi-test-listesi.md`), every existing test suite once; the report → `planlar/‹plan›/‹NN›-kapsamli-test.md`
+- [ ] **‹N›. ‹Release or delivery›**: ‹store submission, deploy or hand-over; a release is announced the same day (BAKIM.md › After release)› → `planlar/‹plan›/‹NN›-‹slug›.md`
 
 ## Risks and open questions
 - ‹…›
 
 ## Decisions
-<!-- One line each; durable ones move to hafiza/kararlar.md at closure. -->
+<!-- Plan-wide decisions, one line each (a step's own go into its file); durable ones move to hafiza/kararlar.md at closure. -->
 - ‹YYYY-MM-DD: decision; why›
 
 ## Manual tests
 <!-- Turkish (for the user); copied to docs/ai/manuel-testler.md at closure. -->
 - [ ] ‹…›
-
-## Progress log
-<!-- One entry per step in this fixed format, at most 2 lines (~300 characters): what and the check's short result, never full output. ⛔ = stop reason. Plan file over ~15,000 characters → move the older entries to planlar/arsiv/<plan-name>-log.md and keep the last 5 here, before splitting into phases. -->
-- ‹YYYY-MM-DD› · Step ‹N› ✓ · ‹what› · tool: ‹…› · verify: ‹command run → short result; "not verified" if it didn't run›
 
 ## Result
 <!-- Filled at closure: what changed, known limits, next suggestions. -->

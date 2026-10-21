@@ -1,21 +1,34 @@
 ---
 title: "Pre-release test list: every check before a store release, how to run it, its pass bar, the report"
 condition: "Game project that ships to a store (Google Play, App Store or Steam), first release included. Android and iOS rows need that target."
-read_when: "The pre-release test stage of every release (a release plan's last step, BAKIM.md); writing a release plan; deciding whether a new test is worth writing."
+read_when: "The comprehensive test stage of every release (a release plan's penultimate step, BAKIM.md); writing a release plan or a step file's Final test; deciding whether a new test is worth writing."
 requires: "The release checklist (`docs/ai/sablonlar/oyun/yayin-kontrol-listesi.md`); an Android emulator or phone with adb and bundletool; iOS rows need the user's Mac and an iPhone (they go to the manual list)."
 source: "Read 2026-10-18/19: Play Console Help 9842757 (pre-launch report), 11926878 (target API), 9859372 (size limits) · Android Developers: Core app quality guidelines, Adaptive app quality tier 3, vitals (crash, ANR, launch time), Page sizes (16 KB), Play Billing › Test · Apple: App Review Guidelines, the privacy manifest news of 2024-02-29 and the third-party SDK list, App privacy details, Sandbox Apple Account settings, WWDC23 10142, Audio Session Programming Guide (archived) · Google Mobile Ads for Unity: test ads, privacy (UMP), Ad Inspector; the iOS IDFA message · Firebase: Crashlytics for Unity, DebugView · Unity: Android requirements (16 KB, API levels), iOS Player settings · secondary: a game-testing vendor's interrupt list · the studio's lessons: the test review of 2026-10-18 (§4, bugs that reached players or nearly did) and the shared lessons (emulator, stores, Unity, analytics) · the template entries named in the rows"
 tech: "Unity 6000.3, Android 15-16 (target API 36), iOS 26, Unity IAP 5, Google Mobile Ads with UMP, Firebase Analytics and Crashlytics"
-added: "2026-10-19 · template 1.54 · asked by the session manager for the owner ('Her taşın altına finalde bakalım'), after the owner's test decision of 2026-10-18 (only an error check while developing, one thorough stage before each release)"
+added: "2026-10-19 · template 1.54 · asked by the session manager for the owner ('Her taşın altına finalde bakalım'), after the owner's test decision of 2026-10-18 (only an error check while developing, one thorough stage before each release) · template 1.57: the step files' Final tests first, the order, the device matrix, real taps, the report file and the hold rules, from the studio's project research of 2026-10-21 (proje-kontrol-listesi.md) and the owner's words ('en sondan bir önce artık her şey hazır denilen noktada her aşama tek tek test edilsin')"
 ---
 # Pre-release test list
 
 ## 0. How to use
-- Once per version, as the release plan's last step (BAKIM.md › Pre-release test stage). The release checklist says what must be true; this list says how to check it, the pass bar and which games need the row. Copy the rows that apply into the plan; a skipped row says why.
-- Order: §1 first (automated), then §13 (the store build on an emulator), the screen matrix (§9), then device and manual rows. After a fix: rerun what it touched plus §13.
+- Once per version, in the comprehensive test stage (BAKIM.md: a release plan's penultimate step, when everything is declared ready). The release checklist says what must be true; this list says how to check it, the pass bar and which games need the row. The test step's matrix starts with every step file's **Final test** in plan order (the version's earlier plans' and phases' too), then the rows here that apply; a skipped row says why. A pass bar is a number or a clear state ("average ≥ 55 FPS", "granted once", "the form shows"), never "works"; a row without one gets one first.
+- Order, cheap to expensive: build scans (§1); every suite once and the level solver over every level (§1-2); the store build on an emulator (§13); the step rows in plan order, with §2-8 and §10 grouped in; screens (§9); performance and memory (§11); analytics and crashes (§12); the device matrix and manual rows; store reports after the upload (§14); then the expert's review and the honest check. After a fix: rerun what it touched plus §13; on the final build, §1's scans again.
+- The tested build is the build that ships: same commit and settings; the report names the commit and the SHA-256 of the AAB and IPA (a fix → a new build, new hashes).
 - Evidence per row: the command and its result, a log excerpt or a screenshot under `Logs/claude/release/<version>/`. Report: §15. "UI check #n" = arayuz-kalitesi-testleri.md §2.
+- Rows whose Pass names a studio bug (the save overwritten at launch, the Monday-only weekly reset, missing currency glyphs, navigation hidden around an ad, the solver passing where the real game fails, a lower jump apex, classes R8 removed) are the permanent regression list: every release runs them.
 - Games column: **all** · **levels** · **iap** (purchases) · **ads** · **rew** (rewarded ads, daily or streak rewards) · **time** (anything on the clock) · **pgs** · **gc** · **notif** · **cloud** · **fb** (Firebase) · **and** · **ios**; plain words ("with tests", "links") mean games that have that thing.
 - Settings a row changes on a device (clock, network, battery saver, developer options) are changed only on the emulator and put back at the row's end: `adb shell settings put global auto_time 1`, `svc wifi enable`, `svc data enable`, `settings put global low_power 0`, "Don't keep activities" off; then a cold boot.
 - New tests only where a row keeps failing or a bug would cost players or money (the Unity test rule › New tests); a test for a fixed bug is seen failing without the fix first.
+
+### Device matrix (at least)
+| Profile | Looks at | Where |
+|---|---|---|
+| Android low end: 3-4 GB RAM, near minSdk, a weak GPU | FPS, memory, heat, launch | A real device (emulators don't measure FPS): a Firebase Test Lab physical device (no-cost plan: 5 physical and 10 virtual tests a day; Test Lab closes 2027-09-30, read 2026-10-21) or the pre-launch report's performance data; a cheap low-end phone is the lasting answer (paid: the user's call) |
+| Android current: 15-16, edge-to-edge, 16 KB | System bars, cutouts, new API behaviour, 16 KB pages | Emulator (Android 15-16 and a 16 KB system image) |
+| Emulator with the Play Store | Rating card, purchases with test cards, Play Games sign-in | A Play Store image signed in to the studio's test account |
+| Tablet 10" and a foldable or resizable | Rotate, fold, split, resize; state kept | Medium Tablet, Pixel Fold, Resizable emulators (§8) |
+| 5 screen profiles × 2 languages | Layout and scores | arayuz-kalitesi-testleri.md (§9) |
+| iPhone with a notch or Dynamic Island | ATT order, silent switch, Game Center, sandbox purchases | The user's iPhone (manual) |
+| iPad, when the game runs on iPad | iPad layout, window sizes | Manual, or the simulator on a Mac |
 
 ## 1. Suites and build scans
 | Check | How | Pass | Games |
@@ -104,6 +117,7 @@ Android's core app quality tests are the anchor (Home, Recents, sleep, a notific
 |---|---|---|---|
 | Screen matrix and scores | arayuz-kalitesi-testleri.md (5 profiles × 2 languages); arayuz-kalitesi.md §5 | Green; scores as §5 rules (the floor blocks, a missed target is explained) | all |
 | Navigation walk | From home, open every screen and popup and leave it again, with ads loaded and with none | Every screen reachable and left again; no dead end; close and back work | all |
+| Real taps | Every screen's main buttons pressed through the input system on the emulator (`adb shell input tap`); code calls (`onClick.Invoke`, `ExecuteEvents`) and editor captures don't count (a game once shipped without an EventSystem: its buttons had only been called from code) | Every main button acts on a real tap | all |
 | Glyphs and casing | Every label in tr and en with the longest strings and prices; Turkish İ/ı; no TMP case styles on localized labels | No missing glyph or fallback face; correct Turkish casing | all |
 | Tablet and notch | The tablet profile; a real notch phone (manual) | Physical sizes kept; nothing under system bars | mobile |
 | Accessibility basics | Reduce-motion and haptics switches; colour-blind check (renk-korlugu-palet.md); contrast (UI check #7); the App Store accessibility labels re-tried (a Grayscale run) | As declared | all |
@@ -149,15 +163,20 @@ Android's core app quality tests are the anchor (Home, Recents, sleep, a notific
 | Age rating | The questionnaire's answers against the build (ads, purchases, chat or user content, gambling-like mechanics) | Same as the build | all |
 | Store checklists | google-play-level-up.md §7 quality table; app-store-game-center.md §7 | Every line met or explained | and, ios |
 
-## 15. Report
-Fill it in the release plan. Then the version's rows in `manuel-testler.md` (device feel, haptics, sound balance, a real notch) and the release plan's closure: the expert reviews this report and the screenshots, then the honest check (BAKIM.md).
+## 15. Report and decision
+File: `Logs/claude/release/<version>/rapor.md` beside the evidence; its summary (counts, decision, the file's path) in the test step's file, which git keeps. Then the version's rows in `manuel-testler.md` (device feel, haptics, sound balance, a real notch); the expert reviews this report and the screenshots, then the honest check (BAKIM.md › Comprehensive test stage, step 5), before the release step.
+- **Hold** if any: a crash, ANR or freeze in a main flow; save loss; a wrong or double grant, restore broken, a purchase not acknowledged; an ad or analytics request before consent, a test setting in the store build, navigation hidden or delayed around an ad; declarations (Data safety, App Privacy, the privacy page) contradicting the build; a dated requirement unmet (target API, 16 KB, Xcode and SDK, privacy manifests); an unsolvable level; a screen score below the floor (3); the lowest phone missing the FPS bar without a written reason; an open critical or major bug; a crash or ANR in the pre-launch report.
+- **Release:** everything green, or written as an accepted risk with its reason; the expert's note; with a session manager, its approval of the submission list. A direct 100% release can't be halted (a fix ships as a new version), so the bar stays strict.
+- On release the file's first line is `SONUÇ: GEÇTİ <version>-<build>` (a packaging gate may look for it at a line's start).
 ```
-## Pre-release test report: <game> <version> (<date>)
-| # | Check | Result | Evidence |
-|---|---|---|---|
-| 1.1 | Every suite once | ✓ EditMode 412/412, PlayMode 88/88 | Logs/claude/release/5.3/suites.txt |
-| 2.1 | Every level finishable | ✓ 120/120, tightest L47 (0.08 m) | Logs/claude/release/5.3/levels.txt |
-| 4.4 | Double tap, kill in between | ✗ → fixed in abc1234, rerun ✓ | Logs/claude/release/5.3/iap.log |
-| 10.1 | Silent switch | manual (manuel-testler.md) | — |
-Not assessed: <rows, why> · Red left: <none, or the tech-debt lines> · Decision: release / hold
+SONUÇ: GEÇTİ 5.3-41
+## Comprehensive test report: <game> <version> (<date>) · commit <…> · AAB SHA-256 <…> · IPA SHA-256 <…>
+| # | Plan step / row | Check | Result | Evidence |
+|---|---|---|---|---|
+| 1 | — / 1.1 | Every suite once | ✓ EditMode 412/412, PlayMode 88/88 | Logs/claude/release/5.3/suites.txt |
+| 2 | 17 / 2.1 | Every level finishable | ✓ 120/120, tightest L47 (0.08 m) | Logs/claude/release/5.3/levels.txt |
+| 3 | 24 / 4.4 | Double tap, kill in between | ✗ → fixed in abc1234, rerun ✓ | Logs/claude/release/5.3/iap.log |
+| 4 | 12 / 10.1 | Silent switch | manual (manuel-testler.md) | — |
+Manual: <rows> · Not assessed: <rows, why> · Accepted risks: <…> · Red left: <none, or the tech-debt lines>
+Screen scores before/after: <…> · Expert: <note> · Honest check: <one paragraph> · Decision: release / hold
 ```

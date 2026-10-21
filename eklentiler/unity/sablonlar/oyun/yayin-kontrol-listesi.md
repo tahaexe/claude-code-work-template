@@ -1,5 +1,5 @@
 # Yayın Kontrol Listesi: ‹Sürüm› · ‹Platform›
-<!-- Yayın hazırlığı planında bu liste plana kopyalanır ve maddeleri kabul kriteri olur. Uygun olmayan maddeyi silme, "Yok" diye işaretle. Otomatik doğrulanamayanlar Manuel test listesine gider. Testlerin nasıl yapılacağı ve rapor şablonu: `docs/ai/el-kitabi/yayin-oncesi-test-listesi.md` (yayın öncesi test aşaması, planın son adımı). -->
+<!-- Yayın hazırlığı planında bu liste plana kopyalanır ve maddeleri kabul kriteri olur. Uygun olmayan maddeyi silme, "Yok" diye işaretle. Otomatik doğrulanamayanlar Manuel test listesine gider. Testlerin nasıl yapılacağı ve rapor şablonu: `docs/ai/el-kitabi/yayin-oncesi-test-listesi.md` (kapsamlı test aşaması, planın sondan bir önceki adımı; son adım yayın). -->
 
 - **Yayın tarihi:** YYYY-AA-GG · **Karar:** [ ] YAYINLA · [ ] BEKLET
 
@@ -17,7 +17,7 @@
 
 ## Kalite
 - [ ] Açık kritik ya da büyük hata yok (istisnalar gerekçesiyle yazılı)
-- [ ] Yayın öncesi test aşaması bitti: test listesinin bu oyuna uyan bütün maddeleri denendi, rapor (madde, sonuç, kanıt) planda (`docs/ai/el-kitabi/yayin-oncesi-test-listesi.md`)
+- [ ] Kapsamlı test aşaması bitti: her adım dosyasının son testi ve test listesinin bu oyuna uyan bütün maddeleri tek tek denendi; rapor (madde, sonuç, kanıt) `Logs/claude/release/<sürüm>/rapor.md`'de, özeti test adımının dosyasında; karar YAYINLA (`docs/ai/el-kitabi/yayin-oncesi-test-listesi.md` §15)
 - [ ] Mevcut otomatik testlerin hepsi bir kez koştu; kırmızı kalan yok: oyun hatası düzeltildi, eskimiş ya da kararsız test gerekçesiyle devre dışı ve teknik borçta
 - [ ] Uzun oynama testi (4+ saat) sorunsuz; bellek sızıntısı yok
 - [ ] En düşük hedef cihazda hedef FPS: ‹gerçek / hedef›
@@ -73,6 +73,7 @@
 - [ ] Analitik veri alıyor; çökme raporlama kurulu
 - [ ] Gerekirse ilk gün yaması hazır
 - [ ] Duyurular ve tanıtım kodları hazır
+- [ ] Yayın duyurusu hazır: `store/duyuru/<sürüm>.md`, Türkçe ve İngilizce (başlık, 1-2 cümle giriş, oyuncunun diliyle 3-5 yenilik, mağaza bağlantıları, kapak görseli); sürüm yayına girdiği gün stüdyonun sitesinde ve topluluk devlog'unda (ör. Oyun Günlüğü) yayınlanır (`docs/ai/BAKIM.md` › After release)
 - [ ] Bilinen sorunlar listesi hazır
 - [ ] Geri dönüş planı yazılı: yayın doğrudan ve %100 olduğu için sorunlu sürüm durdurulamaz; düzeltme yeni bir sürümle çıkar
 
