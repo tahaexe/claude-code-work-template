@@ -197,8 +197,8 @@ Kurulumun Claude Code'un kendi ayarlarına yazdıkları bağlam harcamaz.
 <summary><b>Kurulumda uygulanan ayarlar</b></summary>
 
 - **İzin kuralları** (`.claude/settings.json`): adım commit'leri ve push'lar onay beklemeden çalışır (zorla push yalnızca `--force-with-lease` ile); Unity doğrulama komutları ve Claude in Chrome araçları da öyle. Silme, diğer paket eklemeleri, build ve serbest C# bypass modu dışında yine izin ister.
-- **Eklentiler:** superpowers projelerde kapalıdır, çünkü katı akışı protokolle çatışır; plugin-dev yalnızca şablon klasöründe açıktır. Oturum başına tahminen 1,9–3,2 bin token tasarruf sağlar.
-- **Skill listesi:** agent-protocols ve engineering skill'leri yalnızca adıyla listelenir. `/batch` kapalıdır (her parça için ayrı worktree ve PR, tek dallı adım commit'lerine uymuyor); `/simplify` açık kalır.
+- **Eklentiler:** superpowers projelerde kapalıdır, çünkü katı akışı protokolle çatışır; plugin-dev yalnızca şablon klasöründe açıktır. Oturum başına tahminen 1,9–3,2 bin token tasarruf sağlar. agent-protocols ve engineering kurulmaz, varsa kullanıcı düzeyinde kapatılır: birincisinin oturum başı kancası Windows'ta bozuluyor, ikisinin skill'leri de kullanılmıyordu.
+- **Skill listesi:** `/batch` kapalıdır (her parça için ayrı worktree ve PR, tek dallı adım commit'lerine uymuyor); `/simplify` açık kalır.
 - **İç içe ajan yok:** Kaç yardımcı ajan açılacağına Claude karar verir, ama bir yardımcı kendi ajanını açamaz.
 - **Yerel otomatik hafıza kapalı** (`autoMemoryEnabled: false`): hafıza yalnızca `docs/ai/` ve git'te durur; bilgisayarda kalmış notlar bir kez projeye taşınır.
 - **`.gitignore` ve `.gitattributes`:** editör ve bilgisayar dosyaları yok sayılır (gerekirse takipten çıkarılır), `.sh` dosyaları LF kalır ve Unity'nin ikili `.asset` dosyalarına `binary` satırları eklenir; böylece pişmiş veriler bilgisayarlar arasında bozulmaz.
@@ -234,6 +234,7 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 - **Şablon dosyası `CLAUDE.md` değil `CLAUDE.sablon.md`,** böylece alt klasörlerden otomatik yüklenmez.
 - **`.claude/rules/` altındaki kurallar** `paths:` sayesinde yalnızca eşleşen dosyalarda yüklenir.
 - **Her adım ayrı commit,** böylece her adıma kolayca geri dönülür.
+- **Tek adım biçimi:** planın her adımı tek bir onay kutusu satırıdır (`- [ ] **N. Başlık**: ayrıntı`) ve `DURUM.md`'nin etkin plan satırı planın yolu ve N/M ilerlemesiyle başlar; böylece yeniden açılan oturum ya da bir durum aracı bütün planı okumadan sıradaki adımı bulur.
 - **Kayıpsız kısaltma:** `kayip-kontrol.py`, hafıza kısaltılırken ya da çevrilirken komutların, yolların, sayıların, tarihlerin ve düşebilecek cümle parçalarının korunduğunu denetler.
 - **Sabit eşik değil, varsayılan kural:** Claude kuralları duruma uyarlar ve nedenini söyler; yalnızca "geri dönüşü zor işlemlerden önce sor" kuralı sabittir.
 - **Yardımcı ajan yalnızca değdiğinde:** geniş keşif, bağımsız paralel işler, kapanış incelemesi.

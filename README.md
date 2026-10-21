@@ -198,8 +198,8 @@ What the install writes into Claude Code's own settings costs no context.
 <summary><b>Settings applied at install</b></summary>
 
 - **Permission rules** (`.claude/settings.json`): step commits and pushes run without prompts (force push only with `--force-with-lease`), as do the Unity verification commands and the Claude in Chrome tools. Deleting, other package adds, builds and free-form C# still ask outside bypass mode.
-- **Plugins:** superpowers is disabled in projects because its strict flow fights the protocol; plugin-dev is on only in the template folder. This saves an estimated 1.9–3.2k tokens per session.
-- **Skill list:** agent-protocols and engineering skills are listed by name only. `/batch` is off (a worktree and PR per part doesn't fit single-branch step commits); `/simplify` stays on.
+- **Plugins:** superpowers is disabled in projects because its strict flow fights the protocol; plugin-dev is on only in the template folder. This saves an estimated 1.9–3.2k tokens per session. agent-protocols and engineering are not installed and are turned off at user scope where present: the former's SessionStart hook breaks on Windows, and neither's skills were used.
+- **Skill list:** `/batch` is off (a worktree and PR per part doesn't fit single-branch step commits); `/simplify` stays on.
 - **No nested agents:** Claude decides how many helpers to open, but a helper can't open its own.
 - **Local auto-memory off** (`autoMemoryEnabled: false`): memory lives only in `docs/ai/` and git; notes left on the computer are moved into the project once.
 - **`.gitignore` and `.gitattributes`:** editor and machine files are ignored (and untracked if needed), `.sh` files keep LF, and Unity's binary `.asset` files get `binary` lines so bakes don't break between machines.
@@ -235,6 +235,7 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 - **`CLAUDE.sablon.md`, not `CLAUDE.md`,** for the template file, so it isn't auto-loaded from subfolders.
 - **Rules under `.claude/rules/`** with `paths:` load only for matching files.
 - **One commit per step** makes any step easy to roll back.
+- **One step format:** every plan step is a single checkbox line (`- [ ] **N. Title**: details`), and `DURUM.md` starts its active-plan line with the plan's path and N/M progress, so a restart or a status tool finds the next step without reading the whole plan.
 - **Lossless shortening:** `kayip-kontrol.py` checks that commands, paths, numbers, dates and dropped clauses survive when memory is condensed or translated.
 - **Defaults, not fixed thresholds:** Claude adapts the rules to the situation and says why; only "ask before hard-to-reverse operations" is fixed.
 - **Helpers only when they pay off:** broad exploration, independent parallel jobs, a closing review.
