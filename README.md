@@ -26,6 +26,7 @@ and keeps its memory in your repository, so nothing is lost between sessions or 
 - **Lean context.** Only a small core (about 5k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
 - **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials. If a machine-level `CLAUDE.md` names a session manager, those questions go to the manager instead.
 - **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tried and judged honestly beside those examples, and weak work is fixed before it ships.
+- **Research first, measure after release.** Before the first plan of a new game or channel, and before any big player- or viewer-facing job, Claude studies the best work in the field area by area (market and competitors, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; for YouTube: leading channels, titles, thumbnails, pacing). It plays the top competitors on a Play Store emulator, cites a source for every claim and delivers a report, a reference sheet and a one-page summary. After a release it builds no new content for at least 14 days, analyses the player data (D1, D7, the level funnel, revenue, reviews) and plans the next version from the findings.
 - **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Before each release one thorough stage runs every existing suite, the release checklist and a pre-release test list: levels, saves, purchases, ads and consent, the clock, interruptions, screens, sound, performance and store compliance.
 - **Unity add-on.** Unity CLI first, a headless test runner, C# code intelligence, code rules built on SOLID and services, game design templates and a visual style check after every UI step.
 - **Conditional handbook.** Field-tested notes on Google Play, the App Store, Firebase, ASO, shaders, Synty assets and more, installed only into projects where they apply, so they cost nothing elsewhere.
@@ -36,7 +37,8 @@ and keeps its memory in your repository, so nothing is lost between sessions or 
 ```text
 Request
  ├─ Small job → do → error check → commit + push
- └─ Big job   → explore → (question) → write plan → start
+ └─ Big job   → explore → (pre-research) → (question) → write plan → start
+                 (pre-research: a new game or channel, a big player- or viewer-facing job)
                  (waits for your approval only if the decision is yours or the job has phases)
                                                ↓
     Every step:  apply → error check → record in plan → commit + push → next step
@@ -44,6 +46,7 @@ Request
                                                ↓
     Closing:     eye check + summary + manual tests + memory + archive
     Release:     the pre-release test stage (every suite, checklist, test list, report)
+    After:       measure → at least 14 days without new content → analysis → decision (develop · maintain · shelve)
 ```
 
 | Layer | Files | Loaded |
@@ -131,7 +134,7 @@ Choosing Unity at install adds:
 | Code rules: assets, game code, UI, tests, shaders | `.claude/rules/unity-*.md` | When matching files are read |
 | Headless test runner with its own log file, a time limit and one import worker | `docs/ai/araclar/testler.sh` | The pre-release test stage, editor closed |
 | C# code intelligence (`csharp-lsp` plugin, `csharp-ls` server) | `.claude/settings.local.json` | Every session |
-| Game design templates: game summary with design pillars, GDD, visual style guide, prototype and playtest reports, post-mortem, release checklist | `docs/ai/sablonlar/oyun/` | When used |
+| Game design templates: game summary with design pillars and measurement targets, GDD, visual style guide, prototype and playtest reports, post-mortem, release checklist | `docs/ai/sablonlar/oyun/` | When used |
 
 - **Unity CLI first.** Editor, compile and build work goes through the Unity CLI; Unity MCP only where the CLI falls short. Missing packages (`com.unity.pipeline`, `com.unity.test-framework`) are added at install.
 - **Architecture.** SOLID and services behind interfaces with a single entry point. Singleton-heavy code gets a migration plan candidate, never a silent rewrite.
@@ -166,7 +169,7 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | C# code intelligence, an editor-free compile check and tests outside Unity | Unity or any C# project |
 | Fair difficulty and failure | Unity game |
 | Goal layers, safe stopping points and healthy leaderboards | Mobile game with progression, events or leaderboards |
-| Competitor or reference game study, with players' own words from reviews | Game project, on request only |
+| Competitor or reference game study, with players' own words from reviews | Game project: part of the pre-research, otherwise on request |
 | Colour-blind-safe palettes (with `cvd_palette.py`) | Colour-matching game |
 | Short videos in launch week (Shorts, TikTok, Reels) | Released or launching game |
 | Reading short-video metrics, a weekly review and an outlier clip's beat sheet | Project that posts short videos |
@@ -185,6 +188,7 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Public text check: claims ledger, machine-sounding patterns, fresh review, store listing audit | Project that publishes store, site, press or video text |
 | YouTube thumbnails for a channel that renders its own scenes: real frames, Test & compare, policy limits | YouTube channel that renders its own scenes |
 | Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens, sound, performance, crashes and analytics, store compliance) with how, the pass bar and a report | Game shipping to a store |
+| Pre-research before the first plan: the best work in the field, area by area (market, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; leading YouTube channels), competitors played on an emulator, a source for every claim, a report, a reference sheet and a one-page summary | Project that players or viewers see (game, channel, public app or site) |
 
 </details>
 
@@ -223,7 +227,7 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 | `DURUM.md` | 30 lines, 3,000 characters (technical debt goes to its own file) |
 | `HAFIZA.md` | 40 lines, 4,000 characters |
 | Memory topic file | Split past ~150 lines or 15,000 characters |
-| Plan | Phased past ~15,000 characters; steps of at most 6 lines; read piece by piece |
+| Plan | Steps of at most 6 lines, log entries of at most 2; past ~15,000 characters the older log entries move to the archive (the last 5 stay), then phases; read piece by piece |
 
 </details>
 

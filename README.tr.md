@@ -26,6 +26,7 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
 - **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 5 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
 - **Sınırları belli özerklik.** Teknik kararları Claude verir ve gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler ve kimlik bilgileri için durup sorar. Bilgisayara özel bir `CLAUDE.md` bir oturum yöneticisi adlandırıyorsa bu sorular ona gider.
 - **Kalite çıtası.** Oyuncunun ya da izleyicinin göreceği her işte Claude önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına inceletir; kapanışta iş denenir ve o örneklerin yanında dürüstçe değerlendirilir, zayıfsa yayından önce düzeltilir.
+- **Önce araştırma, yayından sonra ölçüm.** Yeni bir oyunun ya da kanalın ilk planından ve oyuncunun ya da izleyicinin göreceği her büyük işten önce Claude alanın en iyi işlerini alan alan inceler (pazar ve rakipler, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar, başlıklar, küçük resimler, tempo). En iyi rakipleri Play Store'lu bir emülatörde oynar, her bilgiyi kaynağıyla yazar; rapor, referans paftası ve tek sayfalık özet hazırlar. Yayından sonra en az 14 gün yeni içerik eklemez, oyuncu verilerini (D1, D7, bölüm hunisi, gelir, yorumlar) analiz eder ve yeni sürümü bu bulgulardan planlar.
 - **Test, işe yaradığı yerde.** Geliştirirken test yok: her adımda hata kontrolü, her planın sonunda 2-3 dakikalık göz kontrolü (Claude oynar, ekran görüntüsü alır). Her yayından önce tek ve kapsamlı bir aşama: mevcut testlerin hepsi, yayın kontrol listesi ve yayın öncesi test listesi (bölümler, kayıt, satın alma, reklam ve onay, saat, kesintiler, ekranlar, ses, performans, mağaza uyumu).
 - **Unity eklentisi.** Önce Unity CLI, penceresiz test çalıştırıcı, C# kod zekâsı, SOLID ve servis yapısına dayanan kod kuralları, oyun tasarım şablonları ve her arayüz adımından sonra görsel stil kontrolü.
 - **Koşullu el kitabı.** Google Play, App Store, Firebase, ASO, shader'lar, Synty asset'leri ve daha fazlası üzerine sahada denenmiş notlar. Yalnızca işe yarayacağı projelere kurulur, diğerlerinde bağlam harcamaz.
@@ -36,7 +37,8 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
 ```text
 İstek
  ├─ Küçük iş → yap → hata kontrolü → commit + push
- └─ Büyük iş → keşfet → (soru) → plan yaz → başla
+ └─ Büyük iş → keşfet → (ön araştırma) → (soru) → plan yaz → başla
+                 (ön araştırma: yeni oyun ya da kanalda, oyuncunun göreceği büyük işte)
                  (yalnızca karar senin olduğunda ya da iş fazlıysa onayını bekler)
                                                ↓
     Her adım:  uygula → hata kontrolü → plana işle → commit + push → sonraki adım
@@ -44,6 +46,7 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
                                                ↓
     Kapanış:   göz kontrolü + özet + manuel testler + hafıza + arşiv
     Yayın:     yayın öncesi test aşaması (bütün testler, kontrol listesi, test listesi, rapor)
+    Sonra:     ölçüm → en az 14 gün yeni içerik yok → analiz → karar (geliştir · bakım · rafa kaldır)
 ```
 
 | Katman | Dosyalar | Ne zaman yüklenir |
@@ -130,7 +133,7 @@ Kurulumda Unity seçilince şunlar eklenir:
 | Kod kuralları: varlıklar, oyun kodu, arayüz, test, shader | `.claude/rules/unity-*.md` | Eşleşen dosyalar okunduğunda |
 | Kendi log dosyası, süre sınırı ve tek içe aktarma işçisiyle penceresiz test çalıştırıcı | `docs/ai/araclar/testler.sh` | Yayın öncesi test aşamasında, editör kapalıyken |
 | C# kod zekâsı (`csharp-lsp` eklentisi, `csharp-ls` sunucusu) | `.claude/settings.local.json` | Her oturumda |
-| Oyun tasarım şablonları: tasarım sütunlarıyla oyun özeti, GDD, görsel stil rehberi, prototip ve oyun testi raporları, post-mortem, yayın kontrol listesi | `docs/ai/sablonlar/oyun/` | Kullanıldığında |
+| Oyun tasarım şablonları: tasarım sütunları ve ölçüm hedefleriyle oyun özeti, GDD, görsel stil rehberi, prototip ve oyun testi raporları, post-mortem, yayın kontrol listesi | `docs/ai/sablonlar/oyun/` | Kullanıldığında |
 
 - **Önce Unity CLI.** Editör, derleme ve build işleri Unity CLI ile yapılır; Unity MCP yalnızca CLI'ın yetmediği yerde. Eksik paketler (`com.unity.pipeline`, `com.unity.test-framework`) kurulumda eklenir.
 - **Mimari.** SOLID ve tek bir başlangıç noktasında kurulan, arayüz arkasındaki servisler. Singleton ağırlıklı koda sessizce dokunulmaz, geçiş için plan adayı eklenir.
@@ -165,7 +168,7 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | C# kod zekâsı, editörsüz derleme denetimi ve Unity dışında test | Unity ya da herhangi bir C# projesi |
 | Adil zorluk ve başarısızlık | Unity oyunu |
 | Hedef katmanları, güvenli bırakma noktaları ve sağlıklı liderlik tablosu | İlerlemesi, etkinlikleri ya da liderlik tablosu olan mobil oyun |
-| Rakip ya da referans oyun incelemesi, yorumlardan oyuncunun kendi sözleri | Oyun projesi, yalnızca istenince |
+| Rakip ya da referans oyun incelemesi, yorumlardan oyuncunun kendi sözleri | Oyun projesi: ön araştırmanın parçası, onun dışında yalnızca istenince |
 | Renk körlüğüne dayanıklı palet (`cvd_palette.py` ile) | Renk eşleştirmeli oyun |
 | Lansman haftasında kısa video (Shorts, TikTok, Reels) | Yayındaki ya da çıkışa hazırlanan oyun |
 | Kısa video ölçümlerini okumak, haftalık değerlendirme ve sıra dışı bir klibi saniye saniye çözümleme | Kısa video paylaşan proje |
@@ -184,6 +187,7 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | Herkese açık metnin denetimi: iddia defteri, yapay zekâ yazmış gibi duran kalıplar, taze gözden geçirme, mağaza sayfası puanlaması | Mağaza, site, basın ya da video metni yayınlayan proje |
 | Kendi sahnelerini render eden bir kanal için YouTube küçük resmi: gerçek kare, Test & compare, politika sınırları | Kendi sahnelerini render eden YouTube kanalı |
 | Yayın öncesi test listesi: mağaza sürümünden önceki her denetim (bölümler, kayıt, satın alma, reklam ve onay, saat, hizmetler, kesintiler, ekranlar, ses, performans, çökme ve analitik, mağaza uyumu); nasıl, geçme ölçütü ve rapor | Mağazaya çıkan oyun |
+| İlk plandan önce ön araştırma: alanın en iyi işleri alan alan (pazar, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar), rakipler emülatörde oynanır, her bilgi kaynağıyla; rapor, referans paftası ve tek sayfalık özet | Oyuncunun ya da izleyicinin gördüğü proje (oyun, kanal, herkese açık uygulama ya da site) |
 
 </details>
 
@@ -222,7 +226,7 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 | `DURUM.md` | 30 satır, 3.000 karakter (teknik borç kendi dosyasına gider) |
 | `HAFIZA.md` | 40 satır, 4.000 karakter |
 | Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür |
-| Plan | ~15.000 karakteri geçince fazlara bölünür; adımlar en fazla 6 satır; parça parça okunur |
+| Plan | Adımlar en fazla 6, kayıt girdileri en fazla 2 satır; ~15.000 karakteri geçince eski kayıt girdileri arşive taşınır (son 5'i kalır), sonra fazlara bölünür; parça parça okunur |
 
 </details>
 
