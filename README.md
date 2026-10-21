@@ -21,13 +21,15 @@ and keeps its memory in your repository, so nothing is lost between sessions or 
 
 ## Features
 
-- **Plan-first execution.** Small jobs are done right away. Big ones are explored, turned into a plan and carried out step by step; every step gets an error check (it compiles, its log is clean), is recorded in the plan, committed and pushed.
+- **Plan-first execution.** Small jobs are done right away. Big ones are explored, turned into a plan and carried out step by step; every step gets an error check (it compiles, its log is clean), is recorded in the plan, committed and pushed. The plan file is a short index and every step has its own file, marked ✓ done · ▶ in progress · ○ to do (⛔ blocked).
+- **Picks up where it left off.** At ~90 % context Claude writes where it stands into the step's file, commits, pushes and asks for `/clear`; after "devam et" it reads only the status, the plan index and that step's file, never the finished steps or old logs. Background jobs are noted the moment they start, and times come from the clock.
 - **Memory in the repository.** Decisions, lessons and the current state live in `docs/ai/` and travel with git across sessions, computers and cloud sessions. `/clear` and `/compact` never lose work.
 - **Lean context.** Only a small core (about 5k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
 - **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials. If a machine-level `CLAUDE.md` names a session manager, those questions go to the manager instead.
 - **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tried and judged honestly beside those examples, and weak work is fixed before it ships.
 - **Research first, measure after release.** Before the first plan of a new game or channel, and before any big player- or viewer-facing job, Claude studies the best work in the field area by area (market and competitors, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; for YouTube: leading channels, titles, thumbnails, pacing). It plays the top competitors on a Play Store emulator, cites a source for every claim and delivers a report, a reference sheet and a one-page summary. After a release it builds no new content for at least 14 days, analyses the player data (D1, D7, the level funnel, revenue, reviews) and plans the next version from the findings.
-- **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Before each release one thorough stage runs every existing suite, the release checklist and a pre-release test list: levels, saves, purchases, ads and consent, the clock, interruptions, screens, sound, performance and store compliance.
+- **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Every step file says how the step will be tested; when everything is ready, the plan's penultimate step tests every step one by one, and before a release also runs every existing suite, the release checklist and a pre-release test list: levels, saves, a device matrix, sandbox purchases, test ads and consent, the clock, interruptions, screens with real taps, sound, analytics, performance, localization, accessibility and store compliance, with a report and hold rules.
+- **A project checklist.** For games and channels, a sourced checklist from first idea to after release (12 phases, 100 items, each with when it counts as done and how it is finally tested) and a 40-step plan skeleton for a new mobile game; a release is announced the same day.
 - **Unity add-on.** Unity CLI first, a headless test runner, C# code intelligence, code rules built on SOLID and services, game design templates and a visual style check after every UI step.
 - **Conditional handbook.** Field-tested notes on Google Play, the App Store, Firebase, ASO, shaders, Synty assets and more, installed only into projects where they apply, so they cost nothing elsewhere.
 - **Browser work in its own profile.** With Claude in Chrome, Claude works in its own Chrome profile (Play Console, App Store Connect, checking a page) and never touches yours.
@@ -41,18 +43,20 @@ Request
                  (pre-research: a new game or channel, a big player- or viewer-facing job)
                  (waits for your approval only if the decision is yours or the job has phases)
                                                ↓
-    Every step:  apply → error check → record in plan → commit + push → next step
+    Every step:  apply → error check → record in the step file and index → commit + push → next step
                  (blocker · decision · risky operation not in the plan → stops and asks)
+                 (~90 % context → note where it stands → /clear → "devam et")
                                                ↓
-    Closing:     eye check + summary + manual tests + memory + archive
-    Release:     the pre-release test stage (every suite, checklist, test list, report)
+    Penultimate: comprehensive test (every step's final test; before a release: suites, checklist, test list, device matrix, report)
+    Last step:   release (announced the same day) or delivery
+    Closing:     summary + manual tests + memory + archive
     After:       measure → at least 14 days without new content → analysis → decision (develop · maintain · shelve)
 ```
 
 | Layer | Files | Loaded |
 |---|---|---|
 | Core | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `HAFIZA.md` | Every session |
-| Active work | `planlar/<active plan>.md` | While working on that plan |
+| Active work | `planlar/<active plan>.md` (a short index) and the running step's file `planlar/<active plan>/NN-<step>.md` | While working on that plan; finished steps' files are not re-read |
 | Knowledge | `hafiza/*.md` | When the topic needs it |
 | Rare | `sablonlar/`, `BAKIM.md`, `KURULUM.md` | Writing or closing a plan, installing |
 | Project rules | `.claude/rules/*.md` | Only when matching files are read |
@@ -187,7 +191,8 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Claude Code on Windows: Git Bash path conversion, Windows paths in files, Python flags, non-ASCII text through curl | Project worked on with Claude Code on Windows |
 | Public text check: claims ledger, machine-sounding patterns, fresh review, store listing audit | Project that publishes store, site, press or video text |
 | YouTube thumbnails for a channel that renders its own scenes: real frames, Test & compare, policy limits | YouTube channel that renders its own scenes |
-| Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens, sound, performance, crashes and analytics, store compliance) with how, the pass bar and a report | Game shipping to a store |
+| Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens and real taps, sound, performance, crashes and analytics, store compliance) with how, the pass bar, the order, a device matrix, hold rules and a report | Game shipping to a store |
+| Project checklist: 12 phases and 100 items from the first idea to after release (pre-research, prototype, vertical slice, content, monetization and measurement, localization and accessibility, compliance and store records, store page, comprehensive test, release, after release, maintenance), each with when it counts as done, its final test and sources; a 40-step plan skeleton for a new mobile game; PC/Steam and YouTube differences | Game (any engine) or video channel |
 | Pre-research before the first plan: the best work in the field, area by area (market, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; leading YouTube channels), competitors played on an emulator, a source for every claim, a report, a reference sheet and a one-page summary | Project that players or viewers see (game, channel, public app or site) |
 
 </details>
@@ -227,7 +232,7 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 | `DURUM.md` | 30 lines, 3,000 characters (technical debt goes to its own file) |
 | `HAFIZA.md` | 40 lines, 4,000 characters |
 | Memory topic file | Split past ~150 lines or 15,000 characters |
-| Plan | Steps of at most 6 lines, log entries of at most 2; past ~15,000 characters the older log entries move to the archive (the last 5 stay), then phases; read piece by piece |
+| Plan | One index line per step, its details in the step's own file (about 40 lines; log entries of at most 2); an index past ~15,000 characters or with independent parts is split into phases; a session reads the index and only the running step's file |
 
 </details>
 

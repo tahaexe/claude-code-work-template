@@ -21,13 +21,15 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
 
 ## Özellikler
 
-- **Plan öncelikli çalışma.** Küçük işler hemen yapılır. Büyük işler incelenir, plana bağlanır ve adım adım yürütülür; her adımda hata kontrolü yapılır (derleniyor mu, günlük temiz mi), plana işlenir, commit'lenir ve push'lanır.
+- **Plan öncelikli çalışma.** Küçük işler hemen yapılır. Büyük işler incelenir, plana bağlanır ve adım adım yürütülür; her adımda hata kontrolü yapılır (derleniyor mu, günlük temiz mi), plana işlenir, commit'lenir ve push'lanır. Plan dosyası kısa bir dizindir, her adımın kendi dosyası vardır; adımlar ✓ Tamamlandı · ▶ Devam ediyor · ○ Yapılacak (⛔ Engellendi) diye işaretlenir.
+- **Kaldığı yerden sürer.** Bağlam %90'a gelince Claude kaldığı yeri adımın dosyasına yazar, commit'ler, push'lar ve `/clear` ister; "devam et" deyince yalnız durumu, plan dizinini ve o adımın dosyasını okur, bitmiş adımları ve eski kayıtları yeniden okumaz. Arka planda başlattığı işi o an not eder, saatleri saatten yazar.
 - **Hafıza repoda.** Kararlar, dersler ve güncel durum `docs/ai/` klasöründe durur ve git ile oturumlar, bilgisayarlar ve bulut oturumları arasında taşınır. `/clear` ve `/compact` iş kaybettirmez.
 - **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 5 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
 - **Sınırları belli özerklik.** Teknik kararları Claude verir ve gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler ve kimlik bilgileri için durup sorar. Bilgisayara özel bir `CLAUDE.md` bir oturum yöneticisi adlandırıyorsa bu sorular ona gider.
 - **Kalite çıtası.** Oyuncunun ya da izleyicinin göreceği her işte Claude önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına inceletir; kapanışta iş denenir ve o örneklerin yanında dürüstçe değerlendirilir, zayıfsa yayından önce düzeltilir.
 - **Önce araştırma, yayından sonra ölçüm.** Yeni bir oyunun ya da kanalın ilk planından ve oyuncunun ya da izleyicinin göreceği her büyük işten önce Claude alanın en iyi işlerini alan alan inceler (pazar ve rakipler, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar, başlıklar, küçük resimler, tempo). En iyi rakipleri Play Store'lu bir emülatörde oynar, her bilgiyi kaynağıyla yazar; rapor, referans paftası ve tek sayfalık özet hazırlar. Yayından sonra en az 14 gün yeni içerik eklemez, oyuncu verilerini (D1, D7, bölüm hunisi, gelir, yorumlar) analiz eder ve yeni sürümü bu bulgulardan planlar.
-- **Test, işe yaradığı yerde.** Geliştirirken test yok: her adımda hata kontrolü, her planın sonunda 2-3 dakikalık göz kontrolü (Claude oynar, ekran görüntüsü alır). Her yayından önce tek ve kapsamlı bir aşama: mevcut testlerin hepsi, yayın kontrol listesi ve yayın öncesi test listesi (bölümler, kayıt, satın alma, reklam ve onay, saat, kesintiler, ekranlar, ses, performans, mağaza uyumu).
+- **Test, işe yaradığı yerde.** Geliştirirken test yok: her adımda hata kontrolü, her planın sonunda 2-3 dakikalık göz kontrolü (Claude oynar, ekran görüntüsü alır). Her adımın dosyası o adımın nasıl test edileceğini söyler; her şey hazır denince planın sondan bir önceki adımında her adım tek tek test edilir, yayından önce ayrıca mevcut testlerin hepsi, yayın kontrol listesi ve yayın öncesi test listesi koşar (bölümler, kayıt, aygıt matrisi, deneme satın almalar, test reklamları ve onay, saat, kesintiler, gerçek dokunuşlarla ekranlar, ses, analitik, performans, diller, erişilebilirlik, mağaza uyumu), raporu ve "bekle" kurallarıyla.
+- **Proje kontrol listesi.** Oyun ve kanal projeleri için ilk fikirden yayın sonrasına kaynaklı bir kontrol listesi (12 aşama, 100 madde; her maddenin ne zaman bitmiş sayıldığı ve son testte nasıl deneneceği) ve yeni bir mobil oyun için 40 adımlık plan iskeleti; her yayın aynı gün duyurulur.
 - **Unity eklentisi.** Önce Unity CLI, penceresiz test çalıştırıcı, C# kod zekâsı, SOLID ve servis yapısına dayanan kod kuralları, oyun tasarım şablonları ve her arayüz adımından sonra görsel stil kontrolü.
 - **Koşullu el kitabı.** Google Play, App Store, Firebase, ASO, shader'lar, Synty asset'leri ve daha fazlası üzerine sahada denenmiş notlar. Yalnızca işe yarayacağı projelere kurulur, diğerlerinde bağlam harcamaz.
 - **Kendi profilinde tarayıcı işi.** Claude in Chrome ile Claude, Chrome'daki kendi profilinde çalışır (Play Console, App Store Connect, bir sayfayı kontrol etmek) ve senin profillerine dokunmaz.
@@ -41,18 +43,20 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
                  (ön araştırma: yeni oyun ya da kanalda, oyuncunun göreceği büyük işte)
                  (yalnızca karar senin olduğunda ya da iş fazlıysa onayını bekler)
                                                ↓
-    Her adım:  uygula → hata kontrolü → plana işle → commit + push → sonraki adım
+    Her adım:  uygula → hata kontrolü → adımın dosyasına ve dizine işle → commit + push → sonraki adım
                (engel · karar · planda olmayan riskli işlem → durur ve sorar)
+               (bağlam ~%90 → kaldığı yeri yazar → /clear → "devam et")
                                                ↓
-    Kapanış:   göz kontrolü + özet + manuel testler + hafıza + arşiv
-    Yayın:     yayın öncesi test aşaması (bütün testler, kontrol listesi, test listesi, rapor)
+    Sondan bir önceki adım: kapsamlı test (her adımın son testi; yayında testler, kontrol listesi, test listesi, aygıt matrisi, rapor)
+    Son adım:  yayın (aynı gün duyuru) ya da teslim
+    Kapanış:   özet + manuel testler + hafıza + arşiv
     Sonra:     ölçüm → en az 14 gün yeni içerik yok → analiz → karar (geliştir · bakım · rafa kaldır)
 ```
 
 | Katman | Dosyalar | Ne zaman yüklenir |
 |---|---|---|
 | Çekirdek | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `HAFIZA.md` | Her oturumda |
-| Aktif iş | `planlar/<aktif plan>.md` | O plan üzerinde çalışılırken |
+| Aktif iş | `planlar/<aktif plan>.md` (kısa dizin) ve sürmekte olan adımın dosyası `planlar/<aktif plan>/NN-<adım>.md` | O plan üzerinde çalışılırken; bitmiş adımların dosyaları yeniden okunmaz |
 | Bilgi | `hafiza/*.md` | Konu gerektirdiğinde |
 | Nadir | `sablonlar/`, `BAKIM.md`, `KURULUM.md` | Plan yazarken ya da kapatırken, kurulumda |
 | Proje kuralları | `.claude/rules/*.md` | Yalnızca eşleşen dosyalar okunduğunda |
@@ -186,7 +190,8 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | Windows'ta Claude Code: Git Bash'in yol çevirmesi, dosyaya Windows yolu yazmak, Python bayrakları, curl'de Türkçe metin | Windows'ta Claude Code'la çalışılan proje |
 | Herkese açık metnin denetimi: iddia defteri, yapay zekâ yazmış gibi duran kalıplar, taze gözden geçirme, mağaza sayfası puanlaması | Mağaza, site, basın ya da video metni yayınlayan proje |
 | Kendi sahnelerini render eden bir kanal için YouTube küçük resmi: gerçek kare, Test & compare, politika sınırları | Kendi sahnelerini render eden YouTube kanalı |
-| Yayın öncesi test listesi: mağaza sürümünden önceki her denetim (bölümler, kayıt, satın alma, reklam ve onay, saat, hizmetler, kesintiler, ekranlar, ses, performans, çökme ve analitik, mağaza uyumu); nasıl, geçme ölçütü ve rapor | Mağazaya çıkan oyun |
+| Yayın öncesi test listesi: mağaza sürümünden önceki her denetim (bölümler, kayıt, satın alma, reklam ve onay, saat, hizmetler, kesintiler, ekranlar ve gerçek dokunuşlar, ses, performans, çökme ve analitik, mağaza uyumu); nasıl, geçme ölçütü, sıra, aygıt matrisi, "bekle" kuralları ve rapor | Mağazaya çıkan oyun |
+| Proje kontrol listesi: ilk fikirden yayın sonrasına 12 aşama ve 100 madde (ön araştırma, prototip, dikey kesit, içerik, para kazanma ve ölçüm, yerelleştirme ve erişilebilirlik, uyumluluk ve mağaza kayıtları, mağaza sayfası, kapsamlı test, yayın, yayın sonrası, bakım); her maddenin ne zaman bitmiş sayıldığı, son testi ve kaynakları; yeni mobil oyun için 40 adımlık plan iskeleti; PC/Steam ve YouTube farkları | Oyun (her motor) ya da video kanalı |
 | İlk plandan önce ön araştırma: alanın en iyi işleri alan alan (pazar, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar), rakipler emülatörde oynanır, her bilgi kaynağıyla; rapor, referans paftası ve tek sayfalık özet | Oyuncunun ya da izleyicinin gördüğü proje (oyun, kanal, herkese açık uygulama ya da site) |
 
 </details>
@@ -226,7 +231,7 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 | `DURUM.md` | 30 satır, 3.000 karakter (teknik borç kendi dosyasına gider) |
 | `HAFIZA.md` | 40 satır, 4.000 karakter |
 | Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür |
-| Plan | Adımlar en fazla 6, kayıt girdileri en fazla 2 satır; ~15.000 karakteri geçince eski kayıt girdileri arşive taşınır (son 5'i kalır), sonra fazlara bölünür; parça parça okunur |
+| Plan | Dizinde her adım tek satır, ayrıntısı adımın kendi dosyasında (yaklaşık 40 satır; kayıt girdileri en fazla 2 satır); dizin ~15.000 karakteri geçerse ya da bağımsız parçaları varsa fazlara bölünür; bir oturum dizini ve yalnız sürmekte olan adımın dosyasını okur |
 
 </details>
 
