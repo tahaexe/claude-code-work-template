@@ -1,18 +1,18 @@
 ---
 title: "Studying a competitor or reference game: a layered reading"
-condition: "Game project; used on demand only, when the user or a plan asks to study a competitor or reference game. Never start such a study yourself."
-read_when: "Only when the user or a plan asks to study, compare with or learn from a competitor or reference game."
+condition: "Game project. Part of the pre-research (on-arastirma.md: a new game, a big player-facing job, a new version); otherwise used only when the user or a plan asks to study a competitor or reference game."
+read_when: "The pre-research's competitor work (a new game: the top 5-7, the top 2-3 played; a job or version: the leaders' take on its areas); when the user or a plan asks to study, compare with or learn from a competitor or reference game."
 requires: — (the game on a device, its store page or gameplay videos; pages and videos through the account's own Chrome profile)
 source: "Raph Koster, A Theory of Fun for Game Design (2004) and 'A Grammar of Gameplay' (GDC 2005) · Robin Hunicke, Marc LeBlanc and Robert Zubek, 'MDA: A formal approach to game design and game research' (AAAI workshop, 2004) · Steve Swink, Game Feel (2008) · App Review Guideline 4.1 (copycats) and Google Play's impersonation and intellectual property policies. Written in our own words from these works. · Players' words: idea from coreyhaines31/marketingskills (customer-research, research quality guardrails; read 2026-10-18), rewritten"
 tech: engine-independent
-added: 2026-10-15 · written by Claude from the published works at the session manager's request (template 1.45); on demand only, the rejected automatic reference research stays rejected · 2026-10-18 (template 1.53): players' own words from reviews
+added: "2026-10-15 · written by Claude from the published works at the session manager's request (template 1.45); on demand only, the rejected automatic reference research stays rejected · 2026-10-18 (template 1.53): players' own words from reviews · 2026-10-21 (template 1.56): part of the pre-research (the owner's decision; it overrides 'on demand only' there)"
 ---
 # Studying a competitor or reference game
 
 ## Rules
-- On request only (the user or a plan). Never start a reference study yourself; at most suggest one in a line.
-- Only checked facts. Tag every claim: [played], [video <link> mm:ss], [store page], [not checked]. Never invent numbers (downloads, revenue, retention, prices) or features; unknown → "not checked".
-- One game per file: `docs/ai/tasarim/rakip-<game>.md`, written in Turkish (the user reads it), one or two screens. Decisions go to the GDD or DURUM's **Up next**.
+- In the pre-research (on-arastirma.md: a new game's market and competitors, the top 2-3 played and read in layers; a job's or version's areas), and when the user or a plan asks. At other times never start a reference study yourself; at most suggest one in a line.
+- Only checked facts. Tag every claim: [played], [video <link> mm:ss], [store page <link>], [not checked]. Never invent numbers (downloads, revenue, retention, prices) or features; unknown → "not checked".
+- One game per file: `docs/ai/tasarim/rakip-<game>.md` (in a pre-research `docs/ai/tasarim/on-arastirma/rakip-<game>.md`, linked from its report), written in Turkish (the user reads it), one or two screens. Decisions go to the GDD or DURUM's **Up next**.
 - Mechanics and ideas may inspire; never copy art, audio, text, level layouts, names or UI one to one (App Review 4.1 "Copycats"; Google Play's impersonation and intellectual property policies).
 
 ## Read in layers, then check that they agree

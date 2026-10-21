@@ -2,7 +2,7 @@
 <!-- Oyunun görsel kimliği. Claude UI, sahne ve varlık işlerinden önce okur, ekran görüntülerini buna göre kontrol eder. Kısa tut: kararlar, örnekler, sayılar. Zevk kararı kullanıcınındır; Claude bu belgeye uyumu kontrol eder. Doldurulan belge: docs/ai/tasarim/gorsel-stil.md, HAFIZA dizinine eklenir. -->
 
 **Genel his:** ‹3-5 kelime, ör. "sıcak, sade, el yapımı"› <!-- oyun özetindeki "Sanat ve ses yönü" satırının ayrıntısı -->
-**Referanslar:** ‹2-3 oyun ya da görsel; bunlardan neyi alıyoruz, neyi almıyoruz›
+**Referanslar:** ‹2-3 oyun ya da görsel; bunlardan neyi alıyoruz, neyi almıyoruz› <!-- ön araştırma raporundan ve referans paftasından (docs/ai/tasarim/on-arastirma/) -->
 
 ## Renk paleti
 <!-- Kodlarıyla yaz; yeni bir renk önce buraya eklenir. Metin ile zemini arasında okunur kontrast olmalı (en az 4,5:1). -->

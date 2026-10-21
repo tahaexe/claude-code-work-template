@@ -8,7 +8,7 @@
 **Platform ve gelir modeli:** ‹ör. Android + iOS · reklam + uygulama içi satın alma› <!-- el kitabı koşulları (ör. Google Play) buna bakar -->
 
 ## Tasarım sütunları
-<!-- 3-5 sütun: oyunun her kararda öne aldığı şeyler. Sütunlar fikir öldürmez, sıralar (kullanıcı, 2026-10-15: "bir şeyi feda etmeyelim"). Her yeni özellik fikri hizmet ettiği sütunu söyler; söyleyemiyorsa sıranın sonuna yazılır. "Dikkat": sütunu korumak için ölçülecek ya da gözetilecek şey. -->
+<!-- 3-5 sütun: oyunun her kararda öne aldığı şeyler. Sütunlar fikir öldürmez, sıralar (kullanıcı, 2026-10-15: "bir şeyi feda etmeyelim"). Her yeni özellik fikri hizmet ettiği sütunu söyler; söyleyemiyorsa sıranın sonuna yazılır. "Dikkat": sütunu korumak için ölçülecek ya da gözetilecek şey. Ön araştırmadan sonra (docs/ai/tasarim/on-arastirma/) onun bulgularıyla gözden geçirilir. -->
 | Sütun | Öne aldığı | Dikkat |
 |---|---|---|
 | ‹ör. Kısa tur› | ‹2-3 dakikada biten, tek elle oynanan turlar› | ‹tur süresi ölçülür; turu uzatan özellik ayrı bir moda gider› |
@@ -34,3 +34,11 @@
 ## Yapım sırası
 <!-- En riskli ya da eğlencenin çekirdeği olan parça önce: cilalamadan önce eğlenceli olduğunu kanıtla. Maddeler DURUM.md'de Up next listesine plan adayı olarak yazılır. -->
 1. ‹…›
+
+## Ölçüm hedefleri (isteğe bağlı)
+<!-- İlk yayından önce, veri gelmeden yazılır; veri görüldükten sonra eşik değişmez. Ölçüm olayları ilk sürümle çıkar. Yayından en az 14 gün sonraki analiz bu satırlara bakar, karar (geliştir · bakım · rafa kaldır) DURUM'a yazılır (docs/ai/BAKIM.md › After release). Az kurulumda oran aralık olarak okunur (docs/ai/el-kitabi/firebase-olcum-ve-uzaktan-ayar.md). -->
+| Ölçüt | Devam eşiği | Büyütme eşiği | Nereden |
+|---|---|---|---|
+| D1 (ertesi gün dönen oyuncu) | ‹ör. ≥ %35› | ‹ör. ≥ %40› | ‹Firebase, sürüme göre› |
+| D7 | ‹ör. ≥ %12› | ‹…› | ‹…› |
+| İlk gün oyun süresi | ‹ör. ≥ 15 dk› | ‹…› | ‹…› |

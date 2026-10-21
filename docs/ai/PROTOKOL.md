@@ -1,5 +1,5 @@
 # Working Protocol
-<!-- Version 1.55 · 2026-10-21 · Same in every project; project facts → CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
+<!-- Version 1.56 · 2026-10-21 · Same in every project; project facts → CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
 
 Goal for every task: understand it, follow a plan step by step, use little context, keep knowledge in durable memory; what players or viewers see must stand beside the best of its kind (careless work = not done).
 - The user's explicit instruction overrides this protocol. Its rules are defaults: where one doesn't fit, do what serves the goal, say why in one line; only the next rule is fixed.
@@ -7,7 +7,7 @@ Goal for every task: understand it, follow a plan step by step, use little conte
 - **Manager:** a machine-level CLAUDE.md may name a session manager; then what this protocol or the project leaves to the user (questions, decisions, sign-ins, clicks, `/clear`, uploads, store submission) goes to the manager, under its rules.
 - **Language:** Turkish with the user. Claude's files (this protocol, DURUM, HAFIZA, `hafiza/`, plans, rules, handbook): terse English bullets; compress wording, never facts. User-facing files Turkish (`manuel-testler.md`, `tasarim/`); code, comments, commits English.
 
-**Files** (`docs/ai/`): `DURUM.md` state + `HAFIZA.md` memory index (loaded every session) · `hafiza/*.md` (incl. tech debt `teknik-borc.md`): read when the index points there and the task needs it · `planlar/*.md` plans (`planlar/arsiv/` finished; template `sablonlar/plan.md`) · `manuel-testler.md` user's manual tests · `BAKIM.md` plan closure, pre-release tests, memory tidy-up · `KURULUM.md` install, update
+**Files** (`docs/ai/`): `DURUM.md` state + `HAFIZA.md` memory index (loaded every session) · `hafiza/*.md`: read when the index points there and the task needs it · `planlar/*.md` plans (`planlar/arsiv/` finished; template `sablonlar/plan.md`) · `manuel-testler.md` user's manual tests · `BAKIM.md` plan closure, pre-release tests, after release, memory tidy-up · `KURULUM.md` install, update
 
 ## 1. Read intent, choose the path yourself
 Infer intent; the user memorizes no commands. Before changing files, state your path in one line ("→ Plan hazırlıyorum", "→ Küçük iş, doğrudan yapıyorum", "→ Aktif plandan devam: adım 4/7").
@@ -29,7 +29,7 @@ Infer intent; the user memorizes no commands. Before changing files, state your 
 - **Needs a plan** (your call): several steps or systems, uncertainty, architectural impact, or the user asked for one.
 
 ## 3. Plan
-1. **Explore:** memory notes the index points to, then relevant code. **Review** (work players or viewers see): first study the best examples of the same work (look, play, feel; videos: leading channels), the area's expert agent (e.g. `unity-uzmani`) reviews the plan; findings → plan's **Review** section, the yardstick at closure. Broad scans, research → helper agent (general exploration: built-in **Explore**, cheaper, doesn't load CLAUDE.md); only its summary enters the main context.
+1. **Explore:** memory notes the index points to, then relevant code. **Review** (work players or viewers see): first study the best examples of the same work (look, play, feel; videos: leading channels); new project or big job → pre-research (`el-kitabi/on-arastirma.md`) before its first plan, setup plans too. The area's expert agent (e.g. `unity-uzmani`) reviews the plan; findings → plan's **Review** section (citing the report), the yardstick at closure. Broad scans, research → helper agent (general exploration: built-in **Explore**, cheaper, doesn't load CLAUDE.md); only its summary enters the main context.
 2. **Ask:** only what §1 "Decide yourself" allows, before writing code.
 3. **Write:** `planlar/YYYY-MM-DD-short-name.md` (ASCII name) from `sablonlar/plan.md`; exploration's gist in **Context** (files, how the system works now, constraints) so later steps and sessions don't rescan. Step: one line `- [ ] **N. Title**: details` (sub-step `**N.M Title**`), then files, **Tool** (skill or CLI; else `—`), **Verify** method; ≤6 lines, decisions one line each.
 4. **Split:** independent parts or a plan file over ~15,000 characters → phases; the first plan holds a short phase map, each phase's detailed plan written after the previous one ends (no new approval within the map).
@@ -40,7 +40,7 @@ Infer intent; the user memorizes no commands. Before changing files, state your 
 Each step:
 1. Only that step's work, with its **Tool**; read only the files it needs (broad exploration belongs to planning; big files: search first, then open the relevant part).
 2. **Verify = error check** (plan's method, CLAUDE.md commands): clean compile or build (editor-free is enough), a run logs no errors. No tests written or run while developing (they wait for the pre-release test stage), nothing started only to test. A plan's or phase's last step adds an **eye check**: use it 2-3 minutes yourself as a player or user would, with screenshots. Only tool output seen in this session counts; a check that didn't run or timed out **does not pass**: log "not verified". The rest → plan's **Manual tests** (Turkish); continue.
-3. **Record:** tick `[x]`, update **Progress**, one **Progress log** line in the template's fixed format, new decisions → **Decisions**; update DURUM.md (**Active plan:** `planlar/<file>.md` N/M steps done; **Next action:** the next step's number).
+3. **Record:** tick `[x]`, update **Progress**, one **Progress log** entry (≤2 lines) in the template's fixed format, new decisions → **Decisions**; update DURUM.md (**Active plan:** `planlar/<file>.md` N/M steps done; **Next action:** the next step's number). Plan over ~15,000 characters → older log entries to `planlar/arsiv/<plan-name>-log.md`, the last 5 stay (before a phase split).
 4. **Commit and push** (if git): the step's files + companions (e.g. Unity `.meta`) + plan + DURUM; `git status` first, never unrelated changes (no `git add -A` / `git add .`). English message: `feat: add inventory UI (plan: envanter, step 3/7)`; no `--no-verify`. Push if a remote exists: rejected → `git pull --rebase --autostash` once, push again; conflict → resolve if both sides' intent is clear, else `git rebase --abort`, ask; network/server error → continue, retry after the next commit. Force push: your call, `--force-with-lease`.
 5. Mode `auto` → next step without waiting; `step-by-step` → short summary, then stop.
 

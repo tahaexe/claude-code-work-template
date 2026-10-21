@@ -58,7 +58,7 @@ plan_candidates:
 - No two primaries on one screen; no red for "Later" or "Close"; no colour-only meaning; no hidden or delayed decline.
 - No text baked into images (both languages); no hard-coded prices or currency signs.
 - No popup chains at start, no offer before the first win, no ad between a tap and its result (Google Play also bans interstitials at level start, before the splash and on exit; rewarded ads only with the player's explicit opt-in).
-- Never copy another game's art, layout, icons or text one to one; reference images stay under `Logs/`.
+- Never copy another game's art, layout, icons or text one to one; reference images stay out of the game and store art (under `Logs/`; the pre-research's evidence in `docs/ai/tasarim/on-arastirma/`: on-arastirma.md).
 
 ## 5. Honest check (quality bar, last step)
 - Scored screens: home, HUD, win, lose (continue) and shop, in the pre-release test stage; a plan that changes one of them also scores it at its closure (BAKIM.md's honest check). For each: a sheet with our screen beside the same screen of two references (store screenshots or preview-video frames, review only, kept under `Logs/`, never in the game, store page or videos). Score 1-5: hierarchy clear in 1 s, readability, reward feel, polish (depth, light, motion), consistency with our other screens. **Floor 3** (the one place the floor is set; others point here): below 3 on any criterion blocks the release → fix, then send. **Target 4** on win, lose and shop: a miss doesn't block, its reason goes in the report. Write the before and after scores in the closure report.

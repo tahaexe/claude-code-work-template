@@ -65,7 +65,7 @@ added: "2026-10-16 · template 1.50 · research by the promo session, approved b
 - A clean, watermark-free master for each platform.
 
 ## Studying an outlier clip (beat sheet)
-- Inside a plan's Review step or on request only (automatic reference research stays rejected). Pick clips in our genres at roughly 10× their own channel's average views: an outlier for its channel, not a famous channel.
+- Inside the pre-research (on-arastirma.md), a plan's Review step or on request; never on your own at other times. Pick clips in our genres at roughly 10× their own channel's average views: an outlier for its channel, not a famous channel.
 - Watch it in the account's own Chrome profile and write a beat sheet, one row per beat: time (s) · what moves on screen · cut and shot length · on-screen text (words, place, how long) · sound (music hit, effect, voice) · job (hook, payoff, turn, loop). Then the first 2 seconds on their own, and the tempo (cuts per 5 s) across the clip.
 - From the sheet take 3-5 signature moves we can make with our own footage (e.g. the payoff in the first frame, then the build-up).
 - A hook is picture, text and sound together, each adding something (the text says what the picture can't, the sound lands on the action), never three copies of one message.
