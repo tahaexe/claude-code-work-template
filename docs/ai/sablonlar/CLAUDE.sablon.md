@@ -24,8 +24,9 @@
 - ‹Never: …; why›
 
 ## Working system
-Planned-work and durable-memory protocol, current status and memory index:
+Planned-work and durable-memory protocol, current status, handover sheet and memory index:
 
 @docs/ai/PROTOKOL.md
 @docs/ai/DURUM.md
+@docs/ai/DEVIR.md
 @docs/ai/HAFIZA.md
