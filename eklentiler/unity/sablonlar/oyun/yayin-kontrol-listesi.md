@@ -17,6 +17,7 @@
 
 ## Kalite
 - [ ] Açık kritik ya da büyük hata yok (istisnalar gerekçesiyle yazılı)
+- [ ] Kalite kapısı geçti (yeni oyun ya da büyük güncelleme): `docs/ai/tasarim/kalite-kapisi/<sürüm>/puan.md`'nin ilk satırı `KAPI: GEÇTİ <sürüm>`; portföy denetimleri yeşil (öbür oyunlarımızla ortak görsel ve ses yok, mağaza metinleri en çok %25 benzer, kendi arayüz görünümü); kapsamlı test bundan sonra başladı (`docs/ai/el-kitabi/kalite-kapisi.md`)
 - [ ] Kapsamlı test aşaması bitti: her adım dosyasının son testi ve test listesinin bu oyuna uyan bütün maddeleri tek tek denendi; rapor (madde, sonuç, kanıt) `Logs/claude/release/<sürüm>/rapor.md`'de, özeti test adımının dosyasında; karar YAYINLA (`docs/ai/el-kitabi/yayin-oncesi-test-listesi.md` §15)
 - [ ] Mevcut otomatik testlerin hepsi bir kez koştu; kırmızı kalan yok: oyun hatası düzeltildi, eskimiş ya da kararsız test gerekçesiyle devre dışı ve teknik borçta
 - [ ] Uzun oynama testi (4+ saat) sorunsuz; bellek sızıntısı yok
@@ -67,6 +68,7 @@
 - [ ] Play'de ilk yayın: mağaza sayfası, bütün çeviriler, görseller, uygulama içi ürünler ve beyanlar ilk "incelemeye gönder"den önce girildi; inceleme sürerken değişiklik gönderilmiyor (uygulamayı sıranın sonuna itebilir). İlk yayında yönetilen yayın yok: onay gelince yayına girer
 - [ ] Oyuncunun göreceği yeni içerik ya da süreli bir oyun içi etkinlik varsa mağaza etkinliği: Play'de tanıtım içeriği, App Store'da uygulama içi etkinlik (Major Update ya da uygun rozet); içerik o tarihlerde gerçekten oyunda; incelemesi için en az 4 gün önce gönderildi (`docs/ai/el-kitabi/store-events.md`)
 - [ ] Mağazalarda yeni sürüm oluşturuldu ve sürüm verileri girildi: sürüm adı, iki dilde yenilikler notu, gerekiyorsa mağaza sayfası (Claude, Play Console ve App Store Connect'te Chrome'dan)
+- [ ] App Store'a yeni oyun: hesapta incelemede başka yeni oyun yok (sıradaki, öncekinin onayından sonra ve 1-2 hafta arayla; aynı gün toplu gönderim yok); inceleme notunda farklılık dosyası (kanca, 3 rakip ve her biriyle 3 fark, "şablon yok", kancanın videodaki yeri), ekte açılıştan kancaya 30-60 sn kayıt ve 2 açıklamalı ekran görüntüsü (`docs/ai/el-kitabi/kalite-kapisi.md` › Store and portal submissions)
 - [ ] Build'ler mağazalara yüklendi ve incelemeye gönderildi (sen; Claude yüklemez, göndermez; oturum yöneticisi olan bilgisayarda yöneticinin kuralı geçerli)
 
 ## Yayına hazırlık

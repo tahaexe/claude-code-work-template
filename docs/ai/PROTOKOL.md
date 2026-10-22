@@ -1,5 +1,5 @@
 # Working Protocol
-<!-- Version 1.57 · 2026-10-21 · Same in every project; project facts → CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
+<!-- Version 1.58 · 2026-10-22 · Same in every project; project facts → CLAUDE.md. Update: KURULUM.md → "Güncelleme (Update)". -->
 
 Goal for every task: understand it, follow a plan step by step, use little context, keep knowledge in durable memory; what players or viewers see must stand beside the best of its kind (careless work = not done).
 - The user's explicit instruction overrides this protocol. Its rules are defaults: where one doesn't fit, do what serves the goal, say why in one line; only the next rule is fixed.
@@ -47,7 +47,7 @@ Each step:
 **Stop only when** (reason → the step line (⛔) and DURUM; ask one clear question): verification keeps failing, no well-founded idea left · plan assumption proved wrong, goal or scope must change · hard-to-reverse operation outside the approved plan · red test in the comprehensive test stage, unclear cause (bug or stale test) · decision only the user can make (§1). Never delete or loosen a test or hard-code its result to hide a bug.
 
 Small deviation (same goal, different detail) → update the step file, log it, continue. Out-of-scope idea → **Up next**, tech debt → `hafiza/teknik-borc.md`; not now.
-**Everything ready** → the comprehensive test stage (`BAKIM.md`): each step file's **Final test** one by one, a release's items too. **Plan finished** → `BAKIM.md` → "Plan closure".
+**Everything ready** → a game going to a store or portal (new game, big update) passes the Polish & Quality Gate first (`el-kitabi/kalite-kapisi.md`): no submission without its `KAPI: GEÇTİ`. Then the comprehensive test stage (`BAKIM.md`): each step file's **Final test** one by one, a release's items too. **Plan finished** → `BAKIM.md` → "Plan closure".
 
 ## 5. Memory
 Where: current work → `DURUM.md` + active plan · durable decision + reason → `hafiza/kararlar.md` · pitfall, hard-won knowledge, user correction or preference → `hafiza/dersler.md` · tech debt, review follow-ups → `hafiza/teknik-borc.md` (create if missing, index it) · growing area's knowledge → `hafiza/<topic>.md` + a `HAFIZA.md` line · project rule for every task → CLAUDE.md · derivable from code/git, temporary or secret (password, key) → nowhere.

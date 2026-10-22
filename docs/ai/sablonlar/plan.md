@@ -29,7 +29,7 @@
 - **Pre-research:** ‹the report this plan builds on: `tasarim/on-arastirma/YYYY-MM-DD-on-arastirma….md` (new project or big job, PROTOKOL §3); else —›
 - **Best examples:** ‹2-3 references: what they do (measured where possible), what we take, what we avoid›
 - **Expert:** ‹agent and its plan review: findings, what changed in the plan›
-- **Bar at closure:** ‹how "beside the best" is checked: side-by-side, scores, eye check, feel on a device›
+- **Bar at closure:** ‹how "beside the best" is checked: side-by-side, scores, eye check, feel on a device; a game's release: the Polish & Quality Gate's rubric›
 
 ## Phase map
 <!-- Only if the work was split; each phase is its own plan file (index + step folder). Otherwise delete this section. -->
@@ -37,9 +37,10 @@
 2. ‹Phase 2: goal›
 
 ## Steps index
-<!-- One format only, so a restart, the plan view and status tools read just these lines: one checkbox line per step `- [ ] **N. Short title**: one-line what → `planlar/‹plan›/NN-‹slug›.md`` (a sub-step `- [ ] **N.M Short title**: …` with its own file `NN-M-‹slug›.md`, e.g. 4.1, 6a.1); no other checkboxes in this section. States on the line: `[ ]` ○ to do (Yapılacak) · `[~]` ▶ in progress (Devam ediyor) · `[x]` ✓ done (Tamamlandı) · blocked: `⛔ ‹why›` at the line's end (Engellendi), the box unchanged. Files, Tool, Verify, Kaldığım yer, the step's log, decisions and Final test live only in the step file, one per step, written with the plan (a later phase's when that phase's plan is written). DURUM: **Active plan:** `planlar/‹this file›.md` N/M steps done; **Next action:** `Adım N başla: …` or `Adım N devam: …` (PROTOKOL §4). One commit per step. Penultimate step: the comprehensive test stage (BAKIM.md); last: the release or delivery. No stage in a prototype that won't ship or in a plan whose work ships with a later release plan: its Final tests run in that plan's stage. Index over ~15,000 characters or independent parts → phases. -->
+<!-- One format only, so a restart, the plan view and status tools read just these lines: one checkbox line per step `- [ ] **N. Short title**: one-line what → `planlar/‹plan›/NN-‹slug›.md`` (a sub-step `- [ ] **N.M Short title**: …` with its own file `NN-M-‹slug›.md`, e.g. 4.1, 6a.1); no other checkboxes in this section. States on the line: `[ ]` ○ to do (Yapılacak) · `[~]` ▶ in progress (Devam ediyor) · `[x]` ✓ done (Tamamlandı) · blocked: `⛔ ‹why›` at the line's end (Engellendi), the box unchanged. Files, Tool, Verify, Kaldığım yer, the step's log, decisions and Final test live only in the step file, one per step, written with the plan (a later phase's when that phase's plan is written). DURUM: **Active plan:** `planlar/‹this file›.md` N/M steps done; **Next action:** `Adım N başla: …` or `Adım N devam: …` (PROTOKOL §4). One commit per step. Penultimate step: the comprehensive test stage (BAKIM.md); last: the release or delivery. A game going to a store or portal (a new game, a big update): the Polish & Quality Gate (`el-kitabi/kalite-kapisi.md`) right before that stage, its Final test the result line `KAPI: GEÇTİ`. No stage in a prototype that won't ship or in a plan whose work ships with a later release plan: its Final tests run in that plan's stage. Index over ~15,000 characters or independent parts → phases. -->
 - [ ] **1. ‹Short title›**: ‹one-line what› → `planlar/‹plan›/01-‹slug›.md`
 - [ ] **2. ‹Short title›**: ‹one-line what› → `planlar/‹plan›/02-‹slug›.md`
+- [ ] **‹N-2›. Polish & Quality Gate**: a game going to a store or portal: the finished game beside its top 3, blind scores, the owner's 10 minutes, ≤2 fix loops (`el-kitabi/kalite-kapisi.md`); Final test: `KAPI: GEÇTİ ‹version›` → `planlar/‹plan›/‹NN›-kalite-kapisi.md`
 - [ ] **‹N-1›. Comprehensive test**: every step file's Final test one by one; a release: the release checklist and the test list (`el-kitabi/yayin-oncesi-test-listesi.md`), every existing test suite once; the report → `planlar/‹plan›/‹NN›-kapsamli-test.md`
 - [ ] **‹N›. ‹Release or delivery›**: ‹store submission, deploy or hand-over; a release is announced the same day (BAKIM.md › After release)› → `planlar/‹plan›/‹NN›-‹slug›.md`
 

@@ -1,0 +1,113 @@
+---
+title: "Polish & Quality Gate: the finished game beside its top 3 rivals, blind scores, the owner's ten minutes, portfolio rules, App Store submissions"
+condition: "Game project that ships to a store (Google Play, App Store, Steam) or a web portal (Poki, CrazyGames, GameDistribution), first release included."
+read_when: "Writing a new game's release plan or a big update's plan (the gate step); running the gate (captures, measurements, blind scoring, the owner's session, fix loops, the result line); concept time (the hook sentence and the top-3 table); before any store or portal submission or resubmission after a quality or 4.3 rejection; writing App Store review notes; checking the studio's games for shared assets, a shared UI look or look-alike listing texts."
+requires: "Python 3 (standard library) for `metin-benzerlik.py` and `varlik-cakisma.py`, which ship beside this entry in `el-kitabi/araclar/` (a project's copy: `docs/ai/el-kitabi/araclar/`); Unity Recorder or adb for captures; the rivals on an emulator image with the Play Store or a phone (as the pre-research plays them); ffmpeg for loudness and clips"
+source: "The studio's polish-and-quality-gate research for the session manager, 2026-10-22 (CrazyGames, Poki and GameDistribution pages; Apple's App Review Guidelines and App Review page; Google Play's spam policy; Android vitals and core app quality; Apple developer-forum 4.3 threads; game-feel and onboarding talks; Voodoo, SayGames, Supercell, Supersonic, Naavik): links in Sources, read by the research that day, not re-read for this entry · the manager's proposal, approved by the owner on 2026-10-22 13:35 · the trigger: a web portal rejected a studio game for overall quality and Apple rejected five new studio games under 4.3(a) the same week"
+tech: "Engine-independent (Unity games: Unity Recorder); Google Play, App Store, Poki, CrazyGames, GameDistribution"
+added: "2026-10-22 · template 1.58 · the owner's request ('ana planda cilalama gibi bir aşama ... bir aşama ekleyelim. oyunlarımızın bir kalitesi olmalı'), the manager's approved proposal; the research's consolidation proposal (one collection app) left out by the owner's decision; written by a temporary helper session"
+---
+# Polish & Quality Gate
+
+## Where it sits
+- A fixed step in every new game's release plan and every big update (new levels, modes, meta, look, UI or store art; anything the rubric scores), after content-complete and the store-asset drafts, before the comprehensive test stage (BAKIM.md): content complete → gate `KAPI: GEÇTİ` → comprehensive test → release. Its fixes land before the test stage, so that stage tests the build that ships.
+- No store or portal submission without `KAPI: GEÇTİ` for that version, resubmissions after a quality or 4.3 rejection included. A fix-only update (bugs, compliance, store policy) keeps the last pass.
+- Pre-research (`on-arastirma.md`) sets the bar before the first plan; the gate proves the finished game meets it beside its rivals; the test stage proves the shipping build works. Feel, first minute, screen scores and the expert review stay in their entries; the gate scores their result.
+- Why: portals judge the first seconds, the feel and originality and refuse clones, templates and asset flips [C1-C2, P1]; Apple's 4.3 rejects apps that can't be told apart from what is widely available and names shared code or assets, one template repackaged and purchased templates [A1-A3]. The template had the pieces but no stage that puts the finished game beside its top 3 and stops the release.
+
+## Concept pre-check (concept time, `proje-kontrol-listesi.md` 1.4)
+- The hook sentence: "<genre> where <the one thing> so that <feeling>" (Turkish: "<tür>, ama <tek fark>, böylece <his>").
+- The top-3 table (the three most-played games of the exact subgenre): parity (what all three do) · our edge (≥1 concrete item none of them has, ideally 2, from mechanic, theme or world, audience, or meta) · our gaps (each fixed or accepted). Both open the dossier `docs/ai/tasarim/farklilik.md` (`sablonlar/farklilik-dosyasi.md`).
+- Parity is not a hook: claims every rival makes (no timer, many levels, hints) set no game apart. No edge → change the mechanic, the world or the audience; a recolour, rename, refactor or obfuscation changes neither concept nor look [A4]. The hook needs depth behind it: a core loop that opens up over time [P1, E2].
+
+## Entry
+- Content complete (levels, meta, monetization, localization), no open crash, a style guide (`tasarim/gorsel-stil.md`), the store-asset drafts.
+- The top 3 chosen (store charts and installs on the gate day, dated; normally the pre-research's leaders) and captured.
+
+## Capture rules
+- Same device, same moments, same length for all four games: a cold start from the icon tap; the first 60 s; the same actions (e.g. the first three moves, a win, a loss); the home, HUD, win, lose, shop and settings screens; the icon in the genre grid; store screenshots 1-3; the preview's first 5 s.
+- Ours: Unity Recorder (`store-listing-optimization.md` › Recording in Unity) or `adb shell screenrecord` (no audio, ≤180 s a file); the rivals on the emulator or a phone, as the pre-research plays them (`on-arastirma.md` › Methods: never buy, never tap an ad on purpose). Audio is scored only from recordings with sound (`ebur128` loudness), else "not checked".
+- Evidence in `docs/ai/tasarim/kalite-kapisi/<version>/`: `kor/` (the blind set: folders A-D with the same file names, `olcumler.md` with every measurement for all four, `ozellikler.md` with mechanic, theme or world, audience, meta and monetization written alike for all four; nothing names a game, logos and titles masked where cheap); `anahtar.md` (which letter is which, never shown to reviewers); the reviewers' sheets; `puan.md`; the dossier as of the gate; the portfolio outputs. Clips ≤~15 s at 720p, captures ≤~1,280 px; long recordings stay in `Logs/` and are named.
+
+## Checklist (target · how to measure)
+Casual-puzzle defaults; the real bar is the top 3's median, so a genre may justify other numbers in the score sheet, with the rivals' measurement beside them.
+- **First 60 s:** mobile cold start to the first playable input ≤5 s on the low-end target, a progress cue past 2 s · launch time and a log line at the first interactive frame. Web: load to `gameplayStart` ≤10 s on throttled 4G, ≤1 click · a scripted headless Chrome run. Tutorial by doing: ≤1 short line a step, ≤3 new things at once, no fail state in levels 1-2 (`ilk-dakika.md`). First win ≤60 s; the hook visible within 60 s, by level 3 at the latest · timestamps in the cold-start video. Before the first win only what law requires: no ad, rating prompt, offer, sign-in or optional permission; tutorial and level-funnel events fire (DebugView) [F1].
+- **Core feel:** response in the touch frame within `oyun-hissi.md` §1's budgets · input-to-frame timestamps in the engine; the owner's 240 fps camera check once per game. A feedback matrix (select, valid and invalid move, clear or combo, near-miss, win, lose, reward): motion and sound for each, haptics on key events; success big, failure soft. No input lock during decorative motion; celebrations skippable; undo and hint wherever the top 3 have them. Pieces read at a glance: distinct silhouettes, an obvious selected state · grayscale and small-size captures. The same rules feel dull or alive by their layered feedback alone [F1].
+- **Visuals and UI:** one art direction per the style guide; zero placeholders, grey boxes, default UI, missing glyphs or compression artifacts. The game's own UI skin (Portfolio rules). Motion as `oyun-hissi.md` §2. Text ≥11 pt on iOS and legible at web DPR 1 in 800×450; contrast 4.5:1 for text, 3:1 for UI; targets ≥48 dp / 44 pt; safe areas, tablet, 16:9 web; screen scores as `arayuz-kalitesi.md` §5 [A5, G1, C2].
+- **Audio and haptics:** a sound for every interaction; core-action SFX unique to this game; a seamless music loop; even levels, no clipping (ffmpeg `ebur128`). Separate music, SFX and haptics switches; haptics clear, sparse, in sync; the iOS silent switch respected; audio muted during ads.
+- **Content and progression:** a 20-30 min first session and ≥7 days at median pace; a new element or twist at least every ~10 levels through level 50; the solver's curve has breathers and no wall before level 20 (`adil-zorluk-ve-basarisizlik.md`); a goal layer and a reason to return tomorrow (`hedef-katmanlari-ve-geri-donus.md`); a contact sheet of 12 random levels doesn't look like one level.
+- **Performance:** mobile 60 fps (p95 frame ≤16.7 ms) in the heaviest level on the low-end target, 0 B GC a frame in play, memory under Play's thresholds, 0 crashes or ANRs in the gate's runs on the device matrix (`yayin-oncesi-test-listesi.md` › Device matrix; Play lowers visibility above a 1.09 % crash or 0.47 % ANR rate [G1]). Web: initial download ≤20 MB (the portals' cap is 50), ≤10 s to gameplay, Chrome, Edge and Safari, the same physics at 60 and 144 Hz, localStorage in try/catch, no external requests (`unity:optimize-web`) [C2, P1].
+- **Accessibility:** every gameplay colour also carries a shape and passes a grayscale check (`renk-korlugu-palet.md`); reduce-motion and text-size options; English complete, Turkish an option [A5, F1].
+- **Store and portal art:** the icon reads at 48 px and stands out in a grid with the genre's top 10, not confusable by shape, colour or name (`oyun-simgesi.md`); screenshots 1-3 carry the hook in real gameplay in this game's own caption style; the preview shows the hook in its first 3 s; the portal cover and thumbnails (still and animated) match the in-game art (`store-listing-optimization.md`).
+- **Differentiation:** the hook in the first 60 s and in screenshot 1; the top-3 table done; the portfolio checks green; the App Store dossier ready.
+
+## Rubric
+- Blind: every game of the set is scored in every area against the other three, so a reviewer needs no idea which is ours. 1 = broken or missing · 2 = below the weakest of the other three · 3 = on par with their median · 4 = equal to the best · 5 = better than all three, worth screenshot 1 (as Poki's Web Fit, where 3 = the category average [P2]).
+- Differentiation: 1 = clone · 2 = reskin (a new theme only) · 3 = a minor twist · 4 = a clear twist visible in the first minute · 5 = a twist plus a theme, audience or meta combination none of the other three has.
+
+| Area | Evidence (the same for A-D) | Min |
+|---|---|---|
+| First 60 s | cold-start video from the icon tap; time to input; taps to play | 4 |
+| Core feel | 20 s clips of the same actions; latency table; feedback matrix | 3 |
+| Art and animation | 6 captures and 3 clips of the same moments | 3 |
+| UI and readability | home, HUD, win, lose, shop and settings; measurements | 3 |
+| Audio and haptics | clips with sound; haptics list | 3 |
+| Content and progression | level count, twist timeline, difficulty curve, contact sheet | 3 |
+| Technical | fps, memory, load, size and crash table | 3 |
+| Accessibility | colour-blind simulations; settings list | 3 |
+| Store and portal art | icon in the genre grid; screenshots 1-3; the video's first 5 s | 3 |
+| Differentiation | `ozellikler.md`; the captures | 4 |
+
+- **Area score:** the mean of the two reviewers; a third reviewer when they differ by ≥2 on one of our areas, then the median of the three. 4.5 is not a 5.
+- **Pass:** every area at its minimum and a mean ≥3.5; at least one area at 5, and the hook's area (named in the dossier before scoring) is one of them; every hard gate green: 0 crashes or ANRs in the device matrix, 60 fps on the low-end target, the web size and load caps (≤20 MB, the portals' 50 MB only with a written reason; ≤10 s), no placeholder, English complete.
+- **Blocks the release:** a red hard gate; an area under its minimum; a mean under 3.5; no 5, or the 5 isn't the hook; the hook missing from the first 60 s or screenshots 1-2; a portfolio flag; an owner veto; missing evidence.
+
+## Who scores
+1. The builder captures and measures, never scores. The area's expert (`unity-uzmani` in Unity games) may check the measurements, never the taste.
+2. Two fresh reviewer subagents, given only `kor/` and the reviewer form of `sablonlar/kalite-puan.md` (no project, key or dossier), score every letter in every area with one line of reason a score; the main session saves each answer as `hakem-<n>.md` and merges ours into `puan.md` through the key. New reviewers each loop.
+3. The owner plays 10 minutes from a fresh install (a phone; a web game in the browser) and answers four questions: keep playing? the one thing? what felt cheap? which rival would you pick, and why? A "no" or a cheap finding is a veto: the gate fails and the finding becomes a fix.
+4. Optional real players for web builds (check Poki's exclusivity terms first): a Poki Playtest (10 videos of real players with inputs and console, often within minutes) and Player Fit (500 players in ~5 h; passes at an average above 3 min with ≥25 % of plays over 3 min; successful games 5+ min) [P2]. CrazyGames Basic Launch is a submission, so only after `GEÇTİ`; it runs 7-21 days (ends at ≥7 days live and ≥500 plays), successful titles reach 10+ min average playtime, top titles turn 80 %+ of players into ≥1 min of play, load in <10 s and stay under 20 MB, a strong D1 is 10-15 % [C3]: its numbers feed the next version (BAKIM.md › After release).
+5. The reviewer of record (the session manager where a machine-level CLAUDE.md names one, else the owner) writes the result as the first line of `puan.md`: `KAPI: GEÇTİ <version>` or `KAPI: KALDI <version>`. The comprehensive test stage starts only after `GEÇTİ`.
+
+## Loops
+- After the first scoring, at most 2 loops: fix the lowest areas in this order: blockers, first minute, core feel, visuals and UI, audio, store art; then re-capture, re-score (new reviewers) and the owner's session again.
+- Still failing after loop 2 → the reviewer of record decides: rework (a plan of its own), ship only where it fits (e.g. Android or web only), or shelve. No day budget: agents work continuously.
+- Publishers gate the same way: Voodoo weighs product metrics with marketability instead of hard cut-offs, SayGames' producers play every game before a test, Supercell killed 30+ games against 5 hits [E1].
+
+## Portfolio rules (against the studio's own games)
+- **A per-game UI skin:** a shared UI kit (`layerlab-gui-pro.md`) is structure only; frames, palette, fonts, icons and home layout differ from the studio's other games · a side-by-side sheet of all studio games' home, HUD and win screens in the evidence folder.
+- **Core-action SFX unique per game.**
+- **0 shared gameplay art or audio files** with other studio games, by hash · `varlik-cakisma.py`. Asset packs are a fine source, but the same pack file in two studio games counts: take other parts, give them this game's own textures or palette, or allow scenery that carries no look with a reason. Typical deliberate parts for the allow list: the studio logo, cross-promotion images of the other games.
+- **Listing texts** (description, promotional text, what's new) ≤25 % similar to any other studio listing · `metin-benzerlik.py`. A heuristic: Apple publishes no number; one developer's batch had release notes 46 % alike, cut to 15 % [A4].
+- **No purchased complete-project templates** (4.2.6, 4.3(a)); asset packs are fine.
+- Why: Apple names the same code or assets and look-alikes from one template [A3]; CrazyGames refuses games easily confused by name or iconography [C2]; Poki refuses asset flips [P1]; Google Play's Repetitive Content rule refuses near-identical apps [G1].
+
+## Store and portal submissions
+- **App Store, one at a time:** one new game in App Review per developer account; the next only after approval, 1-2 weeks apart (a heuristic); never a same-day batch through the API [A2, A4].
+- **Review Notes** of every submission carry the dossier (`sablonlar/farklilik-dosyasi.md` › App Store): the hook sentence; 3 named rivals with 3 concrete differences each (mechanic, content, presentation); "All code, art and audio were made for this game; no template", with the engine and SDK list; where the hook shows ("0:20 of the attached video, level 2"); plus the version's usual notes (`app-store-game-center.md` §7). Attachment: a 30-60 s recording from launch to the hook and 2 annotated screenshots. Facts only (`metin-denetimi.md`).
+- **After a 4.3:** first ask in Resolution Center which finding applies: binary, metadata or concept; never resubmit the same build with an argument; the one appeal only with new evidence; a precise question can go to Meet with App Review [A2, A4].
+- **Consolidation** (several games in one app) is Apple's own suggested route for look-alike apps [A2], but the owner's call; the template default is separate apps, each passing the gate.
+- **Portals:** resubmit a rejected game only after `GEÇTİ`, with the list of changes; CrazyGames asks for meaningful improvements and may restrict repeat weak submitters [C1-C2]. GameDistribution wants its SDK and ≥3 thumbnails (512×512 and 512×384) and reviews for up to 3 weeks [D1].
+
+## Tools
+- `metin-benzerlik.py <this game's listing files> -- <other games' listing files, folders or globs>`: the highest pairwise similarity, as the difflib ratio on the word sequences and the word 5-gram Jaccard; exit 1 above 0.25 (`--threshold`). Studio listings measured 2026-10-22: distinct games ≤0.13 and 0.00; a web copy of the same game 1.00.
+- `varlik-cakisma.py <this project> -- <other projects or a quoted glob>`: sha256 of the audio, image and model files under `Assets/` (no `*.meta`, SDK or editor folders), shared files by folder; `--allow <file>`: a path glob or a sha256, then `# reason` (keep it at `tasarim/kalite-kapisi/izinli-ortak.txt`); exit 1 on shared gameplay files. 2026-10-22: one game against the 21 other studio projects in 13 s (45,554 files), 39 shared: UI kit sprites, pack models, UI sounds, cross-promotion images.
+- Both read only, standard library, `--dene` runs a self-test in memory.
+
+## Sources
+Read by the research on 2026-10-22; not re-read for this entry. Pages change: re-read a rule before relying on its wording.
+- [C1] CrazyGames FAQ: https://docs.crazygames.com/faq/
+- [C2] CrazyGames requirements: https://docs.crazygames.com/requirements/gameplay/ · https://docs.crazygames.com/requirements/technical · https://docs.crazygames.com/requirements/quality/
+- [C3] CrazyGames Basic Launch metrics: https://docs.crazygames.com/resources/basic-launch-metrics/
+- [P1] Poki: https://developers.poki.com/guide/what-we-look-for · https://developers.poki.com/guide/content-player-safety · https://developers.poki.com/guide/requirements-quality
+- [P2] Poki tests: https://developers.poki.com/guide/playtesting · https://developers.poki.com/guide/player-fit-test · https://developers.poki.com/guide/web-fit-test
+- [D1] GameDistribution (its pages block automated reading; from search, check by hand): https://faq.gamedistribution.com/hc/en-us/articles/360020636279-How-do-you-determine-which-games-to-publish
+- [A1] App Review Guidelines 4.2, 4.2.6, 4.3: https://developer.apple.com/app-store/review/guidelines/#spam
+- [A2] Apple App Review (essentially the same apps, combining them, appeals, Meet with App Review): https://developer.apple.com/distribute/app-review/
+- [A3] Apple's 4.3(a) message as quoted on Unity's forum: https://discussions.unity.com/t/4-3a-design-spawn-error-received-in-app-store-connect/1551940
+- [A4] Apple developer forums, anecdotes, not policy: https://developer.apple.com/forums/thread/843096 · https://developer.apple.com/forums/thread/842971 · https://developer.apple.com/forums/thread/839278
+- [A5] Apple: https://developer.apple.com/app-store/getting-featured/ · https://developer.apple.com/design/human-interface-guidelines/designing-for-games
+- [G1] Google Play spam policy: https://support.google.com/googleplay/android-developer/answer/9899034 · vitals: https://developer.android.com/topic/performance/vitals · core app quality: https://developer.android.com/docs/quality-guidelines/core-app-quality
+- [F1] Feel and onboarding: https://www.gamedeveloper.com/game-platforms/feature-game-feel---the-secret-ingredient- · https://www.youtube.com/watch?v=Fy0aCDmgnxg · https://www.youtube.com/watch?v=AJdEqssNZ-U · https://celiahodent.com/gamers-brain-ux-onboarding/ · https://gameanalytics.com/blog/tips-for-a-great-first-time-user-experience-ftue-in-f2p-games · https://gameaccessibilityguidelines.com/basic/
+- [E1] Publishers: https://www.gameanalytics.com/blog/how-voodoo-diversified-and-lowered-game-product-kpis · https://blog.say.games/posts/why-saygames-believes-hybrid-games-need-a-different-publishing-model · https://gameworldobserver.com/2022/10/04/all-games-killed-by-supercell-everdale-hay-day-pop-clash-quest
+- [E2] Differentiation: https://supersonic.com/?p=99308 · https://naavik.co/digest/how-niche-subgenres-are-reshaping-the-mobile-puzzle-market/
