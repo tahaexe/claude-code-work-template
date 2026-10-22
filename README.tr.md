@@ -24,7 +24,8 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
 - **Plan öncelikli çalışma.** Küçük işler hemen yapılır. Büyük işler incelenir, plana bağlanır ve adım adım yürütülür; her adımda hata kontrolü yapılır (derleniyor mu, günlük temiz mi), plana işlenir, commit'lenir ve push'lanır. Plan dosyası kısa bir dizindir, her adımın kendi dosyası vardır; adımlar ✓ Tamamlandı · ▶ Devam ediyor · ○ Yapılacak (⛔ Engellendi) diye işaretlenir.
 - **Kaldığı yerden sürer.** Bağlam %90'a gelince Claude kaldığı yeri adımın dosyasına yazar, commit'ler, push'lar ve `/clear` ister; "devam et" deyince yalnız durumu, plan dizinini ve o adımın dosyasını okur, bitmiş adımları ve eski kayıtları yeniden okumaz. Arka planda başlattığı işi o an not eder, saatleri saatten yazar.
 - **Hafıza repoda.** Kararlar, dersler ve güncel durum `docs/ai/` klasöründe durur ve git ile oturumlar, bilgisayarlar ve bulut oturumları arasında taşınır. `/clear` ve `/compact` iş kaybettirmez.
-- **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 5 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
+- **Devir için proje kaydı.** Projeyi kim devralırsa her şeyi repodan öğrenir: her oturumda yüklenen bir devir sayfası (önce okunacaklar, repo dışında birinin beklediği açık işler, tarihli devir günlüğü), bir mağaza kaydı (kimlikler, mağaza adları, her gönderim, ret ve yayının günlüğü, ürünler ve fiyatlar) ve bir yazışma özeti (her soru, cevap ve görev). Karar veren bir cevap geldiği an kaynağıyla yazılır; hiçbir proje bilgisi yalnız Claude'un hafızasında, bir sohbette ya da bir posta kutusunda kalmaz. Yeni gelen önce devir günlüğüne satırını ekler, sonra önce okunacakları okur.
+- **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 7 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
 - **Sınırları belli özerklik.** Teknik kararları Claude verir ve gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler ve kimlik bilgileri için durup sorar. Bilgisayara özel bir `CLAUDE.md` bir oturum yöneticisi adlandırıyorsa bu sorular ona gider.
 - **Kalite çıtası.** Oyuncunun ya da izleyicinin göreceği her işte Claude önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına inceletir; kapanışta iş denenir ve o örneklerin yanında dürüstçe değerlendirilir, zayıfsa yayından önce düzeltilir.
 - **Önce araştırma, yayından sonra ölçüm.** Yeni bir oyunun ya da kanalın ilk planından ve oyuncunun ya da izleyicinin göreceği her büyük işten önce Claude alanın en iyi işlerini alan alan inceler (pazar ve rakipler, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar, başlıklar, küçük resimler, tempo). En iyi rakipleri Play Store'lu bir emülatörde oynar, her bilgiyi kaynağıyla yazar; rapor, referans paftası ve tek sayfalık özet hazırlar. Yayından sonra en az 14 gün yeni içerik eklemez, oyuncu verilerini (D1, D7, bölüm hunisi, gelir, yorumlar) analiz eder ve yeni sürümü bu bulgulardan planlar.
@@ -57,7 +58,7 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
 
 | Katman | Dosyalar | Ne zaman yüklenir |
 |---|---|---|
-| Çekirdek | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `HAFIZA.md` | Her oturumda |
+| Çekirdek | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `DEVIR.md` (devir sayfası), `HAFIZA.md` | Her oturumda |
 | Aktif iş | `planlar/<aktif plan>.md` (kısa dizin) ve sürmekte olan adımın dosyası `planlar/<aktif plan>/NN-<adım>.md` | O plan üzerinde çalışılırken; bitmiş adımların dosyaları yeniden okunmaz |
 | Bilgi | `hafiza/*.md` | Konu gerektirdiğinde |
 | Nadir | `sablonlar/`, `BAKIM.md`, `KURULUM.md` | Plan yazarken ya da kapatırken, kurulumda |
@@ -101,12 +102,13 @@ proje/
    ├─ PROTOKOL.md            çalışma kuralları            (sabit)
    ├─ KURULUM.md             kurulum ve güncelleme        (sabit)
    ├─ BAKIM.md               kapanış ve temizlik          (sabit)
-   ├─ sablonlar/             CLAUDE.sablon.md, plan.md    (sabit)
-   ├─ araclar/               kayip-kontrol.py             (sabit)
+   ├─ sablonlar/             CLAUDE.sablon.md, plan.md, devir.md, …  (sabit)
+   ├─ araclar/               kayip-kontrol.py, devir-kontrol.py      (sabit)
    ├─ DURUM.md               neredeyiz
+   ├─ DEVIR.md               devir sayfası: önce okunacaklar, açık işler, devir günlüğü
    ├─ HAFIZA.md              hafıza dizini
    ├─ manuel-testler.md      senin yapacağın testler
-   ├─ hafiza/                kararlar, dersler, teknik borç, …
+   ├─ hafiza/                kararlar, dersler, mağaza kaydı, yazışma özeti, teknik borç, …
    └─ planlar/               tarihli planlar ve arşivleri
 ```
 
@@ -233,6 +235,7 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 | `CLAUDE.md` | 160 satır, 10.000 karakter |
 | `DURUM.md` | 30 satır, 3.000 karakter (teknik borç kendi dosyasına gider) |
 | `HAFIZA.md` | 40 satır, 4.000 karakter |
+| `DEVIR.md` | 40 satır, 4.000 karakter; devir günlüğünde son 10 satır kalır |
 | Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür |
 | Plan | Dizinde her adım tek satır, ayrıntısı adımın kendi dosyasında (yaklaşık 40 satır; kayıt girdileri en fazla 2 satır); dizin ~15.000 karakteri geçerse ya da bağımsız parçaları varsa fazlara bölünür; bir oturum dizini ve yalnız sürmekte olan adımın dosyasını okur |
 

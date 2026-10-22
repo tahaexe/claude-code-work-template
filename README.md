@@ -24,7 +24,8 @@ and keeps its memory in your repository, so nothing is lost between sessions or 
 - **Plan-first execution.** Small jobs are done right away. Big ones are explored, turned into a plan and carried out step by step; every step gets an error check (it compiles, its log is clean), is recorded in the plan, committed and pushed. The plan file is a short index and every step has its own file, marked ✓ done · ▶ in progress · ○ to do (⛔ blocked).
 - **Picks up where it left off.** At ~90 % context Claude writes where it stands into the step's file, commits, pushes and asks for `/clear`; after "devam et" it reads only the status, the plan index and that step's file, never the finished steps or old logs. Background jobs are noted the moment they start, and times come from the clock.
 - **Memory in the repository.** Decisions, lessons and the current state live in `docs/ai/` and travel with git across sessions, computers and cloud sessions. `/clear` and `/compact` never lose work.
-- **Lean context.** Only a small core (about 5k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
+- **A project record for handovers.** Whoever takes the project over learns everything from the repository: a handover sheet loaded every session (what to read first, open threads someone outside the repo waits on, a dated handover log), a store record (IDs, listing names, a log of every submission, rejection and release, products and prices) and a correspondence log (every question, answer and task). A deciding answer is written down with its source the moment it arrives, so no project fact lives only in Claude's memory, a chat or a mailbox; a newcomer adds its line to the handover log, then reads the read-first list.
+- **Lean context.** Only a small core (about 7k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
 - **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials. If a machine-level `CLAUDE.md` names a session manager, those questions go to the manager instead.
 - **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tried and judged honestly beside those examples, and weak work is fixed before it ships.
 - **Research first, measure after release.** Before the first plan of a new game or channel, and before any big player- or viewer-facing job, Claude studies the best work in the field area by area (market and competitors, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; for YouTube: leading channels, titles, thumbnails, pacing). It plays the top competitors on a Play Store emulator, cites a source for every claim and delivers a report, a reference sheet and a one-page summary. After a release it builds no new content for at least 14 days, analyses the player data (D1, D7, the level funnel, revenue, reviews) and plans the next version from the findings.
@@ -57,7 +58,7 @@ Request
 
 | Layer | Files | Loaded |
 |---|---|---|
-| Core | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `HAFIZA.md` | Every session |
+| Core | `CLAUDE.md`, `PROTOKOL.md`, `DURUM.md`, `DEVIR.md` (handover sheet), `HAFIZA.md` | Every session |
 | Active work | `planlar/<active plan>.md` (a short index) and the running step's file `planlar/<active plan>/NN-<step>.md` | While working on that plan; finished steps' files are not re-read |
 | Knowledge | `hafiza/*.md` | When the topic needs it |
 | Rare | `sablonlar/`, `BAKIM.md`, `KURULUM.md` | Writing or closing a plan, installing |
@@ -89,7 +90,7 @@ Claude's own files are terse English bullets to save tokens. File and folder nam
 4. **Update later.** Pull this repository. A project updates itself at its next plan closure; to update at once, say *"update the template"* (*"şablonu güncelle"*). Only the fixed files are refreshed; plans, memory and `CLAUDE.md` are kept.
 
 > [!IMPORTANT]
-> **Language.** Claude talks to you in Turkish by default, and the files written for you (manual tests, game design documents, the [user guide](KILAVUZ.md)) are in Turkish. To work in English, change `Turkish with the user` to `English with the user` on line 7 of `docs/ai/PROTOKOL.md`, and the two "Turkish" mentions in steps 10 and 12 of `docs/ai/KURULUM.md`, before installing. In a project that's already installed, edit its copy.
+> **Language.** Claude talks to you in Turkish by default, and the files written for you (manual tests, game design documents, the [user guide](KILAVUZ.md)) are in Turkish. To work in English, change `Turkish with the user` to `English with the user` on line 8 of `docs/ai/PROTOKOL.md`, and the two "Turkish" mentions in steps 10 and 12 of `docs/ai/KURULUM.md`, before installing. In a project that's already installed, edit its copy.
 
 ### Project layout after install
 
@@ -102,12 +103,13 @@ project/
    ├─ PROTOKOL.md            working rules                (fixed)
    ├─ KURULUM.md             install and update           (fixed)
    ├─ BAKIM.md               closing and cleanup          (fixed)
-   ├─ sablonlar/             CLAUDE.sablon.md, plan.md    (fixed)
-   ├─ araclar/               kayip-kontrol.py             (fixed)
+   ├─ sablonlar/             CLAUDE.sablon.md, plan.md, devir.md, …  (fixed)
+   ├─ araclar/               kayip-kontrol.py, devir-kontrol.py      (fixed)
    ├─ DURUM.md               where we are
+   ├─ DEVIR.md               handover sheet: read first, open threads, handover log
    ├─ HAFIZA.md              memory index
    ├─ manuel-testler.md      tests for you to run
-   ├─ hafiza/                decisions, lessons, technical debt, …
+   ├─ hafiza/                decisions, lessons, store record, correspondence log, technical debt, …
    └─ planlar/               dated plans and their archive
 ```
 
@@ -234,6 +236,7 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 | `CLAUDE.md` | 160 lines, 10,000 characters |
 | `DURUM.md` | 30 lines, 3,000 characters (technical debt goes to its own file) |
 | `HAFIZA.md` | 40 lines, 4,000 characters |
+| `DEVIR.md` | 40 lines, 4,000 characters; the handover log keeps its last 10 lines |
 | Memory topic file | Split past ~150 lines or 15,000 characters |
 | Plan | One index line per step, its details in the step's own file (about 40 lines; log entries of at most 2); an index past ~15,000 characters or with independent parts is split into phases; a session reads the index and only the running step's file |
 
