@@ -28,8 +28,9 @@ and keeps its memory in your repository, so nothing is lost between sessions or 
 - **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials. If a machine-level `CLAUDE.md` names a session manager, those questions go to the manager instead.
 - **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tried and judged honestly beside those examples, and weak work is fixed before it ships.
 - **Research first, measure after release.** Before the first plan of a new game or channel, and before any big player- or viewer-facing job, Claude studies the best work in the field area by area (market and competitors, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; for YouTube: leading channels, titles, thumbnails, pacing). It plays the top competitors on a Play Store emulator, cites a source for every claim and delivers a report, a reference sheet and a one-page summary. After a release it builds no new content for at least 14 days, analyses the player data (D1, D7, the level funnel, revenue, reviews) and plans the next version from the findings.
+- **A quality gate before release.** Before a new game or a big update goes to a store or a web portal, the finished game is captured beside the three most-played games of its subgenre, on the same device and at the same moments. Two fresh reviewer agents score all four blind (A-D) in ten areas, the owner plays ten minutes and answers four questions, and nothing is submitted without `KAPI: GEÇTİ`. Portfolio checks keep a studio's games apart (own UI skin and sounds, no shared art or audio files, listing texts at most 25 % alike, with two checking tools), and App Store submissions go one at a time with a differentiation dossier.
 - **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Every step file says how the step will be tested; when everything is ready, the plan's penultimate step tests every step one by one, and before a release also runs every existing suite, the release checklist and a pre-release test list: levels, saves, a device matrix, sandbox purchases, test ads and consent, the clock, interruptions, screens with real taps, sound, analytics, performance, localization, accessibility and store compliance, with a report and hold rules.
-- **A project checklist.** For games and channels, a sourced checklist from first idea to after release (12 phases, 100 items, each with when it counts as done and how it is finally tested) and a 40-step plan skeleton for a new mobile game; a release is announced the same day.
+- **A project checklist.** For games and channels, a sourced checklist from first idea to after release (12 phases, 100 items, each with when it counts as done and how it is finally tested) and a 41-step plan skeleton for a new mobile game; a release is announced the same day.
 - **Unity add-on.** Unity CLI first, a headless test runner, C# code intelligence, code rules built on SOLID and services, game design templates and a visual style check after every UI step.
 - **Conditional handbook.** Field-tested notes on Google Play, the App Store, Firebase, ASO, shaders, Synty assets and more, installed only into projects where they apply, so they cost nothing elsewhere.
 - **Browser work in its own profile.** With Claude in Chrome, Claude works in its own Chrome profile (Play Console, App Store Connect, checking a page) and never touches yours.
@@ -47,6 +48,7 @@ Request
                  (blocker · decision · risky operation not in the plan → stops and asks)
                  (~90 % context → note where it stands → /clear → "devam et")
                                                ↓
+    A game's release first: quality gate (blind scores beside the top 3, the owner's 10 minutes; no submission without KAPI: GEÇTİ)
     Penultimate: comprehensive test (every step's final test; before a release: suites, checklist, test list, device matrix, report)
     Last step:   release (announced the same day) or delivery
     Closing:     summary + manual tests + memory + archive
@@ -151,7 +153,7 @@ Choosing Unity at install adds:
 The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and asset packs, compiled from official docs, articles and field work. Each entry has a condition: it's installed only where the condition holds and read only during related work. Entries can add plan candidates (for example the Google Play Level Up structure), and notes a project adds to an entry are proposed back to the template on update.
 
 <details>
-<summary><b>All 37 entries</b></summary>
+<summary><b>All 40 entries</b></summary>
 
 | Entry | Installed when |
 |---|---|
@@ -192,8 +194,9 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Public text check: claims ledger, machine-sounding patterns, fresh review, store listing audit | Project that publishes store, site, press or video text |
 | YouTube thumbnails for a channel that renders its own scenes: real frames, Test & compare, policy limits | YouTube channel that renders its own scenes |
 | Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens and real taps, sound, performance, crashes and analytics, store compliance) with how, the pass bar, the order, a device matrix, hold rules and a report | Game shipping to a store |
-| Project checklist: 12 phases and 100 items from the first idea to after release (pre-research, prototype, vertical slice, content, monetization and measurement, localization and accessibility, compliance and store records, store page, comprehensive test, release, after release, maintenance), each with when it counts as done, its final test and sources; a 40-step plan skeleton for a new mobile game; PC/Steam and YouTube differences | Game (any engine) or video channel |
+| Project checklist: 12 phases and 100 items from the first idea to after release (pre-research, prototype, vertical slice, content, monetization and measurement, localization and accessibility, compliance and store records, store page, comprehensive test, release, after release, maintenance), each with when it counts as done, its final test and sources; a 41-step plan skeleton for a new mobile game; PC/Steam and YouTube differences | Game (any engine) or video channel |
 | Pre-research before the first plan: the best work in the field, area by area (market, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; leading YouTube channels), competitors played on an emulator, a source for every claim, a report, a reference sheet and a one-page summary | Project that players or viewers see (game, channel, public app or site) |
+| Polish & quality gate before release: the finished game captured beside its top 3 rivals, scored blind in ten areas by two fresh reviewer agents, the owner's ten minutes and veto, at most two fix loops; portfolio rules against the studio's own games (own UI skin and sounds, no shared art or audio, listing texts at most 25 % alike) with two checking tools (`metin-benzerlik.py`, `varlik-cakisma.py`); App Store submissions one at a time with a differentiation dossier | Game that ships to a store or a web portal |
 
 </details>
 
