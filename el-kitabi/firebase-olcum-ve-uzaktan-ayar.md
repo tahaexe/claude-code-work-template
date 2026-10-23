@@ -1,11 +1,11 @@
 ---
 title: Player funnels, D1/D7 retention and remote tuning with Firebase (mobile Unity games)
 condition: "Unity project that ships on Android or iOS and has the Firebase Unity SDK. Signs: an Assets/Firebase folder; google-services.json or GoogleService-Info.plist in the project."
-read_when: Planning or adding Analytics events; reading where players quit; setting up Remote Config parameters or an A/B test; deciding a difficulty or reward change from player data; updating store privacy declarations after new events.
-requires: — (uses the Firebase packages already in the project; adding a Firebase package the game lacks, e.g. Remote Config, is its own planned step)
-source: Firebase Unity setup https://firebase.google.com/docs/unity/setup (updated 2026-10-13) · codelab "Implement A/B tests with Firebase Remote Config" https://firebase.google.com/codelabs/implement-a-b-tests-with-firebase-remote-config · pricing https://firebase.google.com/pricing (Remote Config quota and the 2026-09-01 Blaze change, verified 2026-10-14)
+read_when: Planning or adding Analytics events; reading where players quit; setting up Remote Config parameters or an A/B test; deciding a difficulty or reward change from player data; updating store privacy declarations after new events; uploading an Android IL2CPP build's native symbols to Crashlytics.
+requires: — (uses the Firebase packages already in the project; adding a Firebase package the game lacks, e.g. Remote Config, is its own planned step; the symbol upload needs the Firebase CLI (`firebase-tools`, free) and `java`)
+source: Firebase Unity setup https://firebase.google.com/docs/unity/setup (updated 2026-10-13) · codelab "Implement A/B tests with Firebase Remote Config" https://firebase.google.com/codelabs/implement-a-b-tests-with-firebase-remote-config · pricing https://firebase.google.com/pricing (Remote Config quota and the 2026-09-01 Blaze change, verified 2026-10-14) · Project F 1.1's symbol upload and its notes (2026-10-19)
 tech: Firebase Unity SDK (Analytics, Remote Config, A/B Testing); Unity 6000.x; Android API 24+, iOS 15+
-added: 2026-10-14 · research by two project sessions (the second: currency events, sample sizes, fixed gates), reviewed by the session manager (binomial figures recomputed) · 2026-10-18 (template 1.53): the GA4 audit before a first release (Project F 1.0, the session manager's standard of 2026-10-17)
+added: 2026-10-14 · research by two project sessions (the second: currency events, sample sizes, fixed gates), reviewed by the session manager (binomial figures recomputed) · 2026-10-18 (template 1.53): the GA4 audit before a first release (Project F 1.0, the session manager's standard of 2026-10-17) · template 1.60: Crashlytics native symbols through the Firebase CLI (Project F's project notes of 2026-10-19, merged)
 ---
 # Player funnels, retention and remote tuning (Firebase, mobile)
 
@@ -72,3 +72,16 @@ Every Firebase game, before its first release (Project F's GA4 property was empt
 - DebugView shows each planned event once per action, with the right parameters, and no duplicates of automatic events.
 - A Remote Config change in the console reaches a test device on its next launch after the fetch interval; the defaults still apply with the network off.
 - The store declarations and the privacy page name what the build sends.
+
+## Crashlytics: native symbols through the Firebase CLI (Project F 1.1, 2026-10-19)
+- **Why:** IL2CPP's native frames (`libil2cpp.so`, `libgame.so`, `libmain.so`) reach Crashlytics as addresses until the build's symbols are uploaded; Play reads the bundle's own symbol table for vitals, Crashlytics doesn't.
+- **Build:** Unity 6.3 `UnityEditor.Android.UserBuildSettings.DebugSymbols.level = SymbolTable`, `format = IncludeInBundle | Zip` (flags) for the store bundle, `Zip` for a test APK → `<build>-<version>-v<code>-IL2CPP.symbols.zip` beside it.
+- **Names:** Unity 6 calls the files `libil2cpp.so.sym`, and Crashlytics' tool finds only `*.so` ("No native libraries found"): unzip, then copy each `*.so.sym` as `*.so` into a folder of its own.
+- **Tool:** `npm i -g firebase-tools` once per machine (free; 15.34.0 on 2026-10-19). Its upload needs `java` on PATH (Unity's `…/AndroidPlayer/OpenJDK/bin`) and drops a `.crashlytics/dump_syms.exe` cache in the working folder: run it from a temporary folder, never the project root. Without a session, check the libraries are found: `java -jar ~/.cache/firebase/crashlytics/buildtools/crashlytics-buildtools-*.jar -symbolGenerator breakpad -symbolFileCacheDir <tmp> -generateNativeSymbols -unstrippedLibrary <folder>` (one breakpad `.sym` per library).
+- **Sign in only around an upload** (the session manager's rule, 2026-10-19: the tool keeps a refresh token with wide Cloud rights in plain text on disk):
+  1. Ask for the sign-in click only once the symbols are ready (a code left waiting is a token on disk for hours).
+  2. `firebase login --no-localhost` prints a session id and a URL (in Git Bash feed its stdin from a FIFO or it prints nothing; a libuv assertion after the URL is harmless, the state is saved).
+  3. Open the URL in the agent's own Chrome profile; the account choice and the consent clicks ("Continue", "Allow") are the user's, or the session manager's where a machine-level CLAUDE.md names one; then confirm the command and the session id on the page, which shows the code.
+  4. `firebase login <code>`, `firebase crashlytics:symbols:upload --app=<google-services.json's mobilesdk_app_id> <folder>` per build ("Successfully uploaded all symbols"), `firebase logout` at once; `~/.config/configstore/firebase-tools.json` then holds no `refresh_token`.
+- **Check:** a development build's test crashes (Project F: C throws, K `Utils.ForceCrash`) reach Crashlytics within minutes, the native one with function names (confirm on the emulator).
+- **Lasting fix (proposed; IAM is the owner's call):** a service account with only Crashlytics rights per Firebase project, its key in the machine's secret store, never in the repo.

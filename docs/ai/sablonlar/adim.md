@@ -8,7 +8,7 @@
 - **Checklist:** ‹item ids from `el-kitabi/proje-kontrol-listesi.md` (e.g. 5.8) whose "Done when" this step meets; else —›
 
 ## Kaldığım yer
-<!-- Resume note (Taha's three states: Tamamlandı · Devam ediyor · Yapılacak). Rewritten, not appended: at the ~90 % context checkpoint, before stopping mid-step, and the moment a background job starts (write-ahead: what runs, how its end shows: a file, a log line, a ticket). Holds: what is done · the next small action · what is open (editor, emulator, build, helper agent). Times from `date`. Emptied (—) when the step is done. -->
+<!-- Resume note (the owner's three states: Tamamlandı · Devam ediyor · Yapılacak). Rewritten, not appended: at the ~90 % context checkpoint, before stopping mid-step, and the moment a background job starts (write-ahead: what runs, how its end shows: a file, a log line, a ticket). Holds: what is done · the next small action · what is open (editor, emulator, build, helper agent). Times from `date`. Emptied (—) when the step is done. -->
 - —
 
 ## Log

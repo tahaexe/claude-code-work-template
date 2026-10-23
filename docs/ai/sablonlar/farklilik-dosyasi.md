@@ -25,23 +25,25 @@
 | ‹…› | ‹…› | ‹…› | ‹…› |
 
 ## Portföy denetimi (kapıda, stüdyonun öbür oyunlarına karşı)
+<!-- Öbür oyunlar: stüdyonun mağazada ya da portalda yayımlanan ya da yayımlanacak uygulamaları; raftakiler de (klasörü silinmişse git clone --depth 1 ile geçici bir klasöre alınır, denetim bitince silinir). Video projeleri karşılaştırmaya girmez. -->
 | Denetim | Sonuç | Kanıt |
 |---|---|---|
+| Karşılaştırılan uygulamalar | ‹oyunlar; raftan klonlananlar› | |
 | Ortak görsel, ses ya da model (`varlik-cakisma.py`) | ‹0 dosya · izin listesindekiler ve nedenleri› | `kalite-kapisi/‹sürüm›/portfoy/varlik-cakisma.txt` |
-| Mağaza metni benzerliği (`metin-benzerlik.py`, en çok %25) | ‹en yüksek difflib · 5-gram ve hangi oyunla› | `kalite-kapisi/‹sürüm›/portfoy/metin-benzerlik.txt` |
+| Mağaza metni benzerliği (`metin-benzerlik.py`, en çok %25): öbür oyunlarımız ve ilk 3 rakibin metinleri | ‹en yüksek difflib · 5-gram ve hangi metinle› | `kalite-kapisi/‹sürüm›/portfoy/metin-benzerlik.txt` |
 | Arayüz görünümü | ‹çerçeve, renk, yazı tipi, simgeler, ana ekran düzeni: neyi farklı› | `kalite-kapisi/‹sürüm›/portfoy/arayuz-paftasi.png` |
 | Temel hareketin ses efektleri | ‹bu oyuna ait mi› | |
-| Hazır proje şablonu | ‹yok · kullanılan varlık paketleri› | |
+| Hazır proje şablonu | ‹yok · kullanılan varlık paketleri› | `docs/ai/tasarim/lisanslar.md` |
 
 ## App Store inceleme notu (Review Notes, İngilizce)
-<!-- Her gönderimde. Sürümün olağan notları (hesap yok, reklamlar, satın almalar) da eklenir: docs/ai/el-kitabi/app-store-game-center.md §7. Gerçekler, pazarlama yok. -->
+<!-- Her gönderimde. Sürümün olağan notları (hesap yok, reklamlar, satın almalar) da eklenir: docs/ai/el-kitabi/app-store-game-center.md §7. Gerçekler, pazarlama yok. "Neyin bizim, neyin lisanslı" satırı oyunun lisans listesinden (docs/ai/tasarim/lisanslar.md) doldurulur: hazır paket (3B model, arayüz kiti, ses) kullanılan oyunda "her şey bu oyun için yapıldı" yazılmaz; yanlış bir satır 4.3 cevabını zayıflatır. -->
 ```text
 What is distinct: <hook sentence>.
 Compared with the three most-played games of its genre:
 1. <Rival 1>: <mechanic difference>; <content difference>; <presentation difference>.
 2. <Rival 2>: <...>; <...>; <...>.
 3. <Rival 3>: <...>; <...>; <...>.
-All code, art and audio were made for this game; no template was used. Engine and SDKs: <engine and version>, <SDK list>.
+What is ours and what is licensed: <Game> was designed and built in-house; its code, game design, levels and UI look are our own work. Licensed: <the packs on its licence list, e.g. 3D models from <pack>, a licensed UI kit, sound effects from <pack>>. Like many studios, our games share a few in-house libraries (<e.g. ad consent, level checks>). No app template, purchased source code or reskin of another app was used. Engine and SDKs: <engine and version>, <SDK list>.
 The distinct mechanic appears at <0:20> of the attached video (level <2>).
 ```
 

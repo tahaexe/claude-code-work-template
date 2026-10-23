@@ -1,11 +1,11 @@
 ---
 title: "Public text check: claims ledger, machine-sounding patterns, proof, fresh review, store listing audit"
 condition: "Project that publishes player- or viewer-facing text: store listings, release notes, a site or catalog page, a press kit, video titles and descriptions. Signs: a store record, a `store/` folder, a press kit or a channel in the plans or memory."
-read_when: "Writing or reviewing store text, release notes, site, press or video copy; before every release (the claims check); auditing a store listing; a listing rejected for its wording."
+read_when: "Writing or reviewing store text, release notes, site, press or video copy; before every release (the claims check); auditing a store listing; a listing rejected for its wording; checking a translation (blind back-translation)."
 requires: "—"
 source: "Ideas from coreyhaines31/marketingskills (MIT; read 2026-10-18: copywriting's AI-tells reference and its six-step self-check, copy-editing's proof and specificity sweeps, the aso skill's scoring criteria and report template, the claim-drift loop) · conorbronsdon/avoid-ai-writing (MIT; found through hesreallyhim/awesome-claude-code, 2026-10-18) · affaan-m/everything-claude-code (santa-method: a fresh reviewer with written criteria; 2026-10-18) · their cited sources: Wikipedia 'Signs of AI writing', Kobak et al. 2024 (PubMed vocabulary), Juzek & Ward (COLING 2025) · the studio's store facts files (since 2026-10-10). Written in our own words; nothing installed."
 tech: "Google Play, App Store, YouTube and the studio's site; English and Turkish"
-added: "2026-10-18 · template 1.53 · the session manager's selection from the day's repository research"
+added: "2026-10-18 · template 1.53 · the session manager's selection from the day's repository research · template 1.60: blind back-translation of translations (§3)"
 ---
 # Public text check
 
@@ -39,6 +39,7 @@ added: "2026-10-18 · template 1.53 · the session manager's selection from the 
   4. declarations (data safety, privacy labels, ads, purchases) match the code;
   5. none of §2's patterns.
 - At most 3 rounds, a new reviewer each round; still failing → to the user with the open points. One reviewer instead of the method's two, to keep the token cost down.
+- **Translations: blind back-translation.** Each translated listing and string table goes to a fresh helper with only the translation, which turns it back into English without seeing the source; meaning, claims, tone and length are then compared with the source before upload, and every drift is fixed or explained. One small call a language; the only check for a language nobody on the team reads (Arabic, Russian…). (The studio's adoption of an outside review, 2026-10-22.)
 
 ## 4. Store listing audit
 - Before a big release or a listing rework, per store. Score each area 0-10 and weight it: title and subtitle 20%, description 15%, visuals (icon, screenshots, video) 25%, ratings and reviews 20%, freshness (last update, languages, events, category) 10%, conversion signals (value before download, clear prices, a credible developer) 10%; sum × 10 = score out of 100. The weights follow marketingskills' aso scoring; judge each area against store-listing-optimization.md and the genre leaders, not against that skill's own anchors.

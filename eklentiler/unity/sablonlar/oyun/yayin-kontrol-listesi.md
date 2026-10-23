@@ -32,7 +32,7 @@
 - [ ] Metinler düzeltildi; koda gömülü metin yok
 - [ ] Yerelleştirme tamam: ‹diller›
 - [ ] Ses miksajı son hâlinde
-- [ ] Emeği geçenler ve üçüncü taraf lisans bildirimleri tamam
+- [ ] Emeği geçenler ve üçüncü taraf lisans bildirimleri tamam; lisans listesi (`docs/ai/tasarim/lisanslar.md`: her paket ya da dosya, kaynağı, lisansı, nerede kullanıldığı) bu sürümün bütün varlıklarıyla güncel (`docs/ai/el-kitabi/proje-kontrol-listesi.md` 4.8)
 
 ## Platform: Mobil (Android / iOS)
 - [ ] Android: hedef API seviyesi mağaza şartına uygun; AAB; IL2CPP + ARM64; imzalama anahtarı güvende ve yedekli
@@ -68,14 +68,16 @@
 - [ ] Play'de ilk yayın: mağaza sayfası, bütün çeviriler, görseller, uygulama içi ürünler ve beyanlar ilk "incelemeye gönder"den önce girildi; inceleme sürerken değişiklik gönderilmiyor (uygulamayı sıranın sonuna itebilir). İlk yayında yönetilen yayın yok: onay gelince yayına girer
 - [ ] Oyuncunun göreceği yeni içerik ya da süreli bir oyun içi etkinlik varsa mağaza etkinliği: Play'de tanıtım içeriği, App Store'da uygulama içi etkinlik (Major Update ya da uygun rozet); içerik o tarihlerde gerçekten oyunda; incelemesi için en az 4 gün önce gönderildi (`docs/ai/el-kitabi/store-events.md`)
 - [ ] Mağazalarda yeni sürüm oluşturuldu ve sürüm verileri girildi: sürüm adı, iki dilde yenilikler notu, gerekiyorsa mağaza sayfası (Claude, Play Console ve App Store Connect'te Chrome'dan)
-- [ ] App Store'a yeni oyun: hesapta incelemede başka yeni oyun yok (sıradaki, öncekinin onayından sonra ve 1-2 hafta arayla; aynı gün toplu gönderim yok); inceleme notunda farklılık dosyası (kanca, 3 rakip ve her biriyle 3 fark, "şablon yok", kancanın videodaki yeri), ekte açılıştan kancaya 30-60 sn kayıt ve 2 açıklamalı ekran görüntüsü (`docs/ai/el-kitabi/kalite-kapisi.md` › Store and portal submissions)
+- [ ] App Store'a yeni oyun: hesapta incelemede başka yeni oyun yok (sıradaki, öncekinin onayından sonra ve 1-2 hafta arayla; aynı gün toplu gönderim yok); inceleme notunda farklılık dosyası (kanca, 3 rakip ve her biriyle 3 fark, neyin bizim neyin lisanslı olduğu (kullanılan paketler lisans listesinden, `docs/ai/tasarim/lisanslar.md`; şablon yok), kancanın videodaki yeri), ekte açılıştan kancaya 30-60 sn kayıt ve 2 açıklamalı ekran görüntüsü (`docs/ai/el-kitabi/kalite-kapisi.md` › Store and portal submissions)
 - [ ] Build'ler mağazalara yüklendi ve incelemeye gönderildi (sen; Claude yüklemez, göndermez; oturum yöneticisi olan bilgisayarda yöneticinin kuralı geçerli)
 
 ## Yayına hazırlık
 - [ ] Analitik veri alıyor; çökme raporlama kurulu
 - [ ] Gerekirse ilk gün yaması hazır
 - [ ] Duyurular ve tanıtım kodları hazır
-- [ ] Yayın duyurusu hazır: `store/duyuru/<sürüm>.md`, Türkçe ve İngilizce (başlık, 1-2 cümle giriş, oyuncunun diliyle 3-5 yenilik, mağaza bağlantıları, kapak görseli); sürüm yayına girdiği gün stüdyonun sitesinde ve topluluk devlog'unda (ör. Oyun Günlüğü) yayınlanır (`docs/ai/BAKIM.md` › After release)
+- [ ] Yayın duyurusu hazır: `store/duyuru/<sürüm>.md`, Türkçe ve İngilizce (başlık, 1-2 cümle giriş, oyuncunun diliyle 3-5 yenilik, mağaza bağlantıları, kapak görseli); sürüm yayına girdiği gün stüdyonun sitesinde ve topluluk devlog'unda (ör. Oyun Günlüğü) yayınlanır; devlog haftalık sınıra takılırsa not sıraya alınır (yeni oyunlar önce), atlanmaz (`docs/ai/BAKIM.md` › After release)
+- [ ] Yayınlanan commit `v<sürüm>` etiketli ve etiket push'lu
+- [ ] Stüdyonun birden çok oyunu varsa yeni oyun öbür canlı oyunların "More Games" listesinde: liste uzaktaysa (ayar, katalog) aynı gün, oyuna gömülüyse o oyunların sıradaki sürümünde
 - [ ] Bilinen sorunlar listesi hazır
 - [ ] Geri dönüş planı yazılı: yayın doğrudan ve %100 olduğu için sorunlu sürüm durdurulamaz; düzeltme yeni bir sürümle çıkar
 
