@@ -23,14 +23,15 @@ and keeps its memory in your repository, so nothing is lost between sessions or 
 
 - **Plan-first execution.** Small jobs are done right away. Big ones are explored, turned into a plan and carried out step by step; every step gets an error check (it compiles, its log is clean), is recorded in the plan, committed and pushed. The plan file is a short index and every step has its own file, marked ✓ done · ▶ in progress · ○ to do (⛔ blocked).
 - **Picks up where it left off.** At ~90 % context Claude writes where it stands into the step's file, commits, pushes and asks for `/clear`; after "devam et" it reads only the status, the plan index and that step's file, never the finished steps or old logs. Background jobs are noted the moment they start, and times come from the clock.
-- **Memory in the repository.** Decisions, lessons and the current state live in `docs/ai/` and travel with git across sessions, computers and cloud sessions. `/clear` and `/compact` never lose work.
+- **Memory in the repository.** Decisions, lessons and the current state live in `docs/ai/` and travel with git across sessions, computers and cloud sessions. `/clear` and `/compact` never lose work. A checker (`devir-kontrol.py`) keeps every file within its size limit and every memory file reachable from an index; growing logs move their oldest lines word for word into an archive (`hafiza-arsiv.py`), never summarised.
 - **A project record for handovers.** Whoever takes the project over learns everything from the repository: a handover sheet loaded every session (what to read first, open threads someone outside the repo waits on, a dated handover log), a store record (IDs, listing names, a log of every submission, rejection and release, products and prices) and a correspondence log (every question, answer and task). A deciding answer is written down with its source the moment it arrives, so no project fact lives only in Claude's memory, a chat or a mailbox; a newcomer adds its line to the handover log, then reads the read-first list.
 - **Lean context.** Only a small core (about 7k tokens in a fresh project) loads each session. Everything else is read on demand, and every file has a size limit that Claude keeps itself.
 - **Autonomy with guardrails.** Claude makes the technical calls and gives the reason in one line. It stops to ask only about scope, money, hard-to-reverse operations and credentials. If a machine-level `CLAUDE.md` names a session manager, those questions go to the manager instead.
 - **A quality bar.** For anything players or viewers see, Claude first studies the best examples of the same work and has the area's expert agent review the plan; at closure the work is tried and judged honestly beside those examples, and weak work is fixed before it ships.
-- **Research first, measure after release.** Before the first plan of a new game or channel, and before any big player- or viewer-facing job, Claude studies the best work in the field area by area (market and competitors, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; for YouTube: leading channels, titles, thumbnails, pacing). It plays the top competitors on a Play Store emulator, cites a source for every claim and delivers a report, a reference sheet and a one-page summary. After a release it builds no new content for at least 14 days, analyses the player data (D1, D7, the level funnel, revenue, reviews) and plans the next version from the findings.
-- **A quality gate before release.** Before a new game or a big update goes to a store or a web portal, the finished game is captured beside the three most-played games of its subgenre, on the same device and at the same moments. Two fresh reviewer agents score all four blind (A-D) in ten areas, the owner plays ten minutes and answers four questions, and nothing is submitted without `KAPI: GEÇTİ`. Portfolio checks keep a studio's games apart (own UI skin and sounds, no shared art or audio files, listing texts at most 25 % alike, with two checking tools), and App Store submissions go one at a time with a differentiation dossier.
-- **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Every step file says how the step will be tested; when everything is ready, the plan's penultimate step tests every step one by one, and before a release also runs every existing suite, the release checklist and a pre-release test list: levels, saves, a device matrix, sandbox purchases, test ads and consent, the clock, interruptions, screens with real taps, sound, analytics, performance, localization, accessibility and store compliance, with a report and hold rules.
+- **Research first, measure after release.** Before the first plan of a new game or channel, and before any big player- or viewer-facing job, Claude studies the best work in the field area by area (market and competitors, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; for YouTube: leading channels, titles, thumbnails, pacing). It plays the top competitors on a Play Store emulator, cites a source for every claim and delivers a report, a reference sheet and a one-page summary; a new project's first big plan also gets one questions-only review from a stronger model (top 5 risks, 5 improvements, 3 cuts). After a release it builds no new content for at least 14 days, analyses the player data (D1, D7, the level funnel, revenue, reviews) and plans the next version from the findings.
+- **A quality gate before release.** Before a new game or a big update goes to a store or a web portal, the finished game is captured beside the three most-played games of its subgenre, on the same device and at the same moments. Two fresh reviewer agents score all four blind (A-D) in eleven areas (ads and offers included), a fresh player agent that never saw the game plays ten minutes from a clean install and notes where it got stuck, and nothing is submitted without `KAPI: GEÇTİ`. Portfolio checks keep a studio's apps apart, shelved ones included and video projects left out (own UI skin and sounds, no shared art or audio files, listing texts at most 25 % alike to each other and to the top 3, with two checking tools), and App Store submissions go one at a time with a differentiation dossier that says honestly what is the studio's own work and what is licensed.
+- **Your call on visual work.** Before a look, the main screens, store art or a video scene is designed, Claude prepares 2-4 internal reference images in different directions (never published) and you pick one; you also approve a short preview before long work and the upload or publish, while Claude works on other things.
+- **Tests where they pay.** No tests while developing: an error check per step and a 2-3 minute eye check (Claude plays it and takes screenshots) at the end of each plan. Every step file says how the step will be tested; when everything is ready, the plan's penultimate step tests every step one by one, and before a release also runs every existing suite, the release checklist and a pre-release test list: levels, saves, a device matrix, sandbox purchases, test ads and consent, the clock, interruptions, screens with real taps, a monkey run of the store build on an emulator, sound, analytics, performance, localization, accessibility and store compliance, with a report and hold rules.
 - **A project checklist.** For games and channels, a sourced checklist from first idea to after release (12 phases, 100 items, each with when it counts as done and how it is finally tested) and a 41-step plan skeleton for a new mobile game; a release is announced the same day.
 - **Unity add-on.** Unity CLI first, a headless test runner, C# code intelligence, code rules built on SOLID and services, game design templates and a visual style check after every UI step.
 - **Conditional handbook.** Field-tested notes on Google Play, the App Store, Firebase, ASO, shaders, Synty assets and more, installed only into projects where they apply, so they cost nothing elsewhere.
@@ -49,7 +50,7 @@ Request
                  (blocker · decision · risky operation not in the plan → stops and asks)
                  (~90 % context → note where it stands → /clear → "devam et")
                                                ↓
-    A game's release first: quality gate (blind scores beside the top 3, the owner's 10 minutes; no submission without KAPI: GEÇTİ)
+    A game's release first: quality gate (blind scores beside the top 3, a fresh player's 10 minutes; no submission without KAPI: GEÇTİ)
     Penultimate: comprehensive test (every step's final test; before a release: suites, checklist, test list, device matrix, report)
     Last step:   release (announced the same day) or delivery
     Closing:     summary + manual tests + memory + archive
@@ -104,12 +105,12 @@ project/
    ├─ KURULUM.md             install and update           (fixed)
    ├─ BAKIM.md               closing and cleanup          (fixed)
    ├─ sablonlar/             CLAUDE.sablon.md, plan.md, devir.md, …  (fixed)
-   ├─ araclar/               kayip-kontrol.py, devir-kontrol.py      (fixed)
+   ├─ araclar/               kayip-kontrol.py, devir-kontrol.py, hafiza-arsiv.py  (fixed)
    ├─ DURUM.md               where we are
    ├─ DEVIR.md               handover sheet: read first, open threads, handover log
    ├─ HAFIZA.md              memory index
    ├─ manuel-testler.md      tests for you to run
-   ├─ hafiza/                decisions, lessons, store record, correspondence log, technical debt, …
+   ├─ hafiza/                decisions, lessons, store record, correspondence log, technical debt, …, arsiv/ (older log lines)
    └─ planlar/               dated plans and their archive
 ```
 
@@ -155,7 +156,7 @@ Choosing Unity at install adds:
 The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and asset packs, compiled from official docs, articles and field work. Each entry has a condition: it's installed only where the condition holds and read only during related work. Entries can add plan candidates (for example the Google Play Level Up structure), and notes a project adds to an entry are proposed back to the template on update.
 
 <details>
-<summary><b>All 40 entries</b></summary>
+<summary><b>All 41 entries</b></summary>
 
 | Entry | Installed when |
 |---|---|
@@ -192,13 +193,14 @@ The handbook (`el-kitabi/`) holds notes on specific technologies, platforms and 
 | Cute stylized look on mobile URP: faces, character shading and effects, cheap depth for low-poly scenes | Mobile URP game with characters or low-poly scenery |
 | The first minute: tutorial, first win, unlock pacing, first ad and offer | Mobile game with levels |
 | Local notifications for a daily reason to return (Android 13+, iOS) | Mobile game with a daily puzzle, reward or event |
-| Claude Code on Windows: Git Bash path conversion, Windows paths in files, Python flags, non-ASCII text through curl | Project worked on with Claude Code on Windows |
-| Public text check: claims ledger, machine-sounding patterns, fresh review, store listing audit | Project that publishes store, site, press or video text |
+| Claude Code on Windows: Git Bash path conversion, Windows paths in files (quoted heredocs too), Python flags, non-ASCII text through curl, a subagent defined mid-session | Project worked on with Claude Code on Windows |
+| Public text check: claims ledger, machine-sounding patterns, fresh review, blind back-translation, store listing audit | Project that publishes store, site, press or video text |
 | YouTube thumbnails for a channel that renders its own scenes: real frames, Test & compare, policy limits | YouTube channel that renders its own scenes |
-| Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens and real taps, sound, performance, crashes and analytics, store compliance) with how, the pass bar, the order, a device matrix, hold rules and a report | Game shipping to a store |
+| Pre-release test list: every check before a store release (levels, saves, purchases, ads and consent, the clock, services, interruptions, screens and real taps, a monkey run, sound, performance, crashes and analytics, store compliance) with how, the pass bar, the order, a device matrix, hold rules and a report | Game shipping to a store |
 | Project checklist: 12 phases and 100 items from the first idea to after release (pre-research, prototype, vertical slice, content, monetization and measurement, localization and accessibility, compliance and store records, store page, comprehensive test, release, after release, maintenance), each with when it counts as done, its final test and sources; a 41-step plan skeleton for a new mobile game; PC/Steam and YouTube differences | Game (any engine) or video channel |
-| Pre-research before the first plan: the best work in the field, area by area (market, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; leading YouTube channels), competitors played on an emulator, a source for every claim, a report, a reference sheet and a one-page summary | Project that players or viewers see (game, channel, public app or site) |
-| Polish & quality gate before release: the finished game captured beside its top 3 rivals, scored blind in ten areas by two fresh reviewer agents, the owner's ten minutes and veto, at most two fix loops; portfolio rules against the studio's own games (own UI skin and sounds, no shared art or audio, listing texts at most 25 % alike) with two checking tools (`metin-benzerlik.py`, `varlik-cakisma.py`); App Store submissions one at a time with a differentiation dossier | Game that ships to a store or a web portal |
+| Pre-research before the first plan: the best work in the field, area by area (market, gameplay and levels, art, shaders and VFX, feel, screens, icon, audio, store page, first minute, monetization; leading YouTube channels), competitors played on an emulator, a source for every claim, a report, a reference sheet and a one-page summary; internal reference images and the owner's three approval points in visual work; a stronger model's questions-only review of a new project's first big plan | Project that players or viewers see (game, channel, public app or site) |
+| Polish & quality gate before release: the finished game captured beside its top 3 rivals, scored blind in eleven areas (ads and offers included) by two fresh reviewer agents, a fresh player agent's ten minutes (stuck in levels 1-3 blocks), at most two fix loops; portfolio rules against the studio's own apps, shelved ones cloned in and video projects left out (own UI skin and sounds, no shared art or audio, listing texts at most 25 % alike, also to the top 3) with two checking tools (`metin-benzerlik.py`, `varlik-cakisma.py`); App Store submissions one at a time with a differentiation dossier that says what is the studio's own and what is licensed | Game that ships to a store or a web portal |
+| Code-drawn motion graphics in your own videos: a `seek(t)` page captured frame by frame in headless Chrome with `kare-yakala.mjs` (Node 22+, nothing to install), the rules and risks, and when it doesn't help (in a trial both blind reviewers preferred a still end card: short cards stay still, text to read stays still ≥1.2 s, fonts load first, pixel fonts are never squashed) | Project that lays code-drawn text or graphics over its own videos |
 
 </details>
 
@@ -227,9 +229,9 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 
 | Case | Loaded every session | ≈ Tokens |
 |---|---|---|
-| Freshly installed project | ~12,200 characters | ~4,900 |
-| Unity project (Unity section and agent definition) | ~15,000 characters | ~6,000 |
-| A project filled to its limits | ~27,600 characters | ~11,000 |
+| Freshly installed project | ~18,000 characters | ~7,200 |
+| Unity project (Unity section and agent definition) | ~21,700 characters | ~8,700 |
+| A project filled to its limits | ~34,900 characters | ~13,900 |
 
 | File | Limit |
 |---|---|
@@ -237,8 +239,11 @@ Measured with `/context` in a Unity project: the core came to 20,939 characters,
 | `DURUM.md` | 30 lines, 3,000 characters (technical debt goes to its own file) |
 | `HAFIZA.md` | 40 lines, 4,000 characters |
 | `DEVIR.md` | 40 lines, 4,000 characters; the handover log keeps its last 10 lines |
-| Memory topic file | Split past ~150 lines or 15,000 characters |
+| Memory topic file | Split past ~150 lines or 15,000 characters; a file family (`kararlar-*.md`) takes one index line, its members listed at the top of its main file |
+| Store record, correspondence log | Past ~15,000 characters the oldest log lines move to `hafiza/arsiv/` (`hafiza-arsiv.py`, word for word) |
 | Plan | One index line per step, its details in the step's own file (about 40 lines; log entries of at most 2); an index past ~15,000 characters or with independent parts is split into phases; a session reads the index and only the running step's file |
+
+`docs/ai/araclar/devir-kontrol.py` checks every limit and that an index reaches every memory file; plan closure runs it.
 
 </details>
 

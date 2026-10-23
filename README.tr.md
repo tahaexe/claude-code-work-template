@@ -23,14 +23,15 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
 
 - **Plan öncelikli çalışma.** Küçük işler hemen yapılır. Büyük işler incelenir, plana bağlanır ve adım adım yürütülür; her adımda hata kontrolü yapılır (derleniyor mu, günlük temiz mi), plana işlenir, commit'lenir ve push'lanır. Plan dosyası kısa bir dizindir, her adımın kendi dosyası vardır; adımlar ✓ Tamamlandı · ▶ Devam ediyor · ○ Yapılacak (⛔ Engellendi) diye işaretlenir.
 - **Kaldığı yerden sürer.** Bağlam %90'a gelince Claude kaldığı yeri adımın dosyasına yazar, commit'ler, push'lar ve `/clear` ister; "devam et" deyince yalnız durumu, plan dizinini ve o adımın dosyasını okur, bitmiş adımları ve eski kayıtları yeniden okumaz. Arka planda başlattığı işi o an not eder, saatleri saatten yazar.
-- **Hafıza repoda.** Kararlar, dersler ve güncel durum `docs/ai/` klasöründe durur ve git ile oturumlar, bilgisayarlar ve bulut oturumları arasında taşınır. `/clear` ve `/compact` iş kaybettirmez.
+- **Hafıza repoda.** Kararlar, dersler ve güncel durum `docs/ai/` klasöründe durur ve git ile oturumlar, bilgisayarlar ve bulut oturumları arasında taşınır. `/clear` ve `/compact` iş kaybettirmez. Bir denetim aracı (`devir-kontrol.py`) her dosyanın boy sınırını ve her hafıza dosyasına bir dizinden ulaşılabildiğini denetler; büyüyen kayıtların eski satırları kelimesi kelimesine arşive taşınır (`hafiza-arsiv.py`), özetlenmez.
 - **Devir için proje kaydı.** Projeyi kim devralırsa her şeyi repodan öğrenir: her oturumda yüklenen bir devir sayfası (önce okunacaklar, repo dışında birinin beklediği açık işler, tarihli devir günlüğü), bir mağaza kaydı (kimlikler, mağaza adları, her gönderim, ret ve yayının günlüğü, ürünler ve fiyatlar) ve bir yazışma özeti (her soru, cevap ve görev). Karar veren bir cevap geldiği an kaynağıyla yazılır; hiçbir proje bilgisi yalnız Claude'un hafızasında, bir sohbette ya da bir posta kutusunda kalmaz. Yeni gelen önce devir günlüğüne satırını ekler, sonra önce okunacakları okur.
 - **Az bağlam.** Her oturumda yalnızca küçük bir çekirdek yüklenir (yeni kurulmuş bir projede yaklaşık 7 bin token). Gerisi gerektiğinde okunur ve her dosyanın, Claude'un kendisinin koruduğu bir boyut sınırı vardır.
 - **Sınırları belli özerklik.** Teknik kararları Claude verir ve gerekçesini tek satırla yazar. Yalnızca kapsam, para, geri dönüşü zor işlemler ve kimlik bilgileri için durup sorar. Bilgisayara özel bir `CLAUDE.md` bir oturum yöneticisi adlandırıyorsa bu sorular ona gider.
 - **Kalite çıtası.** Oyuncunun ya da izleyicinin göreceği her işte Claude önce aynı işin en iyi örneklerini inceler ve planı alanın uzman ajanına inceletir; kapanışta iş denenir ve o örneklerin yanında dürüstçe değerlendirilir, zayıfsa yayından önce düzeltilir.
-- **Önce araştırma, yayından sonra ölçüm.** Yeni bir oyunun ya da kanalın ilk planından ve oyuncunun ya da izleyicinin göreceği her büyük işten önce Claude alanın en iyi işlerini alan alan inceler (pazar ve rakipler, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar, başlıklar, küçük resimler, tempo). En iyi rakipleri Play Store'lu bir emülatörde oynar, her bilgiyi kaynağıyla yazar; rapor, referans paftası ve tek sayfalık özet hazırlar. Yayından sonra en az 14 gün yeni içerik eklemez, oyuncu verilerini (D1, D7, bölüm hunisi, gelir, yorumlar) analiz eder ve yeni sürümü bu bulgulardan planlar.
-- **Yayından önce kalite kapısı.** Yeni bir oyun ya da büyük bir güncelleme mağazaya veya web portalına gitmeden önce, bitmiş oyun türünün en çok oynanan üç oyunuyla aynı cihazda ve aynı anlarda kaydedilir. Projeyi bilmeyen iki ajan dördünü A-D diye karışık 10 alanda puanlar, oyunun sahibi 10 dakika oynayıp dört soruya cevap verir; `KAPI: GEÇTİ` olmadan gönderim yok. Stüdyonun oyunları birbirinden ayrı tutulur (kendi arayüz görünümü ve sesleri, ortak görsel ya da ses dosyası yok, mağaza metinleri en çok %25 benzer; iki denetim aracıyla) ve App Store'a gönderimler bir farklılık dosyasıyla tek tek gider.
-- **Test, işe yaradığı yerde.** Geliştirirken test yok: her adımda hata kontrolü, her planın sonunda 2-3 dakikalık göz kontrolü (Claude oynar, ekran görüntüsü alır). Her adımın dosyası o adımın nasıl test edileceğini söyler; her şey hazır denince planın sondan bir önceki adımında her adım tek tek test edilir, yayından önce ayrıca mevcut testlerin hepsi, yayın kontrol listesi ve yayın öncesi test listesi koşar (bölümler, kayıt, aygıt matrisi, deneme satın almalar, test reklamları ve onay, saat, kesintiler, gerçek dokunuşlarla ekranlar, ses, analitik, performans, diller, erişilebilirlik, mağaza uyumu), raporu ve "bekle" kurallarıyla.
+- **Önce araştırma, yayından sonra ölçüm.** Yeni bir oyunun ya da kanalın ilk planından ve oyuncunun ya da izleyicinin göreceği her büyük işten önce Claude alanın en iyi işlerini alan alan inceler (pazar ve rakipler, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar, başlıklar, küçük resimler, tempo). En iyi rakipleri Play Store'lu bir emülatörde oynar, her bilgiyi kaynağıyla yazar; rapor, referans paftası ve tek sayfalık özet hazırlar; yeni bir projenin ilk büyük planı bir kez de daha güçlü bir modele yalnız soru olarak sorulur (en büyük 5 risk, 5 iyileştirme, kesilecek 3 şey). Yayından sonra en az 14 gün yeni içerik eklemez, oyuncu verilerini (D1, D7, bölüm hunisi, gelir, yorumlar) analiz eder ve yeni sürümü bu bulgulardan planlar.
+- **Yayından önce kalite kapısı.** Yeni bir oyun ya da büyük bir güncelleme mağazaya veya web portalına gitmeden önce, bitmiş oyun türünün en çok oynanan üç oyunuyla aynı cihazda ve aynı anlarda kaydedilir. Projeyi bilmeyen iki ajan dördünü A-D diye karışık 11 alanda puanlar (reklam ve teklifler dahil), oyunu hiç görmemiş bir ajan temiz kurulumla 10 dakika oynayıp nerede takıldığını yazar; `KAPI: GEÇTİ` olmadan gönderim yok. Stüdyonun uygulamaları birbirinden ayrı tutulur, raftakiler de katılır, video projeleri katılmaz (kendi arayüz görünümü ve sesleri, ortak görsel ya da ses dosyası yok, mağaza metinleri birbirine ve ilk 3 rakibe en çok %25 benzer; iki denetim aracıyla) ve App Store'a gönderimler, neyin stüdyonun, neyin lisanslı olduğunu dürüstçe söyleyen bir farklılık dosyasıyla tek tek gider.
+- **Görsel işte senin seçimin.** Bir görünüş, ana ekranlar, mağaza görseli ya da bir video sahnesi tasarlanmadan önce Claude farklı yönlerde 2-4 iç referans görsel hazırlar (hiçbir yerde yayımlanmaz), sen birini seçersin; uzun bir işten önce kısa önizlemeyi ve yükleme ya da yayını da sen onaylarsın, Claude o arada başka işlere bakar.
+- **Test, işe yaradığı yerde.** Geliştirirken test yok: her adımda hata kontrolü, her planın sonunda 2-3 dakikalık göz kontrolü (Claude oynar, ekran görüntüsü alır). Her adımın dosyası o adımın nasıl test edileceğini söyler; her şey hazır denince planın sondan bir önceki adımında her adım tek tek test edilir, yayından önce ayrıca mevcut testlerin hepsi, yayın kontrol listesi ve yayın öncesi test listesi koşar (bölümler, kayıt, aygıt matrisi, deneme satın almalar, test reklamları ve onay, saat, kesintiler, gerçek dokunuşlarla ekranlar, emülatörde mağaza derlemesiyle maymun koşusu, ses, analitik, performans, diller, erişilebilirlik, mağaza uyumu), raporu ve "bekle" kurallarıyla.
 - **Proje kontrol listesi.** Oyun ve kanal projeleri için ilk fikirden yayın sonrasına kaynaklı bir kontrol listesi (12 aşama, 100 madde; her maddenin ne zaman bitmiş sayıldığı ve son testte nasıl deneneceği) ve yeni bir mobil oyun için 41 adımlık plan iskeleti; her yayın aynı gün duyurulur.
 - **Unity eklentisi.** Önce Unity CLI, penceresiz test çalıştırıcı, C# kod zekâsı, SOLID ve servis yapısına dayanan kod kuralları, oyun tasarım şablonları ve her arayüz adımından sonra görsel stil kontrolü.
 - **Koşullu el kitabı.** Google Play, App Store, Firebase, ASO, shader'lar, Synty asset'leri ve daha fazlası üzerine sahada denenmiş notlar. Yalnızca işe yarayacağı projelere kurulur, diğerlerinde bağlam harcamaz.
@@ -49,7 +50,7 @@ ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arası
                (engel · karar · planda olmayan riskli işlem → durur ve sorar)
                (bağlam ~%90 → kaldığı yeri yazar → /clear → "devam et")
                                                ↓
-    Oyun yayınında önce: kalite kapısı (en iyi 3 rakiple kör puan, sahibin 10 dakikası; KAPI: GEÇTİ olmadan gönderim yok)
+    Oyun yayınında önce: kalite kapısı (en iyi 3 rakiple kör puan, taze bir oyuncunun 10 dakikası; KAPI: GEÇTİ olmadan gönderim yok)
     Sondan bir önceki adım: kapsamlı test (her adımın son testi; yayında testler, kontrol listesi, test listesi, aygıt matrisi, rapor)
     Son adım:  yayın (aynı gün duyuru) ya da teslim
     Kapanış:   özet + manuel testler + hafıza + arşiv
@@ -103,12 +104,12 @@ proje/
    ├─ KURULUM.md             kurulum ve güncelleme        (sabit)
    ├─ BAKIM.md               kapanış ve temizlik          (sabit)
    ├─ sablonlar/             CLAUDE.sablon.md, plan.md, devir.md, …  (sabit)
-   ├─ araclar/               kayip-kontrol.py, devir-kontrol.py      (sabit)
+   ├─ araclar/               kayip-kontrol.py, devir-kontrol.py, hafiza-arsiv.py  (sabit)
    ├─ DURUM.md               neredeyiz
    ├─ DEVIR.md               devir sayfası: önce okunacaklar, açık işler, devir günlüğü
    ├─ HAFIZA.md              hafıza dizini
    ├─ manuel-testler.md      senin yapacağın testler
-   ├─ hafiza/                kararlar, dersler, mağaza kaydı, yazışma özeti, teknik borç, …
+   ├─ hafiza/                kararlar, dersler, mağaza kaydı, yazışma özeti, teknik borç, …, arsiv/ (eski kayıt satırları)
    └─ planlar/               tarihli planlar ve arşivleri
 ```
 
@@ -154,7 +155,7 @@ Kurulumda Unity seçilince şunlar eklenir:
 El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri üzerine resmi belgelerden, makalelerden ve saha çalışmasından derlenmiş notları tutar. Her girdinin bir koşulu vardır: yalnızca koşulun tuttuğu projeye kurulur ve yalnızca ilgili işte okunur. Girdiler plan adayı ekleyebilir (örneğin Google Play Level Up yapısı); bir projede girdiye eklenen notlar güncellemede şablona önerilir.
 
 <details>
-<summary><b>40 girdinin tamamı</b></summary>
+<summary><b>41 girdinin tamamı</b></summary>
 
 | Girdi | Ne zaman kurulur |
 |---|---|
@@ -191,13 +192,14 @@ El kitabı (`el-kitabi/`), belirli teknolojiler, platformlar ve asset paketleri 
 | Mobil URP'de sevimli stilize görünüş: yüzler, karakter gölgelendirme ve efektler, low-poly sahnede ucuz derinlik | Karakterli ya da low-poly sahneli mobil URP oyunu |
 | İlk dakika: eğitim, ilk kazanç, açılma temposu, ilk reklam ve teklif | Bölümlü mobil oyun |
 | Günlük bir geri dönüş nedeni için yerel bildirimler (Android 13+, iOS) | Günlük bulmacası, ödülü ya da etkinliği olan mobil oyun |
-| Windows'ta Claude Code: Git Bash'in yol çevirmesi, dosyaya Windows yolu yazmak, Python bayrakları, curl'de Türkçe metin | Windows'ta Claude Code'la çalışılan proje |
-| Herkese açık metnin denetimi: iddia defteri, yapay zekâ yazmış gibi duran kalıplar, taze gözden geçirme, mağaza sayfası puanlaması | Mağaza, site, basın ya da video metni yayınlayan proje |
+| Windows'ta Claude Code: Git Bash'in yol çevirmesi, dosyaya Windows yolu yazmak (tırnaklı heredoc'ta da), Python bayrakları, curl'de Türkçe metin, oturum içinde tanımlanan alt ajan | Windows'ta Claude Code'la çalışılan proje |
+| Herkese açık metnin denetimi: iddia defteri, yapay zekâ yazmış gibi duran kalıplar, taze gözden geçirme, çevirilerin kör geri çevirisi, mağaza sayfası puanlaması | Mağaza, site, basın ya da video metni yayınlayan proje |
 | Kendi sahnelerini render eden bir kanal için YouTube küçük resmi: gerçek kare, Test & compare, politika sınırları | Kendi sahnelerini render eden YouTube kanalı |
-| Yayın öncesi test listesi: mağaza sürümünden önceki her denetim (bölümler, kayıt, satın alma, reklam ve onay, saat, hizmetler, kesintiler, ekranlar ve gerçek dokunuşlar, ses, performans, çökme ve analitik, mağaza uyumu); nasıl, geçme ölçütü, sıra, aygıt matrisi, "bekle" kuralları ve rapor | Mağazaya çıkan oyun |
+| Yayın öncesi test listesi: mağaza sürümünden önceki her denetim (bölümler, kayıt, satın alma, reklam ve onay, saat, hizmetler, kesintiler, ekranlar ve gerçek dokunuşlar, maymun koşusu, ses, performans, çökme ve analitik, mağaza uyumu); nasıl, geçme ölçütü, sıra, aygıt matrisi, "bekle" kuralları ve rapor | Mağazaya çıkan oyun |
 | Proje kontrol listesi: ilk fikirden yayın sonrasına 12 aşama ve 100 madde (ön araştırma, prototip, dikey kesit, içerik, para kazanma ve ölçüm, yerelleştirme ve erişilebilirlik, uyumluluk ve mağaza kayıtları, mağaza sayfası, kapsamlı test, yayın, yayın sonrası, bakım); her maddenin ne zaman bitmiş sayıldığı, son testi ve kaynakları; yeni mobil oyun için 41 adımlık plan iskeleti; PC/Steam ve YouTube farkları | Oyun (her motor) ya da video kanalı |
-| İlk plandan önce ön araştırma: alanın en iyi işleri alan alan (pazar, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar), rakipler emülatörde oynanır, her bilgi kaynağıyla; rapor, referans paftası ve tek sayfalık özet | Oyuncunun ya da izleyicinin gördüğü proje (oyun, kanal, herkese açık uygulama ya da site) |
-| Yayından önce cilalama ve kalite kapısı: bitmiş oyun türünün en iyi 3 rakibiyle yan yana kaydedilir, projeyi bilmeyen iki ajan 10 alanda kör puanlar, oyunun sahibi 10 dakika oynar ve veto edebilir, en çok iki düzeltme turu; stüdyonun kendi oyunlarına karşı kurallar (kendi arayüz görünümü ve sesleri, ortak görsel ya da ses yok, mağaza metinleri en çok %25 benzer) ve iki denetim aracı (`metin-benzerlik.py`, `varlik-cakisma.py`); App Store'a farklılık dosyasıyla tek tek gönderim | Mağazaya ya da web portalına çıkan oyun |
+| İlk plandan önce ön araştırma: alanın en iyi işleri alan alan (pazar, oynanış ve bölümler, grafik, shader ve efektler, his, ekranlar, simge, ses, mağaza sayfası, ilk dakika, para kazanma; YouTube'da önde giden kanallar), rakipler emülatörde oynanır, her bilgi kaynağıyla; rapor, referans paftası ve tek sayfalık özet; görsel işte iç referans görseller ve oyun sahibinin üç onay noktası; yeni projenin ilk büyük planında daha güçlü bir modele yalnız soru | Oyuncunun ya da izleyicinin gördüğü proje (oyun, kanal, herkese açık uygulama ya da site) |
+| Yayından önce cilalama ve kalite kapısı: bitmiş oyun türünün en iyi 3 rakibiyle yan yana kaydedilir, projeyi bilmeyen iki ajan 11 alanda kör puanlar (reklam ve teklifler dahil), oyunu hiç görmemiş bir ajan 10 dakika oynar (1-3. bölümde takılması kapıyı durdurur), en çok iki düzeltme turu; stüdyonun kendi uygulamalarına karşı kurallar, raftakiler de katılır, video projeleri katılmaz (kendi arayüz görünümü ve sesleri, ortak görsel ya da ses yok, mağaza metinleri ilk 3 rakibe de en çok %25 benzer) ve iki denetim aracı (`metin-benzerlik.py`, `varlik-cakisma.py`); App Store'a neyin stüdyonun, neyin lisanslı olduğunu söyleyen farklılık dosyasıyla tek tek gönderim | Mağazaya ya da web portalına çıkan oyun |
+| Kendi videolarında kodla çizilen hareketli grafik: `seek(t)` ile çizen bir sayfa başsız Chrome'da `kare-yakala.mjs` ile kare kare yakalanır (Node 22+, kurulum yok), kurallar ve riskler, ne zaman işe yaramadığı (bir denemede iki kör gözden geçiren de sabit kapanış kartını seçti: kısa kart sabit kalır, okunacak yazı en az 1,2 sn durur, yazı tipi önce yüklenir, piksel yazı ezilmez) | Kendi videolarının üstüne kodla yazı ya da grafik koyan proje |
 
 </details>
 
@@ -226,9 +228,9 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 
 | Durum | Her oturumda yüklenen | ≈ Token |
 |---|---|---|
-| Yeni kurulmuş proje | ~12.200 karakter | ~4.900 |
-| Unity projesi (Unity bölümü ve ajan tanımı) | ~15.000 karakter | ~6.000 |
-| Sınırlarına kadar dolu bir proje | ~27.600 karakter | ~11.000 |
+| Yeni kurulmuş proje | ~18.000 karakter | ~7.200 |
+| Unity projesi (Unity bölümü ve ajan tanımı) | ~21.700 karakter | ~8.700 |
+| Sınırlarına kadar dolu bir proje | ~34.900 karakter | ~13.900 |
 
 | Dosya | Sınır |
 |---|---|
@@ -236,8 +238,11 @@ Bir Unity projesinde `/context` ile ölçüldü: çekirdek 20.939 karakter, **8,
 | `DURUM.md` | 30 satır, 3.000 karakter (teknik borç kendi dosyasına gider) |
 | `HAFIZA.md` | 40 satır, 4.000 karakter |
 | `DEVIR.md` | 40 satır, 4.000 karakter; devir günlüğünde son 10 satır kalır |
-| Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür |
+| Hafıza konu dosyası | ~150 satırı ya da 15.000 karakteri geçince bölünür; bir dosya ailesi (`kararlar-*.md`) dizinde tek satır tutar, üyeleri ana dosyanın başında listelenir |
+| Mağaza kaydı, yazışma özeti | ~15.000 karakteri geçince en eski kayıt satırları `hafiza/arsiv/`'e taşınır (`hafiza-arsiv.py`, kelimesi kelimesine) |
 | Plan | Dizinde her adım tek satır, ayrıntısı adımın kendi dosyasında (yaklaşık 40 satır; kayıt girdileri en fazla 2 satır); dizin ~15.000 karakteri geçerse ya da bağımsız parçaları varsa fazlara bölünür; bir oturum dizini ve yalnız sürmekte olan adımın dosyasını okur |
+
+`docs/ai/araclar/devir-kontrol.py` bütün sınırları ve her hafıza dosyasına bir dizinden ulaşılabildiğini denetler; plan kapanışı onu çalıştırır.
 
 </details>
 
