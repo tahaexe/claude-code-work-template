@@ -1,9 +1,9 @@
 KAPI: ‹GEÇTİ | KALDI› ‹sürüm› · ‹kararı veren› · ‹YYYY-AA-GG SS:DD›
 # Kalite Kapısı Puan Kâğıdı: ‹Oyun› ‹Sürüm› · Tur ‹0 · 1 · 2›
-<!-- Doldurulan kopya: docs/ai/tasarim/kalite-kapisi/‹sürüm›/puan.md. Kurallar, kayıt ve kanıt düzeni: docs/ai/el-kitabi/kalite-kapisi.md. İlk satır sonuç satırıdır: kararı veren (makineye özel CLAUDE.md bir oturum yöneticisi adlandırıyorsa o, yoksa oyunun sahibi) en son yazar; o zamana kadar "KAPI: bekliyor ‹sürüm›". Tur 0 ilk puanlama, en çok iki düzeltme turu gelir. Hakeme yalnız "Hakem formu" bölümü ve kor/ klasörü verilir; bu kâğıdın gerisi, anahtar.md ve farklılık dosyası verilmez. -->
+<!-- Doldurulan kopya: docs/ai/tasarim/kalite-kapisi/‹sürüm›/puan.md. Kurallar, kayıt ve kanıt düzeni: docs/ai/el-kitabi/kalite-kapisi.md. İlk satır sonuç satırıdır: kararı veren (makineye özel CLAUDE.md bir oturum yöneticisi adlandırıyorsa o, yoksa oyunun sahibi) en son yazar; o zamana kadar "KAPI: bekliyor ‹sürüm›". Tur 0 ilk puanlama, en çok iki düzeltme turu gelir. Hakeme yalnız "Hakem formu" bölümü ve kor/ klasörü verilir, hakem odasında (`hakem-odasi.py`; el kitabı › Tools); bu kâğıdın gerisi, anahtar.md ve farklılık dosyası verilmez. -->
 
 ## Hakem formu
-<!-- Hakem projeyi bilmeyen yeni bir yardımcı ajandır: yalnız kor/ altındaki kanıta bakar, başka dosya okumaz. Her oyunu (A-D) her alanda öbür üç oyuna göre puanlar, her puana bir satır gerekçe yazar ve cevabını bu tabloyla verir; ana oturum cevabı olduğu gibi hakem-‹n›.md olarak saklar. Her turda yeni hakemler. -->
+<!-- Hakem projeyi bilmeyen, hakem odasında açılan yeni bir oturumdur: yalnız kor/ altındaki kanıta bakar, başka dosya okumaz. Her oyunu (A-D) her alanda öbür üç oyuna göre puanlar, her puana bir satır gerekçe yazar ve cevabını bu tabloyla verir; araç cevabı olduğu gibi hakem-‹n›.md olarak saklar. Her turda yeni hakemler. -->
 **Ölçek** (her oyun, öbür üç oyuna göre): 1 = bozuk ya da yok · 2 = öbür üçün en zayıfından kötü · 3 = öbür üçün ortası kadar · 4 = en iyisi kadar · 5 = üçünden de iyi, ilk ekran görüntüsüne konacak kadar.
 **Farklılık:** 1 = kopya · 2 = yalnız yeni tema · 3 = küçük bir değişiklik · 4 = ilk dakikada görünen net bir fark · 5 = net fark ve öbür üçünde olmayan bir tema, kitle ya da meta birleşimi.
 
@@ -18,7 +18,7 @@ KAPI: ‹GEÇTİ | KALDI› ‹sürüm› · ‹kararı veren› · ‹YYYY-AA-G
 | Reklam ve teklifler | reklam ve teklif tablosu (`olcumler.md`): ilk geçiş reklamı (bölüm, dakika), 10 dakikadaki geçiş reklamı sayısı, ödüllü teklifler ve verdikleri, reklam gelmeyince ve çevrimdışıyken ne olduğu | | | | |
 | Teknik | FPS, bellek, yükleme, boyut ve çökme tablosu (`olcumler.md`) | | | | |
 | Erişilebilirlik | renk körlüğü benzetimleri, ayarlar listesi | | | | |
-| Mağaza ve portal görselleri | türün ızgarasında simge, ilk 3 ekran görüntüsü, videonun ilk 5 sn'si | | | | |
+| Mağaza ve portal görselleri | türün ızgarasında simge, ilk 3 ekran görüntüsü (listenin küçük boyunda da), mağaza videosu (var mı, ilk 5 sn'si) | | | | |
 | Farklılık | `ozellikler.md`, kayıtlar | | | | |
 
 ## Birleştirme (hakeme verilmez)
@@ -46,11 +46,13 @@ KAPI: ‹GEÇTİ | KALDI› ‹sürüm› · ‹kararı veren› · ‹YYYY-AA-G
 - [ ] En az bir alan 5 ve kancanın alanı onlardan biri: ‹alan›
 - [ ] Kanca ilk 60 saniyede ve 1-2. ekran görüntülerinde görünüyor
 - [ ] Rakiplerin puanları akla yatkın (türün liderine her alanda 2 veren hakem kanıtı yanlış okumuştur: yeni hakem)
+- [ ] Mağaza görselleri: mağaza sayfasında 15-30 sn'lik tanıtım videosu · 1. görselde ad, tek vaat ve türün en kalabalık ya da en doyurucu anı · simgenin ana öğesi büyük, türün ilk 10'uyla yan yana küçük boyda okunuyor · ilk üç görselin başlığı listenin boyunda okunuyor (dikeyde ~150 px, yatayda ~300 px genişlikte yan yana bir şerit)
 
 ## Kesin şartlar (geçti / kaldı)
 | Şart | Ölçüm ve kanıt | Sonuç |
 |---|---|---|
 | Kapının cihaz matrisi koşularında çökme ve ANR yok | ‹koşular, günlük› | |
+| Android: ilk açılışta sistemin tam ekran bildiriminden ("Viewing full screen", "Got it") sonra oyun yeniden çiziyor | `hakem-odasi.py first-launch` çıktısı (ya da "Android yok") | |
 | En düşük hedef telefonda en ağır bölüm 60 FPS (p95 kare ≤ 16,7 ms) | | |
 | Web: ilk indirme ≤ 20 MB (portalların üst sınırı 50 MB, yalnız yazılı gerekçeyle), oyuna ≤ 10 sn | ‹ya da "web yok"› | |
 | Yer tutucu görsel ya da metin yok | | |
@@ -62,12 +64,13 @@ KAPI: ‹GEÇTİ | KALDI› ‹sürüm› · ‹kararı veren› · ‹YYYY-AA-G
 | Ortak oyun görseli, sesi ya da modeli yok (`varlik-cakisma.py`, izin listesi `izinli-ortak.txt`) | `portfoy/varlik-cakisma.txt` | |
 | Mağaza metinleri (açıklama, tanıtım metni, yenilikler) öbür oyunlarımıza en çok %25 benzer (`metin-benzerlik.py`) | `portfoy/metin-benzerlik.txt` | |
 | Kendi arayüz görünümü: çerçeve, renk, yazı tipi, simgeler ve ana ekran düzeni öbür oyunlarımızdan farklı | `portfoy/arayuz-paftasi.png` (bütün oyunlarımızın ana ekran, HUD ve kazanma ekranı yan yana) | |
+| Kendi mağaza görselleri: 1-3. görsellerin yazısı, çerçevesi ve rengi bu oyunun dünyasından, öbür oyunlarımızın ortak bir şeridi ya da düzeni değil; yan yana bir bakışta ayrılıyor | aynı pafta, 1-3. görsellerle | |
 | Temel hareketin ses efektleri bu oyuna ait | | |
 | Satın alınmış hazır proje şablonu yok (varlık paketleri olur) | | |
 
 ## Taze oyuncunun oturumu
-<!-- Projeyi hiç görmemiş bir yardımcı ajan, kapı derlemesini temiz kurulumla 10 dakika oynar (web derlemesi sürdüğü bir tarayıcıda, değilse emülatörde adb dokunuşları ve ekran görüntüleriyle), tek oyuncu profili, ipucu almadan. Netliği ölçer, eğlenceyi değil: 1-3. bölümde ya da bir ekranda takılırsa bulgu düzeltmeye gider ve kapı, yeni bir taze oyuncu oradan geçene kadar geçmez; öbür cevaplar puanların yanında kararı verene gider. Ana oturum cevabı olduğu gibi oyuncu-‹n›.md olarak saklar; her turda yeni bir taze oyuncu. (Oyunun sahibinin 10 dakikalık oyununun yerine; sahibi 2026-10-22: kendisi test yapmaz.) -->
-- **Tarih, derleme, nerede oynandı:** ‹…›
+<!-- Projeyi hiç görmemiş bir oturum, kapı derlemesini temiz kurulumla 10 dakika oynar (web derlemesi sürdüğü bir tarayıcıda; Android'de hakem odasının oynatma kipiyle, `hakem-odasi.py play`), tek oyuncu profili, ipucu almadan. Netliği ölçer, eğlenceyi değil: 1-3. bölümde ya da bir ekranda takılırsa bulgu düzeltmeye gider ve kapı, yeni bir taze oyuncu oradan geçene kadar geçmez; öbür cevaplar puanların yanında kararı verene gider. "Tepki görmedim" satırı (bir saniyeden kısa tepki iki ekran görüntüsü arasında kalabilir) kayıtla karşılaştırılmadan takılma sayılmaz. Cevap olduğu gibi oyuncu-‹n›.md olarak saklanır; her turda yeni bir taze oyuncu. (Oyunun sahibinin 10 dakikalık oyununun yerine; sahibi 2026-10-22: kendisi test yapmaz.) -->
+- **Tarih, derleme (cihazdaki sürüm ve sha256), nerede oynandı:** ‹…›
 1. **Oynamaya devam eder miydin?** ‹evet · hayır, neden›
 2. **Bu oyunun tek özelliği ne?** ‹…›
 3. **Ucuz duran ne?** ‹… ya da "yok"›

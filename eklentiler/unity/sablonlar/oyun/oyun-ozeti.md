@@ -13,6 +13,12 @@
 |---|---|---|
 | ‹ör. Kısa tur› | ‹2-3 dakikada biten, tek elle oynanan turlar› | ‹tur süresi ölçülür; turu uzatan özellik ayrı bir moda gider› |
 
+## Üç tasarım sorusu
+<!-- Sütunlarla birlikte yazılır, her biri 1-2 satır; yeni bir özellik bunlara da uyar (kullanıcı, 2026-10-23; bir oyun tasarımı yazısından esinlenildi, metni alınmadı). -->
+- **Oyuncuyu her şeyi söylemeden nasıl yönlendiriyoruz?** ‹görsel, oynanış ve ses aynı şeyi söylüyor; ekran kalabalık değil›
+- **Oyuncunun kontrolünü nerede elinden alıyoruz, neden?** ‹yalnız deneyim gerçekten istiyorsa (ör. kısa bir kutlama); yoksa "hiçbir yerde"›
+- **Kurallar tutarlı ve öğrenilebilir mi?** ‹aynı görünen aynı davranır; bir istisna varsa oyuncuya nasıl gösteriliyor›
+
 ## Çekirdek döngü
 <!-- Tekrarlanan döngü: oyuncu ne yapar → ne kazanır → neden tekrar eder. 2-4 madde. -->
 - ‹…›

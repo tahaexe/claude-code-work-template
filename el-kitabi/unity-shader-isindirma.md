@@ -1,13 +1,18 @@
 ---
 title: "Shader compile stutter on first use: measure, trace, warm up (Unity 6 GraphicsStateCollection)"
 condition: "Unity 6 project (`ProjectSettings/ProjectVersion.txt` starts with `6000.`)."
-read_when: "A build hitches the first time an effect, material, area or quality level appears; preparing a release, a demo or store video captures; moving a build to DX12, Vulkan or Metal; adding quality levels or many new materials or effects."
-requires: —
+read_when: "Writing or changing a code shader (HLSL), before its Unity run; a build hitches the first time an effect, material, area or quality level appears; preparing a release, a demo or store video captures; moving a build to DX12, Vulkan or Metal; adding quality levels or many new materials or effects."
+requires: "Windows SDK (fxc, dxc) and Python 3 for `shader-kontrol.py` and its stub `shader-kontrol-stub.hlsl`, which ship beside this entry in `el-kitabi/araclar/` (a project's copy: `docs/ai/el-kitabi/araclar/`)"
 source: "Unity Manual 6.3 LTS: Shader loading; Introduction to PSO tracing and warming; Trace and manage PSO data collections; Warm up PSOs; Other methods to warm up shaders; PSO tracing and warming example · Scripting API 6.3 `Experimental.Rendering.GraphicsStateCollection` · Unity Discussions, Unity Graphics team: 'Prevent shader compilation stutters with PSO Tracing in Unity 6' (2024-06-24, sample update 2025-01-13) and 'PSO Caching Improvements in Unity 6.5' (2026-05-08, staff replies 2026-05-27). All read 2026-10-16."
 tech: "Unity 6.0-6.5 (API from 6.0, automatic fallback from 6.1, out of experimental in 6.5) · any render pipeline · DX11, DX12, Vulkan, Metal, OpenGL, GLES, WebGL"
-added: "2026-10-16 · template 1.49 · research by a project session; every claim re-read on the pages above by Claude for the session manager"
+added: "2026-10-16 · template 1.49 · research by a project session; every claim re-read on the pages above by Claude for the session manager · template 1.61: the editor-free compile check before a Unity run (a game session's tool of 2026-10-24, generalized and tried on five studio games' shaders the same day)"
 ---
 # Shader compile stutter: measure, trace, warm up
+
+## Before a Unity run: an editor-free compile check
+- `python -I -B docs/ai/el-kitabi/araclar/shader-kontrol.py <the game's shader folder or files>` compiles each code shader's HLSLPROGRAM with the Windows SDK's fxc (SM 5) and dxc (SM 6), URP's includes swapped for a stub of its common names (`shader-kontrol-stub.hlsl`), the project's own includes kept. About a second a shader, no editor or heavy-job slot; errors point at the shader's own lines. `--cost`: fxc's instruction slots a stage, to compare two versions (a desktop proxy, not a device's cycles); `--dene`: self-test.
+- It catches syntax, type and undeclared-name errors in our code; it doesn't check URP's real library, the mobile back ends or variants: a step is still verified by a Unity run that logs no shader error.
+- A name missing from the stub fails as "undeclared": add it to the stub (the project's copy keeps its own lines on a template update) or pass `--stub <file>`. Tried 2026-10-24 on five games' own shaders: three passed whole (6/6, 6/6, 5/5), the rest stopped on Shader Graph types (`UnityTexture2D`) and a multi-pass shader's entry points.
 
 ## Why it stutters
 - The first time Unity renders with a shader variant, the driver builds its GPU version; that can stall a frame visibly. Unity keeps it while something still references the variant (Shader loading).

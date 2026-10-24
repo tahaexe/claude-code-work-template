@@ -7,7 +7,7 @@ Claude işi planlar, her adımda hata kontrolü yapıp commit'ler, yayından ön
 ve hafızasını senin reponda tutar; böylece oturumlar ve bilgisayarlar arasında hiçbir şey kaybolmaz.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.60-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.61-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-eklentisi)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -277,4 +277,4 @@ Unity eklentisinin bazı kısımları *Claude-Code-Game-Studios*'tan (sürüm `7
 
 ## Lisans
 
-[MIT](LICENSE) · Sürüm **1.60** · 2026-10-23
+[MIT](LICENSE) · Sürüm **1.61** · 2026-10-24

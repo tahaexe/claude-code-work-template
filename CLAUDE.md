@@ -17,5 +17,5 @@ This folder is the Claude working template installed into projects; not a game o
 
 ## Where we left off (Nerede kaldık)
 <!-- ≤8 lines · updated after every job -->
-- **Last version:** 1.60 (2026-10-23).
+- **Last version:** 1.61 (2026-10-24).
 - **Open work:** none.

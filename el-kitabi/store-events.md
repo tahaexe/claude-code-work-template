@@ -5,7 +5,7 @@ read_when: "Planning a release that brings content players will see (levels, mod
 requires: "— (Play Console and App Store Connect through the account's own Chrome profile)"
 source: "Play Console Help 12929944 ('Reach more customers by adhering to our content quality guidelines') and 12932541 ('Create promotional content') · google.play/business/programs/promotionalcontent · google.play/business/guides/premium-growth-tools · Apple, developer.apple.com/app-store/in-app-events. All read 2026-10-16. · 2026-10-18: App Store Connect Help 'Nominate your app for featuring', developer.apple.com/app-store/getting-featured, App Store Connect API 3.8 (nominations), ASO.dev (form limits); Android Publisher v3 discovery document (revision 20261015); Play Console Help 12932541 (CSV); GameRefinery via AppSamurai (seasons)"
 tech: "Google Play Console, App Store Connect"
-added: "2026-10-16 · template 1.49 · research by a project session; every claim re-read on the official pages above by Claude for the session manager; featuring found limited to titles above the Premium growth tools thresholds · 2026-10-18 (template 1.53): featuring nominations, the API state of both event types, seasons (the studio's featuring, seasonal and event-API research)"
+added: "2026-10-16 · template 1.49 · research by a project session; every claim re-read on the official pages above by Claude for the session manager; featuring found limited to titles above the Premium growth tools thresholds · 2026-10-18 (template 1.53): featuring nominations, the API state of both event types, seasons (the studio's featuring, seasonal and event-API research) · template 1.61: an event slot in every game from the first release (a study of how big studios work, 2026-10-23: InvestGame LiveOps Report 2025 with AppMagic data, Royal Match and Playrix cases; approved by the owner)"
 ---
 # Store events
 
@@ -13,6 +13,7 @@ added: "2026-10-16 · template 1.49 · research by a project session; every clai
 - Every release that brings content players will see gets a **store event** step in its plan: a Play promotional content item and an App Store In-App Event (Major Update or the fitting badge), dated to the release.
 - Only for content that is really in the game on those dates. Never for bug fixes, UI tweaks, routine dailies, always-on content, a "we launched" announcement or a plain discount.
 - Free on both stores. Discounts, offers and coupons cost money → only with the user's OK. Submit after the approval the project requires (studio: the session manager).
+- **An event slot from the first release:** every game ships one reusable time-limited event type (dates, goal, reward and theme read from Remote Config, art for ≥4 themes in the build, a date-gate fallback offline; iOS: named in the review notes), so a monthly event and its Play promotional content card need no new build; each event differs in theme and reward (no identical resubmissions); built once in the shared package. Casual games launch ~0.7-0.9 new events a title a month (AppMagic data, InvestGame LiveOps Report 2025); too frequent events lost their effect in one merge game, so a light monthly rhythm is enough.
 
 ## Google Play: promotional content
 - **Who:** all games; apps only above the Premium growth tools thresholds. Not for discounts on paid titles.

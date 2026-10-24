@@ -1,5 +1,5 @@
 # Unity Add-on: Install and Update
-<!-- Version 1.54 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
+<!-- Version 1.61 · Called from the general KURULUM.md. "Add-on folder" = this file's folder (in the template: eklentiler/unity/). -->
 
 ## Yeni proje (New project)
 The user chose Unity but the working folder has no Unity project → do this before the general install:
@@ -35,6 +35,7 @@ The user chose Unity but the working folder has no Unity project → do this bef
    | Build | `unity command build --target <target> --outputPath <path> --confirm true --project-path .`, then `build_status` | `unity build . --target <target> --output-path <path>` or `--profile <profile>` |
 
    Editor-closed tests use the add-on's runner: copy `araclar/testler.sh` (add-on folder) to `docs/ai/araclar/` with LF line endings (`sed 's/\r$//' <add-on file> > <project file>`: a Windows clone of the template may hold it as CRLF, which bash can't run). It needs this project's editor closed (a project open in an editor can't be opened by a second Unity); failing for that reason means "not verified", not "passed". Never `unity test`: it has no log option, so its editor writes the shared `Editor.log` the user's own editor uses.
+   A project with Synty packs (`Assets/Synty*`, `Assets/Polygon*`) also gets `araclar/prefab-onizleme.py` (add-on folder) in `docs/ai/araclar/`: editor-free previews of prefabs (shape, size in metres, triangles, palette; numpy and Pillow), so a scene's parts are chosen before an editor session (`el-kitabi/on-arastirma.md` › Visual work).
 
    So verification runs without prompts, add the missing `allow` rules of `izinler.json` (add-on folder) to `.claude/settings.json`: read and verify commands plus `unity pipeline install`. Outside bypass mode, delete, other package adds, build and free C# eval get a permission prompt.
 4. **Add the Unity section to CLAUDE.md:** insert `claude-bolumu.md` (heading included) after "Rules". CLAUDE.md stays ≤160 lines and ≤10,000 characters; move detail to rule files or `hafiza/` if needed.
@@ -51,10 +52,11 @@ The user chose Unity but the working folder has no Unity project → do this bef
 11. **Architecture check** (project with existing code): grep the scripts for global singletons (`static … Instance`), `FindObjectOfType`/`Find(` and very large manager classes. Found and no composition root or DI → one **Up next** line: "Service architecture migration: composition root first, then one system per step, verified by the error check and Play mode (game code rule → Migrating old code)". Never change code here. Skip if that line or a migration plan exists, or the user declined it (`hafiza/kararlar.md`).
 
 ## Güncelleme (Update)
-1. `agents/unity-uzmani.md`, `sablonlar/oyun/*` and `araclar/testler.sh` (→ `docs/ai/araclar/`, LF as in install step 3) → overwrite the project's copies; a project's own `testler.sh` keeps its project-specific lines (as in step 2).
+1. `agents/unity-uzmani.md`, `sablonlar/oyun/*`, `araclar/testler.sh` (→ `docs/ai/araclar/`, LF as in install step 3) and, where the project uses Synty packs, `araclar/prefab-onizleme.py` (→ `docs/ai/araclar/`) → overwrite the project's copies; a project's own `testler.sh` keeps its project-specific lines (as in step 2).
 2. `rules/*.md` → update the content of the project's copies to the new version; keep the project-fitted `paths:` patterns and project-specific additions (translated to English if still Turkish). Summarize the changes to the user.
 3. Replace CLAUDE.md's `## Unity` section with the new `claude-bolumu.md`, but keep its project-specific lines (lines not in the old template section, e.g. a headless-editor note; old section: `git show v<version>:eklentiler/unity/claude-bolumu.md` in the template folder, version from the section's marker): carry them over, translated to English, and show the user the merged section. Don't touch the Commands table, except replacing MCP tool references with Unity CLI equivalents (CLI first) and bringing template default commands still in an older form up to date (e.g. `unity recompile … --json`; `unity test` → `testler.sh`, 1.43; the editor-free compile row, 1.54: add it if missing, then prove it once with a planted body error as `csharp-lsp.md` says).
 4. Add the missing `allow` rules of `izinler.json` to `.claude/settings.json`; remove the `unity mcp` and `unity bug mcp` deny rules and the `unity test` allow rules of older versions.
 5. **Plugins:** run install step 2's Unity plugin and C# code intelligence checks.
 6. **Architecture check:** run install step 11's check.
 7. **Git attributes:** run install step 8's `.gitattributes` check.
+8. **Game summary questions** (once, from a version before 1.61): a game with a released version (store or portal) whose `docs/ai/tasarim/oyun-ozeti.md` is missing, or has no design pillars or no three design questions (the summary template's new section) → one **Up next** line, first among the game's next-version work: "Game summary: pillars and the three design questions, before the next version's plan (`tasarim/oyun-ozeti.md`)". Tell the user in one line.

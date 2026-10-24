@@ -7,7 +7,7 @@ Claude plans the work, error-checks and commits every step, tests thoroughly onc
 and keeps its memory in your repository, so nothing is lost between sessions or machines.
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-work%20template-D97757?logo=claude&logoColor=white)](https://claude.com/claude-code)
-[![Version](https://img.shields.io/badge/version-1.60-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
+[![Version](https://img.shields.io/badge/version-1.61-2EA44F)](https://github.com/tahaexe/claude-code-work-template/tags)
 [![Unity add-on](https://img.shields.io/badge/Unity%206-add--on-000000?logo=unity&logoColor=white)](#unity-add-on)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -278,4 +278,4 @@ Parts of the Unity add-on are adapted from *Claude-Code-Game-Studios* (version `
 
 ## License
 
-[MIT](LICENSE) · Version **1.60** · 2026-10-23
+[MIT](LICENSE) · Version **1.61** · 2026-10-24
